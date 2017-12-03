@@ -1,0 +1,39 @@
+{
+  "name": "json-sql-builder2",
+  "version": "0.0.10",
+  "description": "SQLBuilder to translate JSON dataformat to SQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/ --recursive"
+  },
+  "keywords": [
+    "sql",
+    "mysql",
+    "mongo",
+    "json",
+    "build",
+    "translate",
+    "postgreSQL"
+  ],
+  "author": "planetarydev",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "pg-format": "^1.0.4"
+  },
+  "devDependencies": {
+    "js-beautify": "^1.7.4",
+    "colors": "^1.1.2",
+    "chai": "^4.1.1",
+    "mocha": "^3.5.0",
+    "eslint": "^4.5.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/planetarydev/json-sql-builder2.git"
+  },
+  "bugs": {
+    "url": "https://github.com/planetarydev/json-sql-builder2/issues"
+  },
+  "homepage": "https://github.com/planetarydev/json-sql-builde2r#readme"
+}
