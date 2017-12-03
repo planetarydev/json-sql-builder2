@@ -42,8 +42,11 @@ function() {
     });
 }
 
-// SQL
-SELECT id FROM people
+// SQL output
+SELECT
+    id
+FROM
+    people
 
 // Values
 {}

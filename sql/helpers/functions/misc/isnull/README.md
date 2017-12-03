@@ -14,4 +14,5 @@ Specifies the `ISNULL` function to use with SQLServer. Further it defines the `I
 ### as Boolean:
 
 The usage of `isnull` as **Boolean** is restricted to the following values:
-- true  `$isnull: true`- false  `$isnull: false`
+- true  `$isnull: true`
+- false  `$isnull: false`

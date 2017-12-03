@@ -40,8 +40,14 @@ function() {
     });
 }
 
-// SQL
-SELECT * FROM people WHERE first_name = $1 AND last_name = $2
+// SQL output
+SELECT
+    *
+FROM
+    people
+WHERE
+    first_name = $ 1
+    AND last_name = $ 2
 
 // Values
 {
@@ -89,8 +95,23 @@ function() {
     });
 }
 
-// SQL
-SELECT * FROM people WHERE first_name = (SELECT first_name FROM people WHERE age = $1 LIMIT $2) AND last_name = $3
+// SQL output
+SELECT
+    *
+FROM
+    people
+WHERE
+    first_name = (
+        SELECT
+            first_name
+        FROM
+            people
+        WHERE
+            age = $ 1
+        LIMIT
+            $ 2
+    )
+    AND last_name = $ 3
 
 // Values
 {
@@ -136,8 +157,23 @@ function() {
     });
 }
 
-// SQL
-SELECT * FROM people WHERE first_name = (SELECT first_name FROM people WHERE age = $1 LIMIT $2) AND last_name = $3
+// SQL output
+SELECT
+    *
+FROM
+    people
+WHERE
+    first_name = (
+        SELECT
+            first_name
+        FROM
+            people
+        WHERE
+            age = $ 1
+        LIMIT
+            $ 2
+    )
+    AND last_name = $ 3
 
 // Values
 {

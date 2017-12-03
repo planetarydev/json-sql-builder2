@@ -46,8 +46,11 @@ function() {
     });
 }
 
-// SQL
-SELECT * FROM people
+// SQL output
+SELECT
+    *
+FROM
+    people
 
 // Values
 {}

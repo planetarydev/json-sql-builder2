@@ -36,8 +36,11 @@ function() {
 
 }
 
-// SQL
-SELECT AVG(DISTINCT age) AS average_age FROM people
+// SQL output
+SELECT
+    AVG(DISTINCT age) AS average_age
+FROM
+    people
 
 // Values
 {}
@@ -66,8 +69,11 @@ function() {
     });
 }
 
-// SQL
-SELECT AVG(age) AS average_age FROM people
+// SQL output
+SELECT
+    AVG(age) AS average_age
+FROM
+    people
 
 // Values
 {}
@@ -97,8 +103,11 @@ function() {
 
 }
 
-// SQL
-SELECT AVG(ISNULL(age, $1)) AS average_age FROM people
+// SQL output
+SELECT
+    AVG(ISNULL(age, $ 1)) AS average_age
+FROM
+    people
 
 // Values
 {

@@ -82,6 +82,26 @@ module.exports = {
 		SQLServer: 'https://docs.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql'
 	},
 	examples: {
+		Operator: {
+			'Basic Usage': function(sql) {
+				return {
+					test: function() {
+						return sql.$select(['first_name', 'last_name'], {
+							$from: 'people',
+							$where: {
+								last_name: 'Doe'
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT first_name, last_name FROM people WHERE last_name = $1',
+						values: {
+							$1: 'Doe'
+						}
+					}
+				}
+			}
+		},
 		Object: {
 			'Basic Usage': function(sql) {
 				return {

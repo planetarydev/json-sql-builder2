@@ -38,8 +38,13 @@ function() {
     });
 }
 
-// SQL
-SELECT COUNT(*) AS total FROM people WHERE age = $1
+// SQL output
+SELECT
+    COUNT(*) AS total
+FROM
+    people
+WHERE
+    age = $ 1
 
 // Values
 {

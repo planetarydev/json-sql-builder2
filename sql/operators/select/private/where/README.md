@@ -39,8 +39,13 @@ function() {
     });
 }
 
-// SQL
-SELECT * FROM people WHERE first_name = $1
+// SQL output
+SELECT
+    *
+FROM
+    people
+WHERE
+    first_name = $ 1
 
 // Values
 {

@@ -37,8 +37,13 @@ function() {
     return query;
 }
 
-// SQL
-SELECT * FROM people LIMIT $1
+// SQL output
+SELECT
+    *
+FROM
+    people
+LIMIT
+    $ 1
 
 // Values
 {

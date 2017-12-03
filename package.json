@@ -19,7 +19,8 @@
   "license": "MIT",
   "dependencies": {
     "lodash": "^4.17.4",
-    "pg-format": "^1.0.4"
+    "pg-format": "^1.0.4",
+    "sql-formatter": "^2.1.0"
   },
   "devDependencies": {
     "js-beautify": "^1.7.4",
