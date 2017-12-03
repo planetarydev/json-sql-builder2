@@ -73,6 +73,9 @@ module.exports = {
 		Function: {
 			"Basic Usage": function(sql){
 				return {
+					supportedBy: {
+						SQLServer: true
+					},
 					test: function(){
 						return sql.$select({
 							average_age: { $avg: sql.isNull('~~age', 40) },

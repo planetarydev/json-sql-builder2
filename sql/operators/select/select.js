@@ -1,11 +1,5 @@
 'use strict';
 
-// Require all private Helpers
-const from 		= require('./private/from');
-const columns 	= require('./private/columns');
-const where 	= require('./private/where');
-const limit 	= require('./private/limit');
-
 const SYNTAX_SELECT =
 	`SELECT	{ TOP [$top]}-->(MSSQLServer)	{ DISTINCT[$distinct]}	{ SQL_CALC_FOUND_ROWS[$calcFoundRows]}-->(MySQL)	{ <$columns>}	{ INTO [$into]}-->(MySQL,MSSQLServer)
 		{ FROM [$from]}
@@ -31,13 +25,17 @@ class select extends SQLBuilder.SQLOperator {
 		});
 
 		// Add private ANSI helpers
-		this.$from = new from.definition(sql);
-		this.$columns = new columns.definition(sql);
-		this.$where = new where.definition(sql);
+		this.registerPrivateHelper('from');
+		this.registerPrivateHelper('columns');
+		this.registerPrivateHelper('where');
 
 		// Add specific Helpers depending on the current SQL-Language dialect
-		if (sql.isPostgreSQL() || sql.isMySQL() || sql.isMariaDB() || sql.isSQLite()) {
-			this.$limit = new limit.definition(sql);
+		if (sql.isPostgreSQL() ||
+			sql.isMySQL() ||
+			sql.isMariaDB() ||
+			sql.isSQLite()
+		) {
+			this.registerPrivateHelper('limit');
 		}
 	}
 
