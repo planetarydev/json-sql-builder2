@@ -1,7 +1,7 @@
 # eq Helper
 Specifies the comparision `=` Operator as Helper.
 
-## Supported by
+#### Supported by
 - [MySQL](https://dev.mysql.com/doc/refman/5.7/en/func-op-summary-ref.html)
 - [MariaDB](https://mariadb.com/kb/en/library/equal/)
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/functions-comparison.html)
@@ -9,9 +9,9 @@ Specifies the comparision `=` Operator as Helper.
 - Oracle
 - [SQLServer](https://docs.microsoft.com/en-US/sql/t-sql/language-elements/equals-transact-sql)
 
-## Allowed Types and Usage
+# Allowed Types and Usage
 
-### as Primitive:
+## as Primitive:
 
 Usage of `eq` as **Primitive** with the following Syntax:
 
@@ -55,7 +55,7 @@ WHERE
     "$2": "Doe"
 }
 ```
-### as Object:
+## as Object:
 
 Usage of `eq` as **Object** with the following Syntax:
 
@@ -120,7 +120,7 @@ WHERE
     "$3": "Doe"
 }
 ```
-### as Function:
+## as Function:
 
 Usage of `eq` as **Function** with the following Syntax:
 

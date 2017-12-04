@@ -2,12 +2,14 @@
 Specifies the `$columns` Helper for the `SELECT` Statement to select
 only the listed columns instead of `*` or `ALL`.
 
-## **Note**
-
-> :bulb: **SELECT * FROM** If you did not support the `columns` Helper on a SELECT Statement the `preBuild` method of the select class will automatically
+> :bulb: **SELECT ***
+>
+> If you did not support the `columns` Helper on a SELECT Statement the `preBuild` method of the select class will automatically
 > add a $columns Object with `*` to the query as single column.
 >
-> :bulb: **Shortcut** for columns: Another way to define your column-list is to write all column-identifiers directly inside the $select: { ... } Operator like:
+> :bulb: **Shortcut**:
+>
+> Another way to define your column-list is to write all column-identifiers directly inside the $select: { ... } Operator like:
 >
 > ```javascript
 > $select {
@@ -20,7 +22,7 @@ only the listed columns instead of `*` or `ALL`.
 >
 
 
-## Supported by
+#### Supported by
 - [MySQL](https://dev.mysql.com/doc/refman/5.7/en/select.html)
 - [MariaDB](https://mariadb.com/kb/en/library/select/)
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/sql-select.html)
@@ -28,9 +30,9 @@ only the listed columns instead of `*` or `ALL`.
 - [Oracle](https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_10002.htm)
 - [SQLServer](https://docs.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql)
 
-## Allowed Types and Usage
+# Allowed Types and Usage
 
-### as Object:
+## as Object:
 
 The Usage of `columns` as **Object** is restricted to childs have the following Type:
 
@@ -40,11 +42,11 @@ The Usage of `columns` as **Object** is restricted to childs have the following 
 - Object
 - Function
 
-### as Object :arrow_right: String:
+## as Object :arrow_right: String:
 
 Usage of `columns` as **Object** with a child of Type **String** :
 
-:small_blue_diamond: **Syntax:**
+**Syntax:**
 
 ```javascript
 $columns: {
@@ -52,7 +54,7 @@ $columns: {
 }
 ```
 
-:small_blue_diamond: **SQL-Definition:**
+**SQL-Definition:**
 ```javascript
 <key-ident> AS <value-ident>[ , ... ]
 ```
@@ -81,11 +83,11 @@ FROM
 // Values
 {}
 ```
-### as Object :arrow_right: Object:
+## as Object :arrow_right: Object:
 
 Usage of `columns` as **Object** with a child of Type **Object** :
 
-:small_blue_diamond: **Syntax:**
+**Syntax:**
 
 ```javascript
 $columns: {
@@ -93,7 +95,7 @@ $columns: {
 }
 ```
 
-:small_blue_diamond: **SQL-Definition:**
+**SQL-Definition:**
 ```javascript
 <value> AS <identifier>[ , ... ]
 ```
@@ -149,11 +151,11 @@ WHERE
     "$2": 18
 }
 ```
-### as Object :arrow_right: Function:
+## as Object :arrow_right: Function:
 
 Usage of `columns` as **Object** with a child of Type **Function** :
 
-:small_blue_diamond: **Syntax:**
+**Syntax:**
 
 ```javascript
 $columns: {
@@ -161,7 +163,7 @@ $columns: {
 }
 ```
 
-:small_blue_diamond: **SQL-Definition:**
+**SQL-Definition:**
 ```javascript
 <value> AS <key-ident>[ , ... ]
 ```
@@ -211,18 +213,18 @@ WHERE
     "$1": 18
 }
 ```
-### as Array:
+## as Array:
 
 The Usage of `columns` as **Array** is restricted to childs have the following Type:
 
 - String
 - Object
 
-### as Array :arrow_right: String:
+## as Array :arrow_right: String:
 
 Usage of `columns` as **Array** with a child of Type **String** :
 
-:small_blue_diamond: **Syntax:**
+**Syntax:**
 
 ```javascript
 $columns: [
@@ -230,7 +232,7 @@ $columns: [
 ]
 ```
 
-:small_blue_diamond: **SQL-Definition:**
+**SQL-Definition:**
 ```javascript
 <value-ident>[ , ... ]
 ```
@@ -256,11 +258,11 @@ FROM
 // Values
 {}
 ```
-### as Array :arrow_right: Object:
+## as Array :arrow_right: Object:
 
 Usage of `columns` as **Array** with a child of Type **Object** :
 
-:small_blue_diamond: **Syntax:**
+**Syntax:**
 
 ```javascript
 $columns: [
@@ -268,7 +270,7 @@ $columns: [
 ]
 ```
 
-:small_blue_diamond: **SQL-Definition:**
+**SQL-Definition:**
 ```javascript
 <value> AS <key-ident>[ , ... ]
 ```
@@ -295,7 +297,7 @@ FROM
 // Values
 {}
 ```
-### as String:
+## as String:
 
 Usage of `columns` as **String** with the following Syntax:
 

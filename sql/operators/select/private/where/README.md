@@ -1,7 +1,7 @@
 # where Helper
 Specifies the `WHERE` clause for the `SELECT` Statement.
 
-## Supported by
+#### Supported by
 - [MySQL](https://dev.mysql.com/doc/refman/5.7/en/select.html)
 - [MariaDB](https://mariadb.com/kb/en/library/select/)
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/sql-select.html)
@@ -9,9 +9,9 @@ Specifies the `WHERE` clause for the `SELECT` Statement.
 - [Oracle](https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_10002.htm)
 - [SQLServer](https://docs.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql)
 
-## Allowed Types and Usage
+# Allowed Types and Usage
 
-### as Object:
+## as Object:
 
 Usage of `where` as **Object** with the following Syntax:
 

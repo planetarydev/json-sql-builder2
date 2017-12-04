@@ -1,7 +1,7 @@
 # gte Helper
 Specifies the comparision `>=` Operator as Helper.
 
-## Supported by
+#### Supported by
 - [MySQL](https://dev.mysql.com/doc/refman/5.7/en/func-op-summary-ref.html)
 - [MariaDB](https://mariadb.com/kb/en/library/equal/)
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/functions-comparison.html)
@@ -9,9 +9,9 @@ Specifies the comparision `>=` Operator as Helper.
 - Oracle
 - [SQLServer](https://docs.microsoft.com/en-US/sql/t-sql/language-elements/greater-than-or-equal-to-transact-sql)
 
-## Allowed Types and Usage
+# Allowed Types and Usage
 
-### as Primitive:
+## as Primitive:
 
 Usage of `gte` as **Primitive** with the following Syntax:
 
@@ -52,7 +52,7 @@ WHERE
     "$1": 18
 }
 ```
-### as Object:
+## as Object:
 
 Usage of `gte` as **Object** with the following Syntax:
 
@@ -103,7 +103,7 @@ WHERE
 // Values
 {}
 ```
-### as Function:
+## as Function:
 
 Usage of `gte` as **Function** with the following Syntax:
 

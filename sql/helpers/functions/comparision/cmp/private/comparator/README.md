@@ -1,7 +1,7 @@
 # comparator Helper
 Specifies a private comparision Operator to use with `cmp` as Helper.
 
-## Supported by
+#### Supported by
 - MySQL
 - MariaDB
 - PostgreSQL
@@ -9,9 +9,9 @@ Specifies a private comparision Operator to use with `cmp` as Helper.
 - Oracle
 - SQLServer
 
-## Allowed Types and Usage
+# Allowed Types and Usage
 
-### as String:
+## as String:
 
 The usage of `comparator` as **String** is restricted to the following values:
 - =

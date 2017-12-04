@@ -1,7 +1,7 @@
 # isnull Helper
 Specifies the `ISNULL` function to use with SQLServer. Further it defines the `IS NULL` and `IS NOT NULL` comparision Operators used by any SQL-Dialect.
 
-## Supported by
+#### Supported by
 - MySQL
 - MariaDB
 - PostgreSQL
@@ -9,9 +9,9 @@ Specifies the `ISNULL` function to use with SQLServer. Further it defines the `I
 - Oracle
 - SQLServer
 
-## Allowed Types and Usage
+# Allowed Types and Usage
 
-### as Boolean:
+## as Boolean:
 
 The usage of `isnull` as **Boolean** is restricted to the following values:
 - true

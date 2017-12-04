@@ -1,15 +1,15 @@
 # limit Helper
 Specifies the `LIMIT` clause for the `SELECT` Statement.
 
-## Supported by
+#### Supported by
 - [MySQL](https://dev.mysql.com/doc/refman/5.5/en/select.html#idm140536593160960)
 - [MariaDB](https://mariadb.com/kb/en/library/limit/)
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/sql-select.html#SQL-LIMIT)
 - [SQLite](https://sqlite.org/lang_select.html#limitoffset)
 
-## Allowed Types and Usage
+# Allowed Types and Usage
 
-### as Number:
+## as Number:
 
 Usage of `limit` as **Number** with the following Syntax:
 
@@ -50,7 +50,7 @@ LIMIT
     "$1": 10
 }
 ```
-### as String:
+## as String:
 
 The usage of `limit` as **String** is restricted to the following values:
 - ALL

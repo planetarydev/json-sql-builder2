@@ -1,7 +1,7 @@
 # from Helper
 Specifies the `FROM` clause for the `SELECT` Statement.
 
-## Supported by
+#### Supported by
 - [MySQL](https://dev.mysql.com/doc/refman/5.7/en/select.html)
 - [MariaDB](https://mariadb.com/kb/en/library/select/)
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/sql-select.html)
@@ -9,9 +9,9 @@ Specifies the `FROM` clause for the `SELECT` Statement.
 - [Oracle](https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_10002.htm)
 - [SQLServer](https://docs.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql)
 
-## Allowed Types and Usage
+# Allowed Types and Usage
 
-### as Object:
+## as Object:
 
 The Usage of `from` as **Object** is restricted to childs have the following Type:
 
@@ -21,11 +21,11 @@ The Usage of `from` as **Object** is restricted to childs have the following Typ
 - Object
 - Function
 
-### as Object :arrow_right: String:
+## as Object :arrow_right: String:
 
 Usage of `from` as **Object** with a child of Type **String** :
 
-:small_blue_diamond: **Syntax:**
+**Syntax:**
 
 ```javascript
 $from: {
@@ -33,7 +33,7 @@ $from: {
 }
 ```
 
-:small_blue_diamond: **SQL-Definition:**
+**SQL-Definition:**
 ```javascript
 <key-ident> AS <value-ident>[ , ... ]
 ```
@@ -57,11 +57,11 @@ FROM
 // Values
 {}
 ```
-### as Object :arrow_right: Object:
+## as Object :arrow_right: Object:
 
 Usage of `from` as **Object** with a child of Type **Object** :
 
-:small_blue_diamond: **Syntax:**
+**Syntax:**
 
 ```javascript
 $from: {
@@ -69,7 +69,7 @@ $from: {
 }
 ```
 
-:small_blue_diamond: **SQL-Definition:**
+**SQL-Definition:**
 ```javascript
 <value> AS <identifier>[ , ... ]
 ```
@@ -104,11 +104,11 @@ FROM
 // Values
 {}
 ```
-### as Object :arrow_right: Function:
+## as Object :arrow_right: Function:
 
 Usage of `from` as **Object** with a child of Type **Function** :
 
-:small_blue_diamond: **Syntax:**
+**Syntax:**
 
 ```javascript
 $from: {
@@ -116,7 +116,7 @@ $from: {
 }
 ```
 
-:small_blue_diamond: **SQL-Definition:**
+**SQL-Definition:**
 ```javascript
 <value> AS <key-ident>[ , ... ]
 ```
@@ -147,7 +147,7 @@ FROM
 // Values
 {}
 ```
-### as String:
+## as String:
 
 Usage of `from` as **String** with the following Syntax:
 

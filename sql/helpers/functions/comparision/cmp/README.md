@@ -1,7 +1,7 @@
 # cmp Helper
 Specifies a global comparision function `cmp` as Helper.
 
-## Supported by
+#### Supported by
 - MySQL
 - MariaDB
 - PostgreSQL
@@ -9,9 +9,9 @@ Specifies a global comparision function `cmp` as Helper.
 - Oracle
 - SQLServer
 
-## Allowed Types and Usage
+# Allowed Types and Usage
 
-### as Object:
+## as Object:
 
 Usage of `cmp` as **Object** with the following Syntax:
 

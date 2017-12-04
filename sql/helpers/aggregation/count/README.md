@@ -1,7 +1,7 @@
 # count Helper
 Specifies the aggregation function `COUNT` as Helper.
 
-## Supported by
+#### Supported by
 - [MySQL](https://dev.mysql.com/doc/refman/5.7/en/group-by-functions.html#function_count)
 - [MariaDB](https://mariadb.com/kb/en/library/count/)
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/functions-aggregate.html)
@@ -9,9 +9,9 @@ Specifies the aggregation function `COUNT` as Helper.
 - [Oracle](https://docs.oracle.com/cd/B19306_01/server.102/b14200/functions032.htm)
 - [SQLServer](https://docs.microsoft.com/en-US/sql/t-sql/functions/count-transact-sql)
 
-## Allowed Types and Usage
+# Allowed Types and Usage
 
-### as String:
+## as String:
 
 Usage of `count` as **String** with the following Syntax:
 

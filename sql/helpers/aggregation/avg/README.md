@@ -1,7 +1,7 @@
 # avg Helper
 Specifies the aggregation function `AVG` as Helper.
 
-## Supported by
+#### Supported by
 - [MySQL](https://dev.mysql.com/doc/refman/5.7/en/group-by-functions.html#function_avg)
 - [MariaDB](https://mariadb.com/kb/en/library/avg/)
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/functions-aggregate.html)
@@ -9,9 +9,9 @@ Specifies the aggregation function `AVG` as Helper.
 - [Oracle](https://docs.oracle.com/cd/B19306_01/server.102/b14200/functions011.htm)
 - [SQLServer](https://docs.microsoft.com/en-US/sql/t-sql/functions/avg-transact-sql)
 
-## Allowed Types and Usage
+# Allowed Types and Usage
 
-### as Object:
+## as Object:
 
 Usage of `avg` as **Object** with the following Syntax:
 
@@ -45,7 +45,7 @@ FROM
 // Values
 {}
 ```
-### as String:
+## as String:
 
 Usage of `avg` as **String** with the following Syntax:
 
@@ -78,7 +78,7 @@ FROM
 // Values
 {}
 ```
-### as Function:
+## as Function:
 
 Usage of `avg` as **Function** with the following Syntax:
 

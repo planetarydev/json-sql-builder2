@@ -1,7 +1,7 @@
 # and Helper
 Specifies the logical `AND` Operator as Helper.
 
-## Supported by
+#### Supported by
 - [MySQL](https://dev.mysql.com/doc/refman/5.7/en/logical-operators.html#operator_and)
 - [MariaDB](https://mariadb.com/kb/en/library/and/)
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/functions-comparison.html)
@@ -9,9 +9,9 @@ Specifies the logical `AND` Operator as Helper.
 - Oracle
 - SQLServer
 
-## Allowed Types and Usage
+# Allowed Types and Usage
 
-### as Array:
+## as Array:
 
 The Usage of `and` as **Array** is restricted to childs have the following Type:
 
@@ -19,11 +19,11 @@ The Usage of `and` as **Array** is restricted to childs have the following Type:
 - Object
 - Function
 
-### as Array :arrow_right: String:
+## as Array :arrow_right: String:
 
 Usage of `and` as **Array** with a child of Type **String** :
 
-:small_blue_diamond: **Syntax:**
+**Syntax:**
 
 ```javascript
 $and: [
@@ -31,7 +31,7 @@ $and: [
 ]
 ```
 
-:small_blue_diamond: **SQL-Definition:**
+**SQL-Definition:**
 ```javascript
 <value>[  AND ... ]
 ```
@@ -66,11 +66,11 @@ WHERE
     "$1": "Doe"
 }
 ```
-### as Array :arrow_right: Object:
+## as Array :arrow_right: Object:
 
 Usage of `and` as **Array** with a child of Type **Object** :
 
-:small_blue_diamond: **Syntax:**
+**Syntax:**
 
 ```javascript
 $and: [
@@ -78,7 +78,7 @@ $and: [
 ]
 ```
 
-:small_blue_diamond: **SQL-Definition:**
+**SQL-Definition:**
 ```javascript
 <key-ident> <value>[  AND ... ]
 ```
@@ -114,11 +114,11 @@ WHERE
     "$2": "Doe"
 }
 ```
-### as Array :arrow_right: Function:
+## as Array :arrow_right: Function:
 
 Usage of `and` as **Array** with a child of Type **Function** :
 
-:small_blue_diamond: **Syntax:**
+**Syntax:**
 
 ```javascript
 $and: [
@@ -126,7 +126,7 @@ $and: [
 ]
 ```
 
-:small_blue_diamond: **SQL-Definition:**
+**SQL-Definition:**
 ```javascript
 <value>[  AND ... ]
 ```
