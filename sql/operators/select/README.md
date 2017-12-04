@@ -65,17 +65,17 @@ FROM
 
 Name|Required|Public|SQL-Definition
 ----|:--------:|------|--------------
-[$distinct](./private/$distinct/)|*optional*|*private*| DISTINCT [$distinct]
-[$columns](./private/$columns/)|:heavy_check_mark:|*private*|  <$columns>
-[$from](./private/$from/)|*optional*|*private*| FROM  [$from]
-[$joins](./private/$joins/)|*optional*|*private*|  [$joins]
-[$where](./private/$where/)|*optional*|*private*| WHERE  [$where]
-[$groupBy](./private/$groupBy/)|*optional*|*private*| GROUP BY  [$groupBy]
-[$having](./private/$having/)|*optional*|*private*| HAVING  [$having]
-[$sort](./private/$sort/)|*optional*|*private*| ORDER BY  [$sort]
-[$orderBy](./private/$orderBy/)|*optional*|*private*| ORDER BY  [$orderBy]
-[$limit](./private/$limit/)|*optional*|*private*| LIMIT  [$limit]
-[$offset](./private/$offset/)|*optional*|*private*| OFFSET  [$offset]
+[$distinct](./private/distinct/)|*optional*|*private*| DISTINCT [$distinct]
+[$columns](./private/columns/)|:heavy_check_mark:|*private*|  <$columns>
+[$from](./private/from/)|*optional*|*private*| FROM  [$from]
+[$joins](./private/joins/)|*optional*|*private*|  [$joins]
+[$where](./private/where/)|*optional*|*private*| WHERE  [$where]
+[$groupBy](./private/groupBy/)|*optional*|*private*| GROUP BY  [$groupBy]
+[$having](./private/having/)|*optional*|*private*| HAVING  [$having]
+[$sort](./private/sort/)|*optional*|*private*| ORDER BY  [$sort]
+[$orderBy](./private/orderBy/)|*optional*|*private*| ORDER BY  [$orderBy]
+[$limit](./private/limit/)|*optional*|*private*| LIMIT  [$limit]
+[$offset](./private/offset/)|*optional*|*private*| OFFSET  [$offset]
 
 ## Further Examples
 

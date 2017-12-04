@@ -57,6 +57,6 @@ WHERE
 
 Name|Required|Public|SQL-Definition
 ----|:--------:|------|--------------
-[$and](./private/$and/)|*optional*|*private*|
-[$or](./private/$or/)|*optional*|*private*|
+[$and](./private/and/)|*optional*|:heavy_check_mark:|
+[$or](./private/or/)|*optional*|*private*|
 

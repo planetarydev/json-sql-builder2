@@ -50,8 +50,8 @@ FROM
 
 Name|Required|Public|SQL-Definition
 ----|:--------:|------|--------------
-[$distinct](./private/$distinct/)|*optional*|*private*|DISTINCT  [$distinct]
-[$expr](./private/$expr/)|:heavy_check_mark:|*private*|
+[$distinct](./private/distinct/)|*optional*|*private*|DISTINCT  [$distinct]
+[$expr](./private/expr/)|:heavy_check_mark:|*private*|
 
 ## as String:
 
