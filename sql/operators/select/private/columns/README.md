@@ -2,14 +2,14 @@
 Specifies the `$columns` Helper for the `SELECT` Statement to select
 only the listed columns instead of `*` or `ALL`.
 
-> :bulb: **SELECT ***
+> :bulb: **SELECT * **
 >
 > If you did not support the `columns` Helper on a SELECT Statement the `preBuild` method of the select class will automatically
 > add a $columns Object with `*` to the query as single column.
 >
-> :bulb: **Shortcut**:
+> :bulb: **Shortcut**
 >
-> Another way to define your column-list is to write all column-identifiers directly inside the $select: { ... } Operator like:
+> Another way to define your column-list is to write all column-identifiers directly inside the `$select: { ... }` Operator like:
 >
 > ```javascript
 > $select {
