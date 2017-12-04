@@ -40,9 +40,23 @@ module.exports = {
 	description: `Specifies the \`$columns\` Helper for the \`SELECT\` Statement to select
 only the listed columns instead of \`*\` or \`ALL\`.
 
-**Note:**
-If you did not support the $columns Helper on a SELECT Statement the preBuild method of the select class will automatically
-add a $columns Object with \`*\` to the query as single column.`,
+**Note**
+
+> :heavy_exclamation_mark: If you did not support the \`columns\` Helper on a SELECT Statement the \`preBuild\` method of the select class will automatically
+> add a $columns Object with \`*\` to the query as single column.
+>
+> :heavy_exclamation_mark: **Shortcut** for columns: Another way to define your column-list is to write all column-identifiers directly inside the $select: { ... } Operator like:
+>
+> \`\`\`javascript
+> $select {
+>     my_col_1: 1,
+>     my_col_2: 1,
+>     $from: 'people',
+>     ...
+> }
+> \`\`\`
+>
+`,
 	supportedBy: {
 		MySQL: 'https://dev.mysql.com/doc/refman/5.7/en/select.html',
 		MariaDB: 'https://mariadb.com/kb/en/library/select/',
