@@ -24,7 +24,8 @@ $select: { ... }
 **SQL-Definition:**
 ```javascript
 SELECT
-	{ TOP [$top]}-->(MSSQLServer)	{ DISTINCT[$distinct]}	{ SQL_CALC_FOUND_ROWS[$calcFoundRows]}-->(MySQL)
+	{ TOP [$top]}-->(SQLServer)	{ DISTINCT[$distinct]}
+	{ SQL_CALC_FOUND_ROWS[$calcFoundRows]}-->(MySQL)
 
 	{ <$columns>}	{ INTO [$into]}-->(MySQL,MSSQLServer)
 
