@@ -21,7 +21,7 @@ Usage of `avg` as **Object** with the following Syntax:
 $avg: { ... }
 ```
 
-**SQL-Result-Definition:**
+**SQL-Definition:**
 ```javascript
 AVG({DISTINCT [$distinct]}<$expr>)
 ```
@@ -55,7 +55,7 @@ Usage of `avg` as **String** with the following Syntax:
 $avg: < String >
 ```
 
-**SQL-Result-Definition:**
+**SQL-Definition:**
 ```javascript
 AVG(<value-ident>)
 ```
@@ -88,7 +88,7 @@ Usage of `avg` as **Function** with the following Syntax:
 $avg: sql.<callee>([params])
 ```
 
-**SQL-Result-Definition:**
+**SQL-Definition:**
 ```javascript
 AVG(<value>)
 ```

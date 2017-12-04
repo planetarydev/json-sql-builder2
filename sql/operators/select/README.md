@@ -21,7 +21,7 @@ Usage of `select` as **Object** with the following Syntax:
 $select: { ... }
 ```
 
-**SQL-Result-Definition:**
+**SQL-Definition:**
 ```javascript
 SELECT	{ TOP [$top]}-->(MSSQLServer)	{ DISTINCT[$distinct]}	{ SQL_CALC_FOUND_ROWS[$calcFoundRows]}-->(MySQL)	{ <$columns>}	{ INTO [$into]}-->(MySQL,MSSQLServer)
 		{ FROM [$from]}

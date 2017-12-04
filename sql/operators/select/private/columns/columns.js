@@ -37,12 +37,12 @@ class columns extends SQLBuilder.SQLHelper {
 
 module.exports = {
 	definition: columns,
-	description: `
-		Specifies the \`$columns\` Helper for the \`SELECT\` Statement to select
-		only the listed columns instead of \`*\` or \`ALL\`.
+	description: `Specifies the \`$columns\` Helper for the \`SELECT\` Statement to select
+only the listed columns instead of \`*\` or \`ALL\`.
 
-		**Note** If you did not support the $columns Helper on a SELECT Statement the preBuild method of the select class will automatically
-		add a $columns Object with \`*\` to the query as single column.`,
+**Note:**
+If you did not support the $columns Helper on a SELECT Statement the preBuild method of the select class will automatically
+add a $columns Object with \`*\` to the query as single column.`,
 	supportedBy: {
 		MySQL: 'https://dev.mysql.com/doc/refman/5.7/en/select.html',
 		MariaDB: 'https://mariadb.com/kb/en/library/select/',

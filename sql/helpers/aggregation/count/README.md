@@ -21,7 +21,7 @@ Usage of `count` as **String** with the following Syntax:
 $count: < String >
 ```
 
-**SQL-Result-Definition:**
+**SQL-Definition:**
 ```javascript
 COUNT(<value-ident>)
 ```

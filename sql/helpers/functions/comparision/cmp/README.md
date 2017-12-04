@@ -21,7 +21,7 @@ Usage of `cmp` as **Object** with the following Syntax:
 $cmp: { ... }
 ```
 
-**SQL-Result-Definition:**
+**SQL-Definition:**
 ```javascript
 {<$value> }<$comparator>{ <$other>}
 ```

@@ -21,7 +21,7 @@ Usage of `eq` as **Primitive** with the following Syntax:
 $eq: < value: String | Number | Boolean >
 ```
 
-**SQL-Result-Definition:**
+**SQL-Definition:**
 ```javascript
 = <value-param>
 ```
@@ -65,7 +65,7 @@ Usage of `eq` as **Object** with the following Syntax:
 $eq: { ... }
 ```
 
-**SQL-Result-Definition:**
+**SQL-Definition:**
 ```javascript
 = <value>
 ```
@@ -130,7 +130,7 @@ Usage of `eq` as **Function** with the following Syntax:
 $eq: sql.<callee>([params])
 ```
 
-**SQL-Result-Definition:**
+**SQL-Definition:**
 ```javascript
 = <value>
 ```

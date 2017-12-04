@@ -19,7 +19,7 @@ Usage of `limit` as **Number** with the following Syntax:
 $limit: < Number >
 ```
 
-**SQL-Result-Definition:**
+**SQL-Definition:**
 ```javascript
 <value-param>
 ```
@@ -53,4 +53,40 @@ LIMIT
 ### as String:
 
 The usage of `limit` as **String** is restricted to the following values:
-- ALL  `$limit: 'ALL'`
+- ALL
+
+#### as String with value **ALL**:
+**Syntax:**
+
+```javascript
+$limit: 'ALL'
+```
+
+**SQL-Definition:**
+```javascript
+<value>
+```
+
+**Example:**
+```javascript
+function() {
+    let query = sql.build({
+        $select: {
+            $from: 'people',
+            $limit: 'ALL'
+        }
+    });
+    return query;
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people
+LIMIT
+    ALL
+
+// Values
+{}
+```

@@ -14,5 +14,78 @@ Specifies the `ISNULL` function to use with SQLServer. Further it defines the `I
 ### as Boolean:
 
 The usage of `isnull` as **Boolean** is restricted to the following values:
-- true  `$isnull: true`
-- false  `$isnull: false`
+- true
+- false
+
+#### as Boolean with value **true**:
+**Syntax:**
+
+```javascript
+$isnull: true
+```
+
+**SQL-Definition:**
+```javascript
+IS NULL
+```
+
+**Example:**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $from: 'people',
+            $where: {
+                first_name: { $isNull: true }
+            }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people
+WHERE
+    first_name IS NULL
+
+// Values
+{}
+```
+#### as Boolean with value **false**:
+**Syntax:**
+
+```javascript
+$isnull: false
+```
+
+**SQL-Definition:**
+```javascript
+IS NOT NULL
+```
+
+**Example:**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $from: 'people',
+            $where: {
+                first_name: { $isNull: false }
+            }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people
+WHERE
+    first_name IS NOT NULL
+
+// Values
+{}
+```

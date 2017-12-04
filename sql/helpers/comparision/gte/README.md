@@ -1,9 +1,7 @@
 # gte Helper
-
 Specifies the comparision `>=` Operator as Helper.
 
 ## Supported by
-
 - [MySQL](https://dev.mysql.com/doc/refman/5.7/en/func-op-summary-ref.html)
 - [MariaDB](https://mariadb.com/kb/en/library/equal/)
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/functions-comparison.html)
@@ -23,14 +21,12 @@ Usage of `gte` as **Primitive** with the following Syntax:
 $gte: < value: String | Number | Boolean >
 ```
 
-**SQL-Result-Definition:**
-
+**SQL-Definition:**
 ```javascript
 >= <value-param>
 ```
 
 **Example:**
-
 ```javascript
 function() {
     return sql.build({
@@ -56,7 +52,6 @@ WHERE
     "$1": 18
 }
 ```
-
 ### as Object:
 
 Usage of `gte` as **Object** with the following Syntax:
@@ -67,14 +62,12 @@ Usage of `gte` as **Object** with the following Syntax:
 $gte: { ... }
 ```
 
-**SQL-Result-Definition:**
-
+**SQL-Definition:**
 ```javascript
 >= <value>
 ```
 
 **Example:**
-
 ```javascript
 function() {
     let avgerageAge = {
@@ -110,7 +103,6 @@ WHERE
 // Values
 {}
 ```
-
 ### as Function:
 
 Usage of `gte` as **Function** with the following Syntax:
@@ -121,14 +113,12 @@ Usage of `gte` as **Function** with the following Syntax:
 $gte: sql.<callee>([params])
 ```
 
-**SQL-Result-Definition:**
-
+**SQL-Definition:**
 ```javascript
 >= <value>
 ```
 
 **Example:**
-
 ```javascript
 function() {
     let myAvarageAgeFunction = sql.select({ age: { $avg: 'age' } }, {

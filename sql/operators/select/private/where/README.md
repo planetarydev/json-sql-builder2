@@ -21,7 +21,7 @@ Usage of `where` as **Object** with the following Syntax:
 $where: { ... }
 ```
 
-**SQL-Result-Definition:**
+**SQL-Definition:**
 ```javascript
 {* AND [$and] *} {* OR [$or] *}
 ```
