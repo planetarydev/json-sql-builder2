@@ -1,17 +1,21 @@
 'use strict';
 
 const SYNTAX_SELECT =
-	`SELECT	{ TOP [$top]}-->(MSSQLServer)	{ DISTINCT[$distinct]}	{ SQL_CALC_FOUND_ROWS[$calcFoundRows]}-->(MySQL)	{ <$columns>}	{ INTO [$into]}-->(MySQL,MSSQLServer)
-		{ FROM [$from]}
-		{ [$joins]}
-		{ WHERE [$where]}
-		{ GROUP BY [$groupBy]} { WITH ROLLUP[$rollup]}-->(MySQL)
-		{ HAVING [$having]}
-		{ ORDER BY [$sort] | [$orderBy]}
-		{ LIMIT [$limit]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
-		{ OFFSET [$offset]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
-		{ INTO OUTFILE [$outfile]}-->(MySQL)
-		{ INTO DUMPFILE [$dumpfile]}-->(MySQL)`;
+`SELECT
+	{ TOP [$top]}-->(MSSQLServer)	{ DISTINCT[$distinct]}	{ SQL_CALC_FOUND_ROWS[$calcFoundRows]}-->(MySQL)
+
+	{ <$columns>}	{ INTO [$into]}-->(MySQL,MSSQLServer)
+
+	{ FROM [$from]}
+	{ [$joins]}
+	{ WHERE [$where]}
+	{ GROUP BY [$groupBy]}	{ WITH ROLLUP[$rollup]}-->(MySQL)
+	{ HAVING [$having]}
+	{ ORDER BY [$sort] | [$orderBy]}
+	{ LIMIT [$limit]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
+	{ OFFSET [$offset]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
+	{ INTO OUTFILE [$outfile]}-->(MySQL)
+	{ INTO DUMPFILE [$dumpfile]}-->(MySQL)`;
 
 // Define select Operator
 class select extends SQLBuilder.SQLOperator {
