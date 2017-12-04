@@ -21,11 +21,11 @@ The Usage of `from` as **Object** is restricted to childs have the following Typ
 - Object
 - Function
 
-#### as Object->String:
+### as Object :arrow_right: String:
 
 Usage of `from` as **Object** with a child of Type **String** :
 
-**Syntax:**
+:small_blue_diamond: **Syntax:**
 
 ```javascript
 $from: {
@@ -33,12 +33,12 @@ $from: {
 }
 ```
 
-**SQL-Definition:**
+:small_blue_diamond: **SQL-Definition:**
 ```javascript
 <key-ident> AS <value-ident>[ , ... ]
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -57,11 +57,11 @@ FROM
 // Values
 {}
 ```
-#### as Object->Object:
+### as Object :arrow_right: Object:
 
 Usage of `from` as **Object** with a child of Type **Object** :
 
-**Syntax:**
+:small_blue_diamond: **Syntax:**
 
 ```javascript
 $from: {
@@ -69,12 +69,12 @@ $from: {
 }
 ```
 
-**SQL-Definition:**
+:small_blue_diamond: **SQL-Definition:**
 ```javascript
 <value> AS <identifier>[ , ... ]
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -104,11 +104,11 @@ FROM
 // Values
 {}
 ```
-#### as Object->Function:
+### as Object :arrow_right: Function:
 
 Usage of `from` as **Object** with a child of Type **Function** :
 
-**Syntax:**
+:small_blue_diamond: **Syntax:**
 
 ```javascript
 $from: {
@@ -116,12 +116,12 @@ $from: {
 }
 ```
 
-**SQL-Definition:**
+:small_blue_diamond: **SQL-Definition:**
 ```javascript
 <value> AS <key-ident>[ , ... ]
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({

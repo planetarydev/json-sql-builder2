@@ -19,11 +19,11 @@ The Usage of `and` as **Array** is restricted to childs have the following Type:
 - Object
 - Function
 
-#### as Array->String:
+### as Array :arrow_right: String:
 
 Usage of `and` as **Array** with a child of Type **String** :
 
-**Syntax:**
+:small_blue_diamond: **Syntax:**
 
 ```javascript
 $and: [
@@ -31,12 +31,12 @@ $and: [
 ]
 ```
 
-**SQL-Definition:**
+:small_blue_diamond: **SQL-Definition:**
 ```javascript
 <value>[  AND ... ]
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -66,11 +66,11 @@ WHERE
     "$1": "Doe"
 }
 ```
-#### as Array->Object:
+### as Array :arrow_right: Object:
 
 Usage of `and` as **Array** with a child of Type **Object** :
 
-**Syntax:**
+:small_blue_diamond: **Syntax:**
 
 ```javascript
 $and: [
@@ -78,12 +78,12 @@ $and: [
 ]
 ```
 
-**SQL-Definition:**
+:small_blue_diamond: **SQL-Definition:**
 ```javascript
 <key-ident> <value>[  AND ... ]
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -114,11 +114,11 @@ WHERE
     "$2": "Doe"
 }
 ```
-#### as Array->Function:
+### as Array :arrow_right: Function:
 
 Usage of `and` as **Array** with a child of Type **Function** :
 
-**Syntax:**
+:small_blue_diamond: **Syntax:**
 
 ```javascript
 $and: [
@@ -126,12 +126,12 @@ $and: [
 ]
 ```
 
-**SQL-Definition:**
+:small_blue_diamond: **SQL-Definition:**
 ```javascript
 <value>[  AND ... ]
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({

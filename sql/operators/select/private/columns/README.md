@@ -2,12 +2,12 @@
 Specifies the `$columns` Helper for the `SELECT` Statement to select
 only the listed columns instead of `*` or `ALL`.
 
-**Note**
+## **Note**
 
-> :heavy_exclamation_mark: If you did not support the `columns` Helper on a SELECT Statement the `preBuild` method of the select class will automatically
+> :bulb: **SELECT * FROM** If you did not support the `columns` Helper on a SELECT Statement the `preBuild` method of the select class will automatically
 > add a $columns Object with `*` to the query as single column.
 >
-> :heavy_exclamation_mark: **Shortcut** for columns: Another way to define your column-list is to write all column-identifiers directly inside the $select: { ... } Operator like:
+> :bulb: **Shortcut** for columns: Another way to define your column-list is to write all column-identifiers directly inside the $select: { ... } Operator like:
 >
 > ```javascript
 > $select {
@@ -40,11 +40,11 @@ The Usage of `columns` as **Object** is restricted to childs have the following 
 - Object
 - Function
 
-#### as Object->String:
+### as Object :arrow_right: String:
 
 Usage of `columns` as **Object** with a child of Type **String** :
 
-**Syntax:**
+:small_blue_diamond: **Syntax:**
 
 ```javascript
 $columns: {
@@ -52,12 +52,12 @@ $columns: {
 }
 ```
 
-**SQL-Definition:**
+:small_blue_diamond: **SQL-Definition:**
 ```javascript
 <key-ident> AS <value-ident>[ , ... ]
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -81,11 +81,11 @@ FROM
 // Values
 {}
 ```
-#### as Object->Object:
+### as Object :arrow_right: Object:
 
 Usage of `columns` as **Object** with a child of Type **Object** :
 
-**Syntax:**
+:small_blue_diamond: **Syntax:**
 
 ```javascript
 $columns: {
@@ -93,12 +93,12 @@ $columns: {
 }
 ```
 
-**SQL-Definition:**
+:small_blue_diamond: **SQL-Definition:**
 ```javascript
 <value> AS <identifier>[ , ... ]
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -149,11 +149,11 @@ WHERE
     "$2": 18
 }
 ```
-#### as Object->Function:
+### as Object :arrow_right: Function:
 
 Usage of `columns` as **Object** with a child of Type **Function** :
 
-**Syntax:**
+:small_blue_diamond: **Syntax:**
 
 ```javascript
 $columns: {
@@ -161,12 +161,12 @@ $columns: {
 }
 ```
 
-**SQL-Definition:**
+:small_blue_diamond: **SQL-Definition:**
 ```javascript
 <value> AS <key-ident>[ , ... ]
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -218,11 +218,11 @@ The Usage of `columns` as **Array** is restricted to childs have the following T
 - String
 - Object
 
-#### as Array->String:
+### as Array :arrow_right: String:
 
 Usage of `columns` as **Array** with a child of Type **String** :
 
-**Syntax:**
+:small_blue_diamond: **Syntax:**
 
 ```javascript
 $columns: [
@@ -230,12 +230,12 @@ $columns: [
 ]
 ```
 
-**SQL-Definition:**
+:small_blue_diamond: **SQL-Definition:**
 ```javascript
 <value-ident>[ , ... ]
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -256,11 +256,11 @@ FROM
 // Values
 {}
 ```
-#### as Array->Object:
+### as Array :arrow_right: Object:
 
 Usage of `columns` as **Array** with a child of Type **Object** :
 
-**Syntax:**
+:small_blue_diamond: **Syntax:**
 
 ```javascript
 $columns: [
@@ -268,12 +268,12 @@ $columns: [
 ]
 ```
 
-**SQL-Definition:**
+:small_blue_diamond: **SQL-Definition:**
 ```javascript
 <value> AS <key-ident>[ , ... ]
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
