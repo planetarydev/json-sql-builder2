@@ -21,6 +21,160 @@ The Usage of `from` as **Object** is restricted to childs have the following Typ
 - Object
 - Function
 
+## as Object :arrow_right: Boolean:
+
+The Usage of `from` as **Object** with a child of Type **Boolean** is restricted to the following values:
+
+- true
+- false
+
+## as Object :arrow_right: Boolean with value `true`:
+**Syntax:**
+
+```javascript
+$from: {
+    "<identifier | $Helper | $operator>": true [, ... ]
+}
+```
+
+**SQL-Definition:**
+```javascript
+<key-ident>[ , ... ]
+```
+
+:bulb: **Example:**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $from: {
+                people: true,
+                people_skills: true
+            }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people,
+    people_skills
+
+// Values
+{}
+```
+## as Object :arrow_right: Boolean with value `false`:
+**Syntax:**
+
+```javascript
+$from: {
+    "<identifier | $Helper | $operator>": false [, ... ]
+}
+```
+
+**SQL-Definition:**
+```javascript
+
+```
+
+:bulb: **Example:**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $from: {
+                people: true,
+                people_skills: false
+            }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people
+
+// Values
+{}
+```
+## as Object :arrow_right: Number:
+
+The Usage of `from` as **Object** with a child of Type **Number** is restricted to the following values:
+
+- 0
+- 1
+
+## as Object :arrow_right: Number with value `0`:
+**Syntax:**
+
+```javascript
+$from: {
+    "<identifier | $Helper | $operator>": 0 [, ... ]
+}
+```
+
+**SQL-Definition:**
+```javascript
+
+```
+
+:bulb: **Example:**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $from: { people: 1, people_skills: 0 }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people
+
+// Values
+{}
+```
+## as Object :arrow_right: Number with value `1`:
+**Syntax:**
+
+```javascript
+$from: {
+    "<identifier | $Helper | $operator>": 1 [, ... ]
+}
+```
+
+**SQL-Definition:**
+```javascript
+<key-ident>[ , ... ]
+```
+
+:bulb: **Example:**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $from: { people: 1, people_skills: 1 }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people,
+    people_skills
+
+// Values
+{}
+```
 ## as Object :arrow_right: String:
 
 Usage of `from` as **Object** with a child of Type **String** :
@@ -162,7 +316,7 @@ $from: < String >
 <value-ident>
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -181,3 +335,26 @@ FROM
 // Values
 {}
 ```
+## Further Examples
+
+:bulb: **Cross Joined Tables**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $from: { people: 'p', people_skills: 'ps' }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people AS p,
+    people_skills AS ps
+
+// Values
+{}
+```
+

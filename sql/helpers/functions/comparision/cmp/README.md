@@ -26,7 +26,7 @@ $cmp: { ... }
 {<$value> }<$comparator>{ <$other>}
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({

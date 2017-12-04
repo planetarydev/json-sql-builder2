@@ -36,7 +36,7 @@ SELECT	{ TOP [$top]}-->(MSSQLServer)	{ DISTINCT[$distinct]}	{ SQL_CALC_FOUND_ROW
 		{ INTO DUMPFILE [$dumpfile]}-->(MySQL)
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -55,3 +55,102 @@ FROM
 // Values
 {}
 ```
+## Further Examples
+
+:bulb: **Basic Usage as Operator-Function**
+```javascript
+function() {
+    return sql.$select({
+        $from: 'people',
+        $where: {
+            last_name: 'Doe'
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people
+WHERE
+    last_name = $ 1
+
+// Values
+{
+    "$1": "Doe"
+}
+```
+
+:bulb: **Basic Usage as Function**
+```javascript
+function() {
+    let peopleLikes = sql.select({ total_likes: sql.count('*') }, {
+        $from: 'people_likes',
+        $where: {
+            'people_likes.people_id': { $eq: '~~people.people_id' }
+        }
+    });
+
+    return sql.$select({
+        first_name: 1,
+        last_name: 1,
+        total_likes: peopleLikes,
+        $from: 'people'
+    });
+}
+
+// SQL output
+SELECT
+    first_name,
+    last_name,
+    (
+        SELECT
+            COUNT(*) AS total_likes
+        FROM
+            people_likes
+        WHERE
+            people_likes.people_id = people.people_id
+    ) AS total_likes
+FROM
+    people
+
+// Values
+{}
+```
+
+:bulb: **Basic Usage as inline-Function**
+```javascript
+function() {
+    return sql.$select({
+        first_name: 1,
+        last_name: 1,
+        total_likes: sql.select({ total_likes: { $count: '*' } }, {
+            $from: 'people_likes',
+            $where: {
+                'people_likes.people_id': '~~people.people_id'
+            }
+        }),
+        $from: 'people'
+    });
+}
+
+// SQL output
+SELECT
+    first_name,
+    last_name,
+    (
+        SELECT
+            COUNT(*) AS total_likes
+        FROM
+            people_likes
+        WHERE
+            people_likes.people_id = people.people_id
+    ) AS total_likes
+FROM
+    people
+
+// Values
+{}
+```
+

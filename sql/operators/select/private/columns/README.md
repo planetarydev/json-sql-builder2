@@ -42,6 +42,172 @@ The Usage of `columns` as **Object** is restricted to childs have the following 
 - Object
 - Function
 
+## as Object :arrow_right: Boolean:
+
+The Usage of `columns` as **Object** with a child of Type **Boolean** is restricted to the following values:
+
+- true
+- false
+
+## as Object :arrow_right: Boolean with value `true`:
+**Syntax:**
+
+```javascript
+$columns: {
+    "<identifier | $Helper | $operator>": true [, ... ]
+}
+```
+
+**SQL-Definition:**
+```javascript
+<key-ident>[ , ... ]
+```
+
+:bulb: **Example:**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $columns: {
+                first_name: true,
+                last_name: true
+            },
+            $from: 'people'
+        }
+    });
+}
+
+// SQL output
+SELECT
+    first_name,
+    last_name
+FROM
+    people
+
+// Values
+{}
+```
+## as Object :arrow_right: Boolean with value `false`:
+**Syntax:**
+
+```javascript
+$columns: {
+    "<identifier | $Helper | $operator>": false [, ... ]
+}
+```
+
+**SQL-Definition:**
+```javascript
+
+```
+
+:bulb: **Example:**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $columns: {
+                people_id: true,
+                first_name: false,
+                last_name: false
+            },
+            $from: 'people'
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people_id
+FROM
+    people
+
+// Values
+{}
+```
+## as Object :arrow_right: Number:
+
+The Usage of `columns` as **Object** with a child of Type **Number** is restricted to the following values:
+
+- 0
+- 1
+
+## as Object :arrow_right: Number with value `0`:
+**Syntax:**
+
+```javascript
+$columns: {
+    "<identifier | $Helper | $operator>": 0 [, ... ]
+}
+```
+
+**SQL-Definition:**
+```javascript
+
+```
+
+:bulb: **Example:**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $columns: {
+                first_name: 1,
+                last_name: 1
+            },
+            $from: 'people'
+        }
+    });
+}
+
+// SQL output
+SELECT
+    first_name,
+    last_name
+FROM
+    people
+
+// Values
+{}
+```
+## as Object :arrow_right: Number with value `1`:
+**Syntax:**
+
+```javascript
+$columns: {
+    "<identifier | $Helper | $operator>": 1 [, ... ]
+}
+```
+
+**SQL-Definition:**
+```javascript
+<key-ident>[ , ... ]
+```
+
+:bulb: **Example:**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $columns: {
+                people_id: 1,
+                first_name: 0,
+                last_name: 0
+            },
+            $from: 'people'
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people_id
+FROM
+    people
+
+// Values
+{}
+```
 ## as Object :arrow_right: String:
 
 Usage of `columns` as **Object** with a child of Type **String** :
@@ -312,7 +478,7 @@ $columns: < String >
 <value-ident>
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({

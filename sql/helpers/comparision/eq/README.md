@@ -26,7 +26,7 @@ $eq: < value: String | Number | Boolean >
 = <value-param>
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -70,7 +70,7 @@ $eq: { ... }
 = <value>
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -135,7 +135,7 @@ $eq: sql.<callee>([params])
 = <value>
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({

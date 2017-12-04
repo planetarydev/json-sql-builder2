@@ -26,7 +26,7 @@ $gte: < value: String | Number | Boolean >
 >= <value-param>
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -67,7 +67,7 @@ $gte: { ... }
 >= <value>
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     let avgerageAge = {
@@ -118,7 +118,7 @@ $gte: sql.<callee>([params])
 >= <value>
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     let myAvarageAgeFunction = sql.select({ age: { $avg: 'age' } }, {
@@ -151,3 +151,34 @@ WHERE
 // Values
 {}
 ```
+## Further Examples
+
+:bulb: **Usage as SQL-Function**
+```javascript
+function() {
+    let averageAge = 45;
+
+    return sql.build({
+        $select: {
+            $from: 'people',
+            $where: {
+                age: sql.gte(averageAge)
+            }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people
+WHERE
+    age >= $ 1
+
+// Values
+{
+    "$1": 45
+}
+```
+

@@ -33,7 +33,7 @@ $comparator: '='
 <value>
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -73,7 +73,7 @@ $comparator: '!='
 <value>
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -113,7 +113,7 @@ $comparator: '>'
 <value>
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -153,7 +153,7 @@ $comparator: '<'
 <value>
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -193,7 +193,7 @@ $comparator: '>='
 <value>
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -233,7 +233,7 @@ $comparator: '<='
 <value>
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({

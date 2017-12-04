@@ -26,7 +26,7 @@ $count: < String >
 COUNT(<value-ident>)
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.$select({

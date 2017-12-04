@@ -26,7 +26,7 @@ $avg: { ... }
 AVG({DISTINCT [$distinct]}<$expr>)
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.$select({
@@ -60,7 +60,7 @@ $avg: < String >
 AVG(<value-ident>)
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.$select({
@@ -93,7 +93,7 @@ $avg: sql.<callee>([params])
 AVG(<value>)
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.$select({
@@ -114,3 +114,25 @@ FROM
     "$1": 40
 }
 ```
+## Further Examples
+
+:bulb: **Using avg callee with DISTINCT parameter**
+```javascript
+function() {
+    return sql.$select({
+        average_age: sql.avg(sql.DISTINCT, 'age'),
+        $from: 'people'
+    });
+
+}
+
+// SQL output
+SELECT
+    AVG(DISTINCT age) AS average_age
+FROM
+    people
+
+// Values
+{}
+```
+

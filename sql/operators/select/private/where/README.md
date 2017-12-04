@@ -26,7 +26,7 @@ $where: { ... }
 {* AND [$and] *} {* OR [$or] *}
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({

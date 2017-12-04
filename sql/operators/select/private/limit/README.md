@@ -24,7 +24,7 @@ $limit: < Number >
 <value-param>
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     let query = sql.build({
@@ -67,7 +67,7 @@ $limit: 'ALL'
 <value>
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     let query = sql.build({
@@ -90,3 +90,53 @@ LIMIT
 // Values
 {}
 ```
+## Further Examples
+
+:bulb: **MySQL turns $limit: 'ALL' to LIMIT 9007199254740991**
+```javascript
+function() {
+    let query = sql.build({
+        $select: {
+            $from: 'people',
+            $limit: 'ALL'
+        }
+    });
+    return query;
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people
+LIMIT
+    9007199254740991
+
+// Values
+{}
+```
+
+:bulb: **SQLite turns $limit: 'ALL' to LIMIT -1**
+```javascript
+function() {
+    let query = sql.build({
+        $select: {
+            $from: 'people',
+            $limit: 'ALL'
+        }
+    });
+    return query;
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people
+LIMIT
+    -1
+
+// Values
+{}
+```
+

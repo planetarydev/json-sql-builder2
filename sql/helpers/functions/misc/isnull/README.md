@@ -1,4 +1,4 @@
-# isnull Helper
+# isNull Helper
 Specifies the `ISNULL` function to use with SQLServer. Further it defines the `IS NULL` and `IS NOT NULL` comparision Operators used by any SQL-Dialect.
 
 #### Supported by
@@ -13,7 +13,7 @@ Specifies the `ISNULL` function to use with SQLServer. Further it defines the `I
 
 ## as Boolean:
 
-The usage of `isnull` as **Boolean** is restricted to the following values:
+The usage of `isNull` as **Boolean** is restricted to the following values:
 - true
 - false
 
@@ -21,7 +21,7 @@ The usage of `isnull` as **Boolean** is restricted to the following values:
 **Syntax:**
 
 ```javascript
-$isnull: true
+$isNull: true
 ```
 
 **SQL-Definition:**
@@ -29,7 +29,7 @@ $isnull: true
 IS NULL
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
@@ -57,7 +57,7 @@ WHERE
 **Syntax:**
 
 ```javascript
-$isnull: false
+$isNull: false
 ```
 
 **SQL-Definition:**
@@ -65,7 +65,7 @@ $isnull: false
 IS NOT NULL
 ```
 
-**Example:**
+:bulb: **Example:**
 ```javascript
 function() {
     return sql.build({
