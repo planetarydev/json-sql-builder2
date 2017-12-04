@@ -26,6 +26,13 @@ $where: { ... }
 {* AND [$and] *} {* OR [$or] *}
 ```
 
+**Registered Helpers**
+
+Name|Required|Public|SQL-Definition
+----|:--------:|------|--------------
+[and](./private/and/)|*optional*|:heavy_check_mark:|
+[or](./private/or/)|*optional*|*private*|
+
 :bulb: **Example:**
 ```javascript
 function() {
@@ -52,11 +59,4 @@ WHERE
     "$1": "John"
 }
 ```
-
-**Details on the registered Helpers**
-
-Name|Required|Public|SQL-Definition
-----|:--------:|------|--------------
-[$and](./private/and/)|*optional*|:heavy_check_mark:|
-[$or](./private/or/)|*optional*|*private*|
 
