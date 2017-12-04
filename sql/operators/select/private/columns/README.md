@@ -35,7 +35,8 @@ Usage of `columns` as **Object** with a child of Type **String** :
 ```javascript
 $columns: {
     "<identifier | $Helper | $operator>": <String> [, ... ]
-}```
+}
+```
 
 **SQL-Definition:**
 ```javascript
@@ -75,7 +76,8 @@ Usage of `columns` as **Object** with a child of Type **Object** :
 ```javascript
 $columns: {
     "<identifier | $Helper | $operator>": { ... } [, ... ]
-}```
+}
+```
 
 **SQL-Definition:**
 ```javascript
@@ -142,7 +144,8 @@ Usage of `columns` as **Object** with a child of Type **Function** :
 ```javascript
 $columns: {
     "<identifier | $Helper | $operator>": sql.<callee>([params])
-}```
+}
+```
 
 **SQL-Definition:**
 ```javascript
@@ -210,7 +213,8 @@ Usage of `columns` as **Array** with a child of Type **String** :
 ```javascript
 $columns: [
     <String> [, ... ]
-]```
+]
+```
 
 **SQL-Definition:**
 ```javascript
@@ -247,7 +251,8 @@ Usage of `columns` as **Array** with a child of Type **Object** :
 ```javascript
 $columns: [
     { ... } [, ... ]
-]```
+]
+```
 
 **SQL-Definition:**
 ```javascript

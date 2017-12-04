@@ -28,7 +28,8 @@ Usage of `and` as **Array** with a child of Type **String** :
 ```javascript
 $and: [
     <String> [, ... ]
-]```
+]
+```
 
 **SQL-Definition:**
 ```javascript
@@ -74,7 +75,8 @@ Usage of `and` as **Array** with a child of Type **Object** :
 ```javascript
 $and: [
     { ... } [, ... ]
-]```
+]
+```
 
 **SQL-Definition:**
 ```javascript
@@ -121,7 +123,8 @@ Usage of `and` as **Array** with a child of Type **Function** :
 ```javascript
 $and: [
     sql.<callee>([params]) [, ... ]
-]```
+]
+```
 
 **SQL-Definition:**
 ```javascript

@@ -30,7 +30,8 @@ Usage of `from` as **Object** with a child of Type **String** :
 ```javascript
 $from: {
     "<identifier | $Helper | $operator>": <String> [, ... ]
-}```
+}
+```
 
 **SQL-Definition:**
 ```javascript
@@ -65,7 +66,8 @@ Usage of `from` as **Object** with a child of Type **Object** :
 ```javascript
 $from: {
     "<identifier | $Helper | $operator>": { ... } [, ... ]
-}```
+}
+```
 
 **SQL-Definition:**
 ```javascript
@@ -111,7 +113,8 @@ Usage of `from` as **Object** with a child of Type **Function** :
 ```javascript
 $from: {
     "<identifier | $Helper | $operator>": sql.<callee>([params])
-}```
+}
+```
 
 **SQL-Definition:**
 ```javascript
