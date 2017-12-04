@@ -52,3 +52,11 @@ WHERE
     "$1": "John"
 }
 ```
+
+**Details on the registered Helpers**
+
+Name|Required|Public|SQL-Definition
+----|:--------:|------|--------------
+[$and](./private/$and/)|*optional*|*private*|
+[$or](./private/$or/)|*optional*|*private*|
+

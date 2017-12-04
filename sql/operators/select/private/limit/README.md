@@ -50,6 +50,7 @@ LIMIT
     "$1": 10
 }
 ```
+
 ## as String:
 
 The usage of `limit` as **String** is restricted to the following values:

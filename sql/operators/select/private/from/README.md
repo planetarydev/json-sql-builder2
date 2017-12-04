@@ -335,6 +335,7 @@ FROM
 // Values
 {}
 ```
+
 ## Further Examples
 
 :bulb: **Cross Joined Tables**

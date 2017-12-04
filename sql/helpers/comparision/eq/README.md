@@ -55,6 +55,7 @@ WHERE
     "$2": "Doe"
 }
 ```
+
 ## as Object:
 
 Usage of `eq` as **Object** with the following Syntax:
@@ -120,6 +121,7 @@ WHERE
     "$3": "Doe"
 }
 ```
+
 ## as Function:
 
 Usage of `eq` as **Function** with the following Syntax:
@@ -182,3 +184,4 @@ WHERE
     "$3": "Doe"
 }
 ```
+

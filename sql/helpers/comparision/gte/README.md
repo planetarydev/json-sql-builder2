@@ -52,6 +52,7 @@ WHERE
     "$1": 18
 }
 ```
+
 ## as Object:
 
 Usage of `gte` as **Object** with the following Syntax:
@@ -103,6 +104,7 @@ WHERE
 // Values
 {}
 ```
+
 ## as Function:
 
 Usage of `gte` as **Function** with the following Syntax:
@@ -151,6 +153,7 @@ WHERE
 // Values
 {}
 ```
+
 ## Further Examples
 
 :bulb: **Usage as SQL-Function**

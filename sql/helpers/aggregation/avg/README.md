@@ -45,6 +45,14 @@ FROM
 // Values
 {}
 ```
+
+**Details on the registered Helpers**
+
+Name|Required|Public|SQL-Definition
+----|:--------:|------|--------------
+[$distinct](./private/$distinct/)|*optional*|*private*|DISTINCT  [$distinct]
+[$expr](./private/$expr/)|:heavy_check_mark:|*private*|
+
 ## as String:
 
 Usage of `avg` as **String** with the following Syntax:
@@ -78,6 +86,7 @@ FROM
 // Values
 {}
 ```
+
 ## as Function:
 
 Usage of `avg` as **Function** with the following Syntax:
@@ -114,6 +123,7 @@ FROM
     "$1": 40
 }
 ```
+
 ## Further Examples
 
 :bulb: **Using avg callee with DISTINCT parameter**
