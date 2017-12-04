@@ -2,7 +2,7 @@
 Specifies the `$columns` Helper for the `SELECT` Statement to select
 only the listed columns instead of `*` or `ALL`.
 
-> :bulb: **SELECT * **
+> :bulb: **SELECT ALL**
 >
 > If you did not support the `columns` Helper on a SELECT Statement the `preBuild` method of the select class will automatically
 > add a $columns Object with `*` to the query as single column.
