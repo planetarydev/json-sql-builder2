@@ -43,19 +43,25 @@ SELECT
 
 **Registered Helpers**
 
-Name|Required|Public|SQL-Definition
-----|:------:|:----:|--------------
-[distinct](./private/distinct/)|*optional*|*private*| DISTINCT [$distinct]
-[columns](./private/columns/)|:heavy_check_mark:|*private*|  <$columns>
-[from](./private/from/)|*optional*|*private*| FROM  [$from]
-[joins](./private/joins/)|*optional*|*private*|  [$joins]
-[where](./private/where/)|*optional*|*private*| WHERE  [$where]
-[groupBy](./private/groupBy/)|*optional*|*private*| GROUP BY  [$groupBy]
-[having](./private/having/)|*optional*|*private*| HAVING  [$having]
-[sort](./private/sort/)|*optional*|*private*| ORDER BY  [$sort]
-[orderBy](./private/orderBy/)|*optional*|*private*| ORDER BY  [$orderBy]
-[limit](./private/limit/)|*optional*|*private*| LIMIT  [$limit]
-[offset](./private/offset/)|*optional*|*private*| OFFSET  [$offset]
+Name|Required|Public|SQL-Definition|Supported by
+----|:------:|:----:|--------------|------------
+[top](./private/top/)|*optional*|*private*| TOP  [$top]|`SQLServer` 
+[distinct](./private/distinct/)|*optional*|*private*| DISTINCT [$distinct]|*Ansi-Standard*
+[calcFoundRows](./private/calcFoundRows/)|*optional*|*private*| SQL_CALC_FOUND_ROWS [$calcFoundRows]|`MySQL` 
+[columns](./private/columns/)|:heavy_check_mark:|*private*|  <$columns>|*Ansi-Standard*
+[into](./private/into/)|*optional*|*private*| INTO  [$into]|`MySQL` `MSSQLServer` 
+[from](./private/from/)|*optional*|*private*| FROM  [$from]|*Ansi-Standard*
+[joins](./private/joins/)|*optional*|*private*|  [$joins]|*Ansi-Standard*
+[where](./private/where/)|*optional*|*private*| WHERE  [$where]|*Ansi-Standard*
+[groupBy](./private/groupBy/)|*optional*|*private*| GROUP BY  [$groupBy]|*Ansi-Standard*
+[rollup](./private/rollup/)|*optional*|*private*| WITH ROLLUP [$rollup]|`MySQL` 
+[having](./private/having/)|*optional*|*private*| HAVING  [$having]|*Ansi-Standard*
+[sort](./private/sort/)|*optional*|*private*| ORDER BY  [$sort]|*Ansi-Standard*
+[orderBy](./private/orderBy/)|*optional*|*private*| ORDER BY  [$orderBy]|*Ansi-Standard*
+[limit](./private/limit/)|*optional*|*private*| LIMIT  [$limit]|`MariaDB` `MySQL` `PostgreSQL` `SQLite` 
+[offset](./private/offset/)|*optional*|*private*| OFFSET  [$offset]|`MariaDB` `MySQL` `PostgreSQL` `SQLite` 
+[outfile](./private/outfile/)|*optional*|*private*| INTO OUTFILE  [$outfile]|`MySQL` 
+[dumpfile](./private/dumpfile/)|*optional*|*private*| INTO DUMPFILE  [$dumpfile]|`MySQL` 
 
 :bulb: **Example:**
 ```javascript

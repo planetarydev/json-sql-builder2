@@ -28,10 +28,10 @@ AVG({DISTINCT [$distinct]}<$expr>)
 
 **Registered Helpers**
 
-Name|Required|Public|SQL-Definition
-----|:------:|:----:|--------------
-[distinct](./private/distinct/)|*optional*|*private*|DISTINCT  [$distinct]
-[expr](./private/expr/)|:heavy_check_mark:|*private*|
+Name|Required|Public|SQL-Definition|Supported by
+----|:------:|:----:|--------------|------------
+[distinct](./private/distinct/)|*optional*|*private*|DISTINCT  [$distinct]|*Ansi-Standard*
+[expr](./private/expr/)|:heavy_check_mark:|*private*||*Ansi-Standard*
 
 :bulb: **Example:**
 ```javascript

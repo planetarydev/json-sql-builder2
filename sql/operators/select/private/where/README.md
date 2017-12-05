@@ -28,10 +28,10 @@ $where: { ... }
 
 **Registered Helpers**
 
-Name|Required|Public|SQL-Definition
-----|:------:|:----:|--------------
-[and](../../../../helpers/logical/and/)|*optional*|:heavy_check_mark:|
-[or](./private/or/)|*optional*|*private*|
+Name|Required|Public|SQL-Definition|Supported by
+----|:------:|:----:|--------------|------------
+[and](../../../../helpers/logical/and/)|*optional*|:heavy_check_mark:||*Ansi-Standard*
+[or](./private/or/)|*optional*|*private*||*Ansi-Standard*
 
 :bulb: **Example:**
 ```javascript
