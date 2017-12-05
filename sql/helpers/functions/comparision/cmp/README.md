@@ -29,10 +29,10 @@ $cmp: { ... }
 **Registered Helpers**
 
 Name|Required|Public|SQL-Definition|Supported by
-----|:------:|:----:|--------------|------------
-[value](./private/value/)|:heavy_check_mark:|*private*| <$value> |*Ansi-Standard*
-[comparator](./private/comparator/)|:heavy_check_mark:|*private*||*Ansi-Standard*
-[other](./private/other/)|:heavy_check_mark:|*private*|  <$other>|*Ansi-Standard*
+:---|:------:|:----:|:-------------|:-----------
+[value](./private/value/)|:heavy_check_mark:|*private*| <$value> |
+[comparator](./private/comparator/)|:heavy_check_mark:|*private*||
+[other](./private/other/)|:heavy_check_mark:|*private*|  <$other>|
 
 :bulb: **Example:**
 ```javascript

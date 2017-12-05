@@ -29,9 +29,9 @@ $where: { ... }
 **Registered Helpers**
 
 Name|Required|Public|SQL-Definition|Supported by
-----|:------:|:----:|--------------|------------
-[and](../../../../helpers/logical/and/)|*optional*|:heavy_check_mark:||*Ansi-Standard*
-[or](./private/or/)|*optional*|*private*||*Ansi-Standard*
+:---|:------:|:----:|:-------------|:-----------
+[and](../../../../helpers/logical/and/)|*optional*|:heavy_check_mark:||
+[or](./private/or/)|*optional*|*private*||
 
 :bulb: **Example:**
 ```javascript
