@@ -89,3 +89,50 @@ WHERE
 // Values
 {}
 ```
+## as Object:
+
+Usage of `isNull` as **Object** with the following Syntax:
+
+**Syntax:**
+
+```javascript
+$isNull: { ... }
+```
+
+**SQL-Definition:**
+```javascript
+ISNULL(<$expr>, <$replacement>)
+```
+
+**Registered Helpers**
+
+Name|Required|Public|SQL-Definition|Supported by
+:---|:------:|:----:|:-------------|:-----------
+[expr](./private/expr/)|:heavy_check_mark:|*private*||
+[replacement](./private/replacement/)|:heavy_check_mark:|*private*||
+
+:bulb: **Example:**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $from: 'people',
+            $where: {
+                first_name: { $eq: { $isNull: { $expr: '~~nick_name', $replacement: '~~first_name' } } }
+            }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people
+WHERE
+    first_name = ISNULL(nick_name, first_name)
+
+// Values
+{}
+```
+

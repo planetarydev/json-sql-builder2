@@ -71,12 +71,6 @@ module.exports = {
 		Object: {
 			"Basic Usage": function(sql){
 				return {
-					supportedBy: {
-						PostgreSQL: true,
-						MariaDB: true,
-						MySQL: true,
-						SQLite: true
-					},
 					test: function(){
 						let avgerageAge = {
 							$select: {
@@ -104,12 +98,6 @@ module.exports = {
 		Function: {
 			"Basic Usage": function(sql){
 				return {
-					supportedBy: {
-						PostgreSQL: true,
-						MariaDB: true,
-						MySQL: true,
-						SQLite: true
-					},
 					test: function(){
 						let myAvarageAgeFunction = sql.select({ age: { $avg: 'age' } }, {
 							$from: 'people'

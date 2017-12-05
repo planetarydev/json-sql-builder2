@@ -16,7 +16,7 @@ class isNull extends SQLBuilder.SQLHelper {
 
 		// add special function ISNULL() syntax usage as Object
 		// when current dialect is SQLServer
-		if (sql.isSQLServer()) {
+		if (sql.isSQLServer() || sql._options.createDocs) {
 			definedTypes.Object = { syntax: this.Syntax('ISNULL(<$expr>, <$replacement>)', SQLBuilder.CALLEE) }
 
 			// private declaration of Helpers

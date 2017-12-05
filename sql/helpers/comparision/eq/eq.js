@@ -14,13 +14,13 @@ class eq extends SQLBuilder.SQLHelper {
 
 module.exports = {
 	definition: eq,
-	description: 'Specifies the comparision `=` Operator as Helper.',
+	description: 'Specifies the comparision **equal to** `=` Operator as Helper.',
 	supportedBy: {
 		MySQL: 'https://dev.mysql.com/doc/refman/5.7/en/func-op-summary-ref.html',
 		MariaDB: 'https://mariadb.com/kb/en/library/equal/',
 		PostgreSQL: 'https://www.postgresql.org/docs/9.5/static/functions-comparison.html',
 		SQLite: 'https://sqlite.org/lang_expr.html',
-		Oracle: '',
+		Oracle: 'https://docs.oracle.com/html/A95915_01/sqopr.htm#sthref149',
 		SQLServer: 'https://docs.microsoft.com/en-US/sql/t-sql/language-elements/equals-transact-sql'
 	},
 	examples: {
