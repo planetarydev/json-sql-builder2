@@ -29,7 +29,7 @@ AVG({DISTINCT [$distinct]}<$expr>)
 **Registered Helpers**
 
 Name|Required|Public|SQL-Definition
-----|:--------:|------|--------------
+----|:------:|:----:|--------------
 [distinct](./private/distinct/)|*optional*|*private*|DISTINCT  [$distinct]
 [expr](./private/expr/)|:heavy_check_mark:|*private*|
 

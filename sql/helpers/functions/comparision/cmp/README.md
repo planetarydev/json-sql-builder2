@@ -29,7 +29,7 @@ $cmp: { ... }
 **Registered Helpers**
 
 Name|Required|Public|SQL-Definition
-----|:--------:|------|--------------
+----|:------:|:----:|--------------
 [value](./private/value/)|:heavy_check_mark:|*private*| <$value> 
 [comparator](./private/comparator/)|:heavy_check_mark:|*private*|
 [other](./private/other/)|:heavy_check_mark:|*private*|  <$other>

@@ -44,7 +44,7 @@ SELECT
 **Registered Helpers**
 
 Name|Required|Public|SQL-Definition
-----|:--------:|------|--------------
+----|:------:|:----:|--------------
 [distinct](./private/distinct/)|*optional*|*private*| DISTINCT [$distinct]
 [columns](./private/columns/)|:heavy_check_mark:|*private*|  <$columns>
 [from](./private/from/)|*optional*|*private*| FROM  [$from]

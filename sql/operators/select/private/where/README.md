@@ -29,8 +29,8 @@ $where: { ... }
 **Registered Helpers**
 
 Name|Required|Public|SQL-Definition
-----|:--------:|------|--------------
-[and](./private/and/)|*optional*|:heavy_check_mark:|
+----|:------:|:----:|--------------
+[and](../../../../helpers/logical/and/)|*optional*|:heavy_check_mark:|
 [or](./private/or/)|*optional*|*private*|
 
 :bulb: **Example:**
