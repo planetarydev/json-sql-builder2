@@ -43,7 +43,7 @@ SELECT
 FROM
     people
 LIMIT
-    $ 1
+    $1
 
 // Values
 {

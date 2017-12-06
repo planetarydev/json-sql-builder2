@@ -46,8 +46,8 @@ SELECT
 FROM
     people
 WHERE
-    first_name = $ 1
-    AND last_name = $ 2
+    first_name = $1
+    AND last_name = $2
 
 // Values
 {
@@ -108,11 +108,11 @@ WHERE
         FROM
             people
         WHERE
-            age = $ 1
+            age = $1
         LIMIT
-            $ 2
+            $2
     )
-    AND last_name = $ 3
+    AND last_name = $3
 
 // Values
 {
@@ -171,11 +171,11 @@ WHERE
         FROM
             people
         WHERE
-            age = $ 1
+            age = $1
         LIMIT
-            $ 2
+            $2
     )
-    AND last_name = $ 3
+    AND last_name = $3
 
 // Values
 {

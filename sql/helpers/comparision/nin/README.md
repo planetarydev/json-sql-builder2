@@ -1,9 +1,9 @@
-# in Helper
-Specifies the comparision `IN` Operator as Helper.
+# nin Helper
+Specifies the comparision `NOT IN` Operator as Helper.
 
 #### Supported by
-- [MySQL](https://dev.mysql.com/doc/refman/5.7/en/comparison-operators.html#function_in)
-- [MariaDB](https://mariadb.com/kb/en/library/in/)
+- [MySQL](https://dev.mysql.com/doc/refman/5.7/en/comparison-operators.html#function_not-in)
+- [MariaDB](https://mariadb.com/kb/en/library/not-in/)
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/functions-comparisons.html)
 - [SQLite](https://sqlite.org/lang_expr.html#in_op)
 - [Oracle](https://docs.oracle.com/html/A95915_01/sqopr.htm#sthref149)
@@ -13,17 +13,17 @@ Specifies the comparision `IN` Operator as Helper.
 
 ## as Array:
 
-Usage of `in` as **Array** with the following Syntax:
+Usage of `nin` as **Array** with the following Syntax:
 
 **Syntax:**
 
 ```javascript
-$in: [ ... ]
+$nin: [ ... ]
 ```
 
 **SQL-Definition:**
 ```javascript
-IN (<value-param>[ , ... ])
+NOT IN (<value-param>[ , ... ])
 ```
 
 :bulb: **Example:**
@@ -33,7 +33,7 @@ function() {
         $select: {
             $from: 'people',
             $where: {
-                first_name: { $in: ['John', 'Jane', 'Joe'] }
+                first_name: { $nin: ['John', 'Jane', 'Joe'] }
             }
         }
     });
@@ -45,7 +45,7 @@ SELECT
 FROM
     people
 WHERE
-    first_name IN ($1, $2, $3)
+    first_name NOT IN ($1, $2, $3)
 
 // Values
 {
@@ -57,17 +57,17 @@ WHERE
 
 ## as Object:
 
-Usage of `in` as **Object** with the following Syntax:
+Usage of `nin` as **Object** with the following Syntax:
 
 **Syntax:**
 
 ```javascript
-$in: { ... }
+$nin: { ... }
 ```
 
 **SQL-Definition:**
 ```javascript
-IN (<value>)
+NOT IN (<value>)
 ```
 
 :bulb: **Example:**
@@ -78,7 +78,7 @@ function() {
             $from: 'people',
             $where: {
                 people_id: {
-                    $in: {
+                    $nin: {
                         $select: {
                             people_id: 1,
                             $from: 'people_skills',
@@ -99,7 +99,7 @@ SELECT
 FROM
     people
 WHERE
-    people_id IN (
+    people_id NOT IN (
         SELECT
             people_id
         FROM
@@ -116,17 +116,17 @@ WHERE
 
 ## as Function:
 
-Usage of `in` as **Function** with the following Syntax:
+Usage of `nin` as **Function** with the following Syntax:
 
 **Syntax:**
 
 ```javascript
-$in: sql.<callee>([params])
+$nin: sql.<callee>([params])
 ```
 
 **SQL-Definition:**
 ```javascript
-IN (<value>)
+NOT IN (<value>)
 ```
 
 :bulb: **Example:**
@@ -137,7 +137,7 @@ function() {
             $from: 'people',
             $where: {
                 people_id: {
-                    $in: sql.select('people_id', {
+                    $nin: sql.select('people_id', {
                         $from: 'people_skills',
                         $where: {
                             skill_points: { $gt: 100 }
@@ -155,7 +155,7 @@ SELECT
 FROM
     people
 WHERE
-    people_id IN (
+    people_id NOT IN (
         SELECT
             people_id
         FROM
@@ -181,7 +181,7 @@ function() {
         $select: {
             $from: 'people',
             $where: {
-                first_name: sql.in(['John', 'Jane', 'Joe'])
+                first_name: sql.nin(['John', 'Jane', 'Joe'])
             }
         }
     });
@@ -193,7 +193,7 @@ SELECT
 FROM
     people
 WHERE
-    first_name IN ($1, $2, $3)
+    first_name NOT IN ($1, $2, $3)
 
 // Values
 {

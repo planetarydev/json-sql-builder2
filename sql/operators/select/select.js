@@ -68,7 +68,7 @@ class select extends SQLBuilder.SQLOperator {
 
 	postBuild(result, type, itemType){
 		// check for a subquery and use round bracket on sub-selects
-		if (this.isCurrent('$select')) {
+		if (this.isCurrent('$select') && !this.isPreviousHelper('$in') && !this.isPreviousHelper('$nin')) {
 			result = '(' + result + ')';
 		}
 		return result;

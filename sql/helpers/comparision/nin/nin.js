@@ -1,23 +1,23 @@
 'use strict';
 
-class $in extends SQLBuilder.SQLHelper {
+class nin extends SQLBuilder.SQLHelper {
 	constructor(sql){
 		super(sql);
 
 		this.Types({
-			Array: { syntax: this.Syntax('IN (<value-param>[ , ... ])', SQLBuilder.CALLEE) },
-			Object: { syntax: this.Syntax('IN (<value>)') },
-			Function: { syntax: this.Syntax('IN (<value>)') }
+			Array: { syntax: this.Syntax('NOT IN (<value-param>[ , ... ])', SQLBuilder.CALLEE) },
+			Object: { syntax: this.Syntax('NOT IN (<value>)') },
+			Function: { syntax: this.Syntax('NOT IN (<value>)') }
 		});
 	}
 }
 
 module.exports = {
-	definition: $in,
-	description: 'Specifies the comparision `IN` Operator as Helper.',
+	definition: nin,
+	description: 'Specifies the comparision `NOT IN` Operator as Helper.',
 	supportedBy: {
-		MySQL: 'https://dev.mysql.com/doc/refman/5.7/en/comparison-operators.html#function_in',
-		MariaDB: 'https://mariadb.com/kb/en/library/in/',
+		MySQL: 'https://dev.mysql.com/doc/refman/5.7/en/comparison-operators.html#function_not-in',
+		MariaDB: 'https://mariadb.com/kb/en/library/not-in/',
 		PostgreSQL: 'https://www.postgresql.org/docs/9.5/static/functions-comparisons.html',
 		SQLite: 'https://sqlite.org/lang_expr.html#in_op',
 		Oracle: 'https://docs.oracle.com/html/A95915_01/sqopr.htm#sthref149',
@@ -32,13 +32,13 @@ module.exports = {
 							$select: {
 								$from: 'people',
 								$where: {
-									first_name: { $in: ['John', 'Jane', 'Joe'] }
+									first_name: { $nin: ['John', 'Jane', 'Joe'] }
 								}
 							}
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT * FROM people WHERE first_name IN ($1, $2, $3)',
+						sql: 'SELECT * FROM people WHERE first_name NOT IN ($1, $2, $3)',
 						values: {
 							$1: 'John',
 							$2: 'Jane',
@@ -56,13 +56,13 @@ module.exports = {
 							$select: {
 								$from: 'people',
 								$where: {
-									first_name: sql.in(['John', 'Jane', 'Joe'])
+									first_name: sql.nin(['John', 'Jane', 'Joe'])
 								}
 							}
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT * FROM people WHERE first_name IN ($1, $2, $3)',
+						sql: 'SELECT * FROM people WHERE first_name NOT IN ($1, $2, $3)',
 						values: {
 							$1: 'John',
 							$2: 'Jane',
@@ -81,7 +81,7 @@ module.exports = {
 								$from: 'people',
 								$where: {
 									people_id: {
-										$in: {
+										$nin: {
 											$select: {
 												people_id: 1,
 												$from: 'people_skills',
@@ -96,7 +96,7 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT * FROM people WHERE people_id IN (SELECT people_id FROM people_skills WHERE skill_points > $1)',
+						sql: 'SELECT * FROM people WHERE people_id NOT IN (SELECT people_id FROM people_skills WHERE skill_points > $1)',
 						values: {
 							$1: 100
 						}
@@ -113,7 +113,7 @@ module.exports = {
 								$from: 'people',
 								$where: {
 									people_id: {
-										$in: sql.select('people_id', {
+										$nin: sql.select('people_id', {
 											$from: 'people_skills',
 											$where: {
 												skill_points: { $gt: 100 }
@@ -125,7 +125,7 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT * FROM people WHERE people_id IN (SELECT people_id FROM people_skills WHERE skill_points > $1)',
+						sql: 'SELECT * FROM people WHERE people_id NOT IN (SELECT people_id FROM people_skills WHERE skill_points > $1)',
 						values: {
 							$1: 100
 						}

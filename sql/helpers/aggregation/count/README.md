@@ -44,7 +44,7 @@ SELECT
 FROM
     people
 WHERE
-    age = $ 1
+    age = $1
 
 // Values
 {

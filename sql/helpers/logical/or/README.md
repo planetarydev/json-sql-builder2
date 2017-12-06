@@ -1,19 +1,19 @@
-# and Helper
+# or Helper
 Specifies the logical `AND` Operator as Helper.
 
 #### Supported by
-- [MySQL](https://dev.mysql.com/doc/refman/5.7/en/logical-operators.html#operator_and)
-- [MariaDB](https://mariadb.com/kb/en/library/and/)
+- [MySQL](https://dev.mysql.com/doc/refman/5.7/en/logical-operators.html#operator_or)
+- [MariaDB](https://mariadb.com/kb/en/library/or/)
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/functions-logical.html)
 - [SQLite](https://sqlite.org/lang_expr.html)
 - [Oracle](https://docs.oracle.com/cd/B13789_01/server.101/b10759/conditions004.htm)
-- [SQLServer](https://docs.microsoft.com/en-US/sql/t-sql/language-elements/and-transact-sql)
+- [SQLServer](https://docs.microsoft.com/en-US/sql/t-sql/language-elements/or-transact-sql)
 
 # Allowed Types and Usage
 
 ## as Array:
 
-The Usage of `and` as **Array** is restricted to childs have the following Type:
+The Usage of `or` as **Array** is restricted to childs have the following Type:
 
 - String
 - Object
@@ -21,19 +21,19 @@ The Usage of `and` as **Array** is restricted to childs have the following Type:
 
 ## as Array :arrow_right: String:
 
-Usage of `and` as **Array** with a child of Type **String** :
+Usage of `or` as **Array** with a child of Type **String** :
 
 **Syntax:**
 
 ```javascript
-$and: [
+$or: [
     <String> [, ... ]
 ]
 ```
 
 **SQL-Definition:**
 ```javascript
-<value>[  AND ... ]
+<value>[  OR ... ]
 ```
 
 :bulb: **Example:**
@@ -43,7 +43,7 @@ function() {
         $select: {
             $from: 'people',
             $where: {
-                $and: [
+                $or: [
                     "COALESCE(gender, 'male') = 'male'",
                     { last_name: { $eq: 'Doe' } }
                 ]
@@ -59,7 +59,7 @@ FROM
     people
 WHERE
     COALESCE(gender, 'male') = 'male'
-    AND last_name = $1
+    OR last_name = $1
 
 // Values
 {
@@ -68,19 +68,19 @@ WHERE
 ```
 ## as Array :arrow_right: Object:
 
-Usage of `and` as **Array** with a child of Type **Object** :
+Usage of `or` as **Array** with a child of Type **Object** :
 
 **Syntax:**
 
 ```javascript
-$and: [
+$or: [
     { ... } [, ... ]
 ]
 ```
 
 **SQL-Definition:**
 ```javascript
-<key-ident> <value>[  AND ... ]
+<key-ident> <value>[  OR ... ]
 ```
 
 :bulb: **Example:**
@@ -90,7 +90,7 @@ function() {
         $select: {
             $from: 'people',
             $where: {
-                $and: [
+                $or: [
                     { first_name: { $eq: 'Jane' } },
                     { last_name: { $eq: 'Doe' } }
                 ]
@@ -106,7 +106,7 @@ FROM
     people
 WHERE
     first_name = $1
-    AND last_name = $2
+    OR last_name = $2
 
 // Values
 {
@@ -116,19 +116,19 @@ WHERE
 ```
 ## as Array :arrow_right: Function:
 
-Usage of `and` as **Array** with a child of Type **Function** :
+Usage of `or` as **Array** with a child of Type **Function** :
 
 **Syntax:**
 
 ```javascript
-$and: [
+$or: [
     sql.<callee>([params]) [, ... ]
 ]
 ```
 
 **SQL-Definition:**
 ```javascript
-<value>[  AND ... ]
+<value>[  OR ... ]
 ```
 
 :bulb: **Example:**
@@ -138,7 +138,7 @@ function() {
         $select: {
             $from: 'people',
             $where: {
-                $and: [
+                $or: [
                     sql.cmp('~~first_name', '=', 'Jane'),
                     { last_name: { $eq: 'Doe' } }
                 ]
@@ -154,7 +154,7 @@ FROM
     people
 WHERE
     first_name = $1
-    AND last_name = $2
+    OR last_name = $2
 
 // Values
 {
@@ -162,3 +162,46 @@ WHERE
     "$2": "Doe"
 }
 ```
+## Further Examples
+
+:bulb: **Combine AND/OR**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $from: 'people',
+            $where: {
+                $and: [
+                    { people_id: 456725 },
+                    {
+                        $or: [
+                            { first_name: { $eq: 'Jane' } },
+                            { last_name: { $eq: 'Doe' } }
+                        ]
+                    }
+                ]
+            }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people
+WHERE
+    people_id = $1
+    AND (
+        first_name = $2
+        OR last_name = $3
+    )
+
+// Values
+{
+    "$1": 456725,
+    "$2": "Jane",
+    "$3": "Doe"
+}
+```
+

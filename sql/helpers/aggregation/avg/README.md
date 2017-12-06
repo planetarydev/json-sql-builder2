@@ -114,7 +114,7 @@ function() {
 
 // SQL output
 SELECT
-    AVG(ISNULL(age, $ 1)) AS average_age
+    AVG(ISNULL(age, $1)) AS average_age
 FROM
     people
 

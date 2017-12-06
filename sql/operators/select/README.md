@@ -102,7 +102,7 @@ SELECT
 FROM
     people
 WHERE
-    last_name = $ 1
+    last_name = $1
 
 // Values
 {

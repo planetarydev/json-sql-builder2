@@ -31,7 +31,7 @@ $where: { ... }
 Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
 [and](../../../../helpers/logical/and/)|*optional*|:heavy_check_mark:||
-[or](./private/or/)|*optional*|*private*||
+[or](../../../../helpers/logical/or/)|*optional*|:heavy_check_mark:||
 
 :bulb: **Example:**
 ```javascript
@@ -52,7 +52,7 @@ SELECT
 FROM
     people
 WHERE
-    first_name = $ 1
+    first_name = $1
 
 // Values
 {

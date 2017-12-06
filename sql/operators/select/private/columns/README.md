@@ -304,12 +304,12 @@ SELECT
             people_skills
         WHERE
             people.people_id = people_skills.people_id
-            AND people_skills.is_top = $ 1
+            AND people_skills.is_top = $1
     ) AS top_skill
 FROM
     people
 WHERE
-    age >= $ 2
+    age >= $2
 
 // Values
 {
@@ -372,7 +372,7 @@ SELECT
 FROM
     people
 WHERE
-    age >= $ 1
+    age >= $1
 
 // Values
 {
