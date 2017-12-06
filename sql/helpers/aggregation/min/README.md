@@ -1,29 +1,29 @@
-# count Helper
-Specifies the aggregation function `COUNT` as Helper.
+# min Helper
+Specifies the aggregation function `MIN` as Helper.
 
 #### Supported by
-- [MySQL](https://dev.mysql.com/doc/refman/5.7/en/group-by-functions.html#function_count)
-- [MariaDB](https://mariadb.com/kb/en/library/count/)
+- [MySQL](https://dev.mysql.com/doc/refman/5.7/en/group-by-functions.html#function_min)
+- [MariaDB](https://mariadb.com/kb/en/library/min/)
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/functions-aggregate.html)
-- [SQLite](https://sqlite.org/lang_aggfunc.html#count)
-- [Oracle](https://docs.oracle.com/cd/B19306_01/server.102/b14200/functions032.htm)
-- [SQLServer](https://docs.microsoft.com/en-US/sql/t-sql/functions/count-transact-sql)
+- [SQLite](https://sqlite.org/lang_aggfunc.html#min)
+- [Oracle](https://docs.oracle.com/cd/B19306_01/server.102/b14200/functions087.htm)
+- [SQLServer](https://docs.microsoft.com/en-US/sql/t-sql/functions/min-transact-sql)
 
 # Allowed Types and Usage
 
 ## as Object:
 
-Usage of `count` as **Object** with the following Syntax:
+Usage of `min` as **Object** with the following Syntax:
 
 **Syntax:**
 
 ```javascript
-$count: { ... }
+$min: { ... }
 ```
 
 **SQL-Definition:**
 ```javascript
-COUNT({DISTINCT [$distinct]}<$expr>)
+MIN({DISTINCT [$distinct]}<$expr>)
 ```
 
 **Registered Helpers**
@@ -37,7 +37,7 @@ Name|Required|Public|SQL-Definition|Supported by
 ```javascript
 function() {
     return sql.$select({
-        total_age: { $count: { $expr: '~~age', $distinct: true } },
+        min_age: { $min: { $expr: '~~age', $distinct: true } },
         $from: 'people'
     });
 
@@ -45,7 +45,7 @@ function() {
 
 // SQL output
 SELECT
-    COUNT(DISTINCT age) AS total_age
+    MIN(DISTINCT age) AS min_age
 FROM
     people
 
@@ -55,65 +55,58 @@ FROM
 
 ## as String:
 
-Usage of `count` as **String** with the following Syntax:
+Usage of `min` as **String** with the following Syntax:
 
 **Syntax:**
 
 ```javascript
-$count: < String >
+$min: < String >
 ```
 
 **SQL-Definition:**
 ```javascript
-COUNT(<value-ident>)
+MIN(<value-ident>)
 ```
 
 :bulb: **Example:**
 ```javascript
 function() {
     return sql.$select({
-        total: { $count: '*' },
-        $from: 'people',
-        $where: {
-            age: 18
-        }
+        min_age: { $min: 'age' },
+        $from: 'people'
     });
 }
 
 // SQL output
 SELECT
-    COUNT(*) AS total
+    MIN(age) AS min_age
 FROM
     people
-WHERE
-    age = $1
 
 // Values
-{
-    "$1": 18
-}
+{}
 ```
 
 ## as Function:
 
-Usage of `count` as **Function** with the following Syntax:
+Usage of `min` as **Function** with the following Syntax:
 
 **Syntax:**
 
 ```javascript
-$count: sql.<callee>([params])
+$min: sql.<callee>([params])
 ```
 
 **SQL-Definition:**
 ```javascript
-COUNT(<value>)
+MIN(<value>)
 ```
 
 :bulb: **Example:**
 ```javascript
 function() {
     return sql.$select({
-        total_age: { $count: sql.isNull('~~age', 40) },
+        min_age: { $min: sql.isNull('~~age', 40) },
         $from: 'people'
     });
 
@@ -121,7 +114,7 @@ function() {
 
 // SQL output
 SELECT
-    COUNT(ISNULL(age, $1)) AS total_age
+    MIN(ISNULL(age, $1)) AS min_age
 FROM
     people
 
@@ -133,11 +126,11 @@ FROM
 
 ## Further Examples
 
-:bulb: **Using count callee with DISTINCT parameter**
+:bulb: **Using min callee with DISTINCT parameter**
 ```javascript
 function() {
     return sql.$select({
-        total_age: sql.count(sql.DISTINCT, 'age'),
+        min_age: sql.min(sql.DISTINCT, 'age'),
         $from: 'people'
     });
 
@@ -145,7 +138,7 @@ function() {
 
 // SQL output
 SELECT
-    COUNT(DISTINCT age) AS total_age
+    MIN(DISTINCT age) AS min_age
 FROM
     people
 

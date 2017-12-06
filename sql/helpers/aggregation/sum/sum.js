@@ -2,22 +2,22 @@
 
 const aggregationHelper = require('../classHelper/aggregationHelper')
 
-class avg extends aggregationHelper.definition {
+class sum extends aggregationHelper.definition {
 	constructor(sql){
-		super(sql, 'AVG');
+		super(sql, 'SUM');
 	}
 }
 
 module.exports = {
-	definition: avg,
-	description: 'Specifies the aggregation function `AVG` as Helper.',
+	definition: sum,
+	description: 'Specifies the aggregation function `SUM` as Helper.',
 	supportedBy: {
-		MySQL: 'https://dev.mysql.com/doc/refman/5.7/en/group-by-functions.html#function_avg',
-		MariaDB: 'https://mariadb.com/kb/en/library/avg/',
+		MySQL: 'https://dev.mysql.com/doc/refman/5.7/en/group-by-functions.html#function_sum',
+		MariaDB: 'https://mariadb.com/kb/en/library/sum/',
 		PostgreSQL: 'https://www.postgresql.org/docs/9.5/static/functions-aggregate.html',
-		SQLite: 'https://sqlite.org/lang_aggfunc.html#avg',
-		Oracle: 'https://docs.oracle.com/cd/B19306_01/server.102/b14200/functions011.htm',
-		SQLServer: 'https://docs.microsoft.com/en-US/sql/t-sql/functions/avg-transact-sql'
+		SQLite: 'https://sqlite.org/lang_aggfunc.html#sum',
+		Oracle: 'https://docs.oracle.com/cd/B19306_01/server.102/b14200/functions087.htm',
+		SQLServer: 'https://docs.microsoft.com/en-US/sql/t-sql/functions/sum-transact-sql'
 	},
 	examples: {
 		String: {
@@ -25,12 +25,12 @@ module.exports = {
 				return {
 					test: function(){
 						return sql.$select({
-							average_age: { $avg: 'age' },
+							sum_age: { $sum: 'age' },
 							$from: 'people'
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT AVG(age) AS average_age FROM people',
+						sql: 'SELECT SUM(age) AS sum_age FROM people',
 						values:{}
 					}
 				}
@@ -41,13 +41,13 @@ module.exports = {
 				return {
 					test: function(){
 						return sql.$select({
-							average_age: { $avg: { $expr: '~~age', $distinct: true } },
+							sum_age: { $sum: { $expr: '~~age', $distinct: true } },
 							$from: 'people'
 						});
 
 					},
 					expectedResults: {
-						sql: 'SELECT AVG(DISTINCT age) AS average_age FROM people',
+						sql: 'SELECT SUM(DISTINCT age) AS sum_age FROM people',
 						values:{}
 					}
 				}
@@ -61,30 +61,30 @@ module.exports = {
 					},
 					test: function(){
 						return sql.$select({
-							average_age: { $avg: sql.isNull('~~age', 40) },
+							sum_age: { $sum: sql.isNull('~~age', 40) },
 							$from: 'people'
 						});
 
 					},
 					expectedResults: {
-						sql: 'SELECT AVG(ISNULL(age, $1)) AS average_age FROM people',
+						sql: 'SELECT SUM(ISNULL(age, $1)) AS sum_age FROM people',
 						values:{
 							$1: 40
 						}
 					}
 				}
 			},
-			"Using avg callee with DISTINCT parameter": function(sql){
+			"Using sum callee with DISTINCT parameter": function(sql){
 				return {
 					test: function(){
 						return sql.$select({
-							average_age: sql.avg(sql.DISTINCT, 'age'),
+							sum_age: sql.sum(sql.DISTINCT, 'age'),
 							$from: 'people'
 						});
 
 					},
 					expectedResults: {
-						sql: 'SELECT AVG(DISTINCT age) AS average_age FROM people',
+						sql: 'SELECT SUM(DISTINCT age) AS sum_age FROM people',
 						values:{}
 					}
 				}

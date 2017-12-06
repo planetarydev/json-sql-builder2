@@ -85,7 +85,7 @@ FROM
 
 ## Further Examples
 
-:bulb: **Basic Usage as Operator-Function**
+:bulb: **Usage as Operator-Function**
 ```javascript
 function() {
     return sql.$select({
@@ -110,7 +110,7 @@ WHERE
 }
 ```
 
-:bulb: **Basic Usage as Function**
+:bulb: **Usage as Function**
 ```javascript
 function() {
     let peopleLikes = sql.select({ total_likes: sql.count('*') }, {
@@ -147,7 +147,7 @@ FROM
 {}
 ```
 
-:bulb: **Basic Usage as inline-Function**
+:bulb: **Usage as inline-Function**
 ```javascript
 function() {
     return sql.$select({

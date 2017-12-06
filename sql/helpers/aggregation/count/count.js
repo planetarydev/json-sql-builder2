@@ -1,12 +1,10 @@
 'use strict';
 
-class count extends SQLBuilder.SQLHelper {
-	constructor(sql){
-		super(sql);
+const aggregationHelper = require('../classHelper/aggregationHelper')
 
-		this.Types({
-			String: { syntax: this.Syntax('COUNT(<value-ident>)', SQLBuilder.CALLEE) }
-		});
+class count extends aggregationHelper.definition {
+	constructor(sql){
+		super(sql, 'COUNT');
 	}
 }
 
@@ -39,6 +37,60 @@ module.exports = {
 						values:{
 							$1: 18
 						}
+					}
+				}
+			}
+		},
+		Object: {
+			"Basic Usage": function(sql){
+				return {
+					test: function(){
+						return sql.$select({
+							total_age: { $count: { $expr: '~~age', $distinct: true } },
+							$from: 'people'
+						});
+
+					},
+					expectedResults: {
+						sql: 'SELECT COUNT(DISTINCT age) AS total_age FROM people',
+						values:{}
+					}
+				}
+			}
+		},
+		Function: {
+			"Basic Usage": function(sql){
+				return {
+					supportedBy: {
+						SQLServer: true
+					},
+					test: function(){
+						return sql.$select({
+							total_age: { $count: sql.isNull('~~age', 40) },
+							$from: 'people'
+						});
+
+					},
+					expectedResults: {
+						sql: 'SELECT COUNT(ISNULL(age, $1)) AS total_age FROM people',
+						values:{
+							$1: 40
+						}
+					}
+				}
+			},
+			"Using count callee with DISTINCT parameter": function(sql){
+				return {
+					test: function(){
+						return sql.$select({
+							total_age: sql.count(sql.DISTINCT, 'age'),
+							$from: 'people'
+						});
+
+					},
+					expectedResults: {
+						sql: 'SELECT COUNT(DISTINCT age) AS total_age FROM people',
+						values:{}
 					}
 				}
 			}

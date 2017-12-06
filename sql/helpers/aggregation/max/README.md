@@ -1,29 +1,29 @@
-# count Helper
-Specifies the aggregation function `COUNT` as Helper.
+# max Helper
+Specifies the aggregation function `MAX` as Helper.
 
 #### Supported by
-- [MySQL](https://dev.mysql.com/doc/refman/5.7/en/group-by-functions.html#function_count)
-- [MariaDB](https://mariadb.com/kb/en/library/count/)
+- [MySQL](https://dev.mysql.com/doc/refman/5.7/en/group-by-functions.html#function_max)
+- [MariaDB](https://mariadb.com/kb/en/library/max/)
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/functions-aggregate.html)
-- [SQLite](https://sqlite.org/lang_aggfunc.html#count)
-- [Oracle](https://docs.oracle.com/cd/B19306_01/server.102/b14200/functions032.htm)
-- [SQLServer](https://docs.microsoft.com/en-US/sql/t-sql/functions/count-transact-sql)
+- [SQLite](https://sqlite.org/lang_aggfunc.html#max)
+- [Oracle](https://docs.oracle.com/cd/B19306_01/server.102/b14200/functions087.htm)
+- [SQLServer](https://docs.microsoft.com/en-US/sql/t-sql/functions/max-transact-sql)
 
 # Allowed Types and Usage
 
 ## as Object:
 
-Usage of `count` as **Object** with the following Syntax:
+Usage of `max` as **Object** with the following Syntax:
 
 **Syntax:**
 
 ```javascript
-$count: { ... }
+$max: { ... }
 ```
 
 **SQL-Definition:**
 ```javascript
-COUNT({DISTINCT [$distinct]}<$expr>)
+MAX({DISTINCT [$distinct]}<$expr>)
 ```
 
 **Registered Helpers**
@@ -37,7 +37,7 @@ Name|Required|Public|SQL-Definition|Supported by
 ```javascript
 function() {
     return sql.$select({
-        total_age: { $count: { $expr: '~~age', $distinct: true } },
+        max_age: { $max: { $expr: '~~age', $distinct: true } },
         $from: 'people'
     });
 
@@ -45,7 +45,7 @@ function() {
 
 // SQL output
 SELECT
-    COUNT(DISTINCT age) AS total_age
+    MAX(DISTINCT age) AS max_age
 FROM
     people
 
@@ -55,65 +55,58 @@ FROM
 
 ## as String:
 
-Usage of `count` as **String** with the following Syntax:
+Usage of `max` as **String** with the following Syntax:
 
 **Syntax:**
 
 ```javascript
-$count: < String >
+$max: < String >
 ```
 
 **SQL-Definition:**
 ```javascript
-COUNT(<value-ident>)
+MAX(<value-ident>)
 ```
 
 :bulb: **Example:**
 ```javascript
 function() {
     return sql.$select({
-        total: { $count: '*' },
-        $from: 'people',
-        $where: {
-            age: 18
-        }
+        max_age: { $max: 'age' },
+        $from: 'people'
     });
 }
 
 // SQL output
 SELECT
-    COUNT(*) AS total
+    MAX(age) AS max_age
 FROM
     people
-WHERE
-    age = $1
 
 // Values
-{
-    "$1": 18
-}
+{}
 ```
 
 ## as Function:
 
-Usage of `count` as **Function** with the following Syntax:
+Usage of `max` as **Function** with the following Syntax:
 
 **Syntax:**
 
 ```javascript
-$count: sql.<callee>([params])
+$max: sql.<callee>([params])
 ```
 
 **SQL-Definition:**
 ```javascript
-COUNT(<value>)
+MAX(<value>)
 ```
 
 :bulb: **Example:**
 ```javascript
 function() {
     return sql.$select({
-        total_age: { $count: sql.isNull('~~age', 40) },
+        max_age: { $max: sql.isNull('~~age', 40) },
         $from: 'people'
     });
 
@@ -121,7 +114,7 @@ function() {
 
 // SQL output
 SELECT
-    COUNT(ISNULL(age, $1)) AS total_age
+    MAX(ISNULL(age, $1)) AS max_age
 FROM
     people
 
@@ -133,11 +126,11 @@ FROM
 
 ## Further Examples
 
-:bulb: **Using count callee with DISTINCT parameter**
+:bulb: **Using max callee with DISTINCT parameter**
 ```javascript
 function() {
     return sql.$select({
-        total_age: sql.count(sql.DISTINCT, 'age'),
+        max_age: sql.max(sql.DISTINCT, 'age'),
         $from: 'people'
     });
 
@@ -145,7 +138,7 @@ function() {
 
 // SQL output
 SELECT
-    COUNT(DISTINCT age) AS total_age
+    MAX(DISTINCT age) AS max_age
 FROM
     people
 

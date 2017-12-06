@@ -123,7 +123,7 @@ module.exports = {
 					}
 				}
 			},
-			'Basic Usage as Operator-Function': function(sql) {
+			'Usage as Operator-Function': function(sql) {
 				return {
 					test: function() {
 						return sql.$select({
@@ -141,7 +141,7 @@ module.exports = {
 					}
 				}
 			},
-			'Basic Usage as Function': function(sql) {
+			'Usage as Function': function(sql) {
 				return {
 					test: function() {
 						let peopleLikes = sql.select({ total_likes: sql.count('*') }, {
@@ -164,7 +164,7 @@ module.exports = {
 					}
 				}
 			},
-			'Basic Usage as inline-Function': function(sql) {
+			'Usage as inline-Function': function(sql) {
 				return {
 					test: function() {
 						return sql.$select({

@@ -2,22 +2,22 @@
 
 const aggregationHelper = require('../classHelper/aggregationHelper')
 
-class avg extends aggregationHelper.definition {
+class min extends aggregationHelper.definition {
 	constructor(sql){
-		super(sql, 'AVG');
+		super(sql, 'MIN');
 	}
 }
 
 module.exports = {
-	definition: avg,
-	description: 'Specifies the aggregation function `AVG` as Helper.',
+	definition: min,
+	description: 'Specifies the aggregation function `MIN` as Helper.',
 	supportedBy: {
-		MySQL: 'https://dev.mysql.com/doc/refman/5.7/en/group-by-functions.html#function_avg',
-		MariaDB: 'https://mariadb.com/kb/en/library/avg/',
+		MySQL: 'https://dev.mysql.com/doc/refman/5.7/en/group-by-functions.html#function_min',
+		MariaDB: 'https://mariadb.com/kb/en/library/min/',
 		PostgreSQL: 'https://www.postgresql.org/docs/9.5/static/functions-aggregate.html',
-		SQLite: 'https://sqlite.org/lang_aggfunc.html#avg',
-		Oracle: 'https://docs.oracle.com/cd/B19306_01/server.102/b14200/functions011.htm',
-		SQLServer: 'https://docs.microsoft.com/en-US/sql/t-sql/functions/avg-transact-sql'
+		SQLite: 'https://sqlite.org/lang_aggfunc.html#min',
+		Oracle: 'https://docs.oracle.com/cd/B19306_01/server.102/b14200/functions087.htm',
+		SQLServer: 'https://docs.microsoft.com/en-US/sql/t-sql/functions/min-transact-sql'
 	},
 	examples: {
 		String: {
@@ -25,12 +25,12 @@ module.exports = {
 				return {
 					test: function(){
 						return sql.$select({
-							average_age: { $avg: 'age' },
+							min_age: { $min: 'age' },
 							$from: 'people'
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT AVG(age) AS average_age FROM people',
+						sql: 'SELECT MIN(age) AS min_age FROM people',
 						values:{}
 					}
 				}
@@ -41,13 +41,13 @@ module.exports = {
 				return {
 					test: function(){
 						return sql.$select({
-							average_age: { $avg: { $expr: '~~age', $distinct: true } },
+							min_age: { $min: { $expr: '~~age', $distinct: true } },
 							$from: 'people'
 						});
 
 					},
 					expectedResults: {
-						sql: 'SELECT AVG(DISTINCT age) AS average_age FROM people',
+						sql: 'SELECT MIN(DISTINCT age) AS min_age FROM people',
 						values:{}
 					}
 				}
@@ -61,30 +61,30 @@ module.exports = {
 					},
 					test: function(){
 						return sql.$select({
-							average_age: { $avg: sql.isNull('~~age', 40) },
+							min_age: { $min: sql.isNull('~~age', 40) },
 							$from: 'people'
 						});
 
 					},
 					expectedResults: {
-						sql: 'SELECT AVG(ISNULL(age, $1)) AS average_age FROM people',
+						sql: 'SELECT MIN(ISNULL(age, $1)) AS min_age FROM people',
 						values:{
 							$1: 40
 						}
 					}
 				}
 			},
-			"Using avg callee with DISTINCT parameter": function(sql){
+			"Using min callee with DISTINCT parameter": function(sql){
 				return {
 					test: function(){
 						return sql.$select({
-							average_age: sql.avg(sql.DISTINCT, 'age'),
+							min_age: sql.min(sql.DISTINCT, 'age'),
 							$from: 'people'
 						});
 
 					},
 					expectedResults: {
-						sql: 'SELECT AVG(DISTINCT age) AS average_age FROM people',
+						sql: 'SELECT MIN(DISTINCT age) AS min_age FROM people',
 						values:{}
 					}
 				}
