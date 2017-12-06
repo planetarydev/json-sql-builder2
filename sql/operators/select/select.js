@@ -12,7 +12,7 @@ const SYNTAX_SELECT =
 	{ WHERE [$where]}
 	{ GROUP BY [$groupBy]}	{ WITH ROLLUP[$rollup]}-->(MySQL)
 	{ HAVING [$having]}
-	{ ORDER BY [$sort] | [$orderBy]}
+	{ ORDER BY [$orderBy]}
 	{ LIMIT [$limit]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
 	{ OFFSET [$offset]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
 	{ INTO OUTFILE [$outfile]}-->(MySQL)
@@ -33,6 +33,9 @@ class select extends SQLBuilder.SQLOperator {
 		this.registerPrivateHelper('from');
 		this.registerPrivateHelper('columns');
 		this.registerPrivateHelper('where');
+		this.registerPrivateHelper('groupBy');
+		this.registerPrivateHelper('having');
+		this.registerPrivateHelper('orderBy');
 
 		// Add specific Helpers depending on the current SQL-Language dialect
 		if (sql.isPostgreSQL() ||

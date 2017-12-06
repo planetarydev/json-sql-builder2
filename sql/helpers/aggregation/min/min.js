@@ -1,6 +1,6 @@
 'use strict';
 
-const aggregationHelper = require('../classHelper/aggregationHelper')
+const aggregationHelper = require('../aggregationHelper')
 
 class min extends aggregationHelper.definition {
 	constructor(sql){

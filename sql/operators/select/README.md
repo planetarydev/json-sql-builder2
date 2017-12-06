@@ -34,7 +34,7 @@ SELECT
   { WHERE [$where]}
   { GROUP BY [$groupBy]}  { WITH ROLLUP[$rollup]}-->(MySQL)
   { HAVING [$having]}
-  { ORDER BY [$sort] | [$orderBy]}
+  { ORDER BY [$orderBy]}
   { LIMIT [$limit]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
   { OFFSET [$offset]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
   { INTO OUTFILE [$outfile]}-->(MySQL)
@@ -56,7 +56,6 @@ Name|Required|Public|SQL-Definition|Supported by
 [groupBy](./private/groupBy/)|*optional*|*private*| GROUP BY  [$groupBy]|
 [rollup](./private/rollup/)|*optional*|*private*| WITH ROLLUP [$rollup]|`MySQL` 
 [having](./private/having/)|*optional*|*private*| HAVING  [$having]|
-[sort](./private/sort/)|*optional*|*private*| ORDER BY  [$sort]|
 [orderBy](./private/orderBy/)|*optional*|*private*| ORDER BY  [$orderBy]|
 [limit](./private/limit/)|*optional*|*private*| LIMIT  [$limit]|`MariaDB` `MySQL` `PostgreSQL` `SQLite` 
 [offset](./private/offset/)|*optional*|*private*| OFFSET  [$offset]|`MariaDB` `MySQL` `PostgreSQL` `SQLite` 
