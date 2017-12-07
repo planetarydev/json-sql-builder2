@@ -24,10 +24,10 @@ $select: { ... }
 **SQL-Definition:**
 ```javascript
 SELECT
-  { TOP [$top]}-->(SQLServer)  { DISTINCT[$distinct]}
-  { SQL_CALC_FOUND_ROWS[$calcFoundRows]}-->(MySQL)
+  { [$top]}-->(SQLServer)  { DISTINCT[$distinct]}
+  { SQL_CALC_FOUND_ROWS[$calcFoundRows]}-->(MySQL,MariaDB)
 
-  { <$columns>}  { INTO [$into]}-->(MySQL,MSSQLServer)
+  { <$columns>}  { [$into]}-->(MySQL,MariaDB,SQLServer)
 
   { FROM [$from]}
   { [$joins]}
@@ -45,11 +45,11 @@ SELECT
 
 Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
-[top](./private/top/)|*optional*|*private*| TOP  [$top]|`SQLServer` 
+[top](./private/top/)|*optional*|*private*|  [$top]|`SQLServer` 
 [distinct](./private/distinct/)|*optional*|*private*| DISTINCT [$distinct]|
-[calcFoundRows](./private/calcFoundRows/)|*optional*|*private*| SQL_CALC_FOUND_ROWS [$calcFoundRows]|`MySQL` 
+[calcFoundRows](./private/calcFoundRows/)|*optional*|*private*| SQL_CALC_FOUND_ROWS [$calcFoundRows]|`MySQL` `MariaDB` 
 [columns](./private/columns/)|:heavy_check_mark:|*private*|  <$columns>|
-[into](./private/into/)|*optional*|*private*| INTO  [$into]|`MySQL` `MSSQLServer` 
+[into](./private/into/)|*optional*|*private*|  [$into]|`MySQL` `MariaDB` `SQLServer` 
 [from](./private/from/)|*optional*|*private*| FROM  [$from]|
 [joins](./private/joins/)|*optional*|*private*|  [$joins]|
 [where](./private/where/)|*optional*|*private*| WHERE  [$where]|
@@ -179,5 +179,55 @@ FROM
 
 // Values
 {}
+```
+
+:bulb: **Usage with DISTINCT**
+```javascript
+function() {
+    return sql.$select({
+        $distinct: true,
+        job_title: true,
+        $from: 'people'
+    });
+}
+
+// SQL output
+SELECT
+    DISTINCT job_title
+FROM
+    people
+
+// Values
+{}
+```
+
+:bulb: **Usage for SQL_CALC_FOUND_ROWS**
+```javascript
+function() {
+    return sql.$select({
+        $calcFoundRows: true,
+        $from: 'people',
+        $where: {
+            people_id: { $gt: 100 }
+        },
+        $limit: 10
+    });
+}
+
+// SQL output
+SELECT
+    SQL_CALC_FOUND_ROWS *
+FROM
+    people
+WHERE
+    people_id > $1
+LIMIT
+    $2
+
+// Values
+{
+    "$1": 100,
+    "$2": 10
+}
 ```
 

@@ -2,10 +2,10 @@
 
 const SYNTAX_SELECT =
 `SELECT
-	{ TOP [$top]}-->(SQLServer)	{ DISTINCT[$distinct]}
-	{ SQL_CALC_FOUND_ROWS[$calcFoundRows]}-->(MySQL)
+	{ [$top]}-->(SQLServer)	{ DISTINCT[$distinct]}
+	{ SQL_CALC_FOUND_ROWS[$calcFoundRows]}-->(MySQL,MariaDB)
 
-	{ <$columns>}	{ INTO [$into]}-->(MySQL,MSSQLServer)
+	{ <$columns>}	{ [$into]}-->(MySQL,MariaDB,SQLServer)
 
 	{ FROM [$from]}
 	{ [$joins]}
@@ -29,7 +29,15 @@ class select extends SQLBuilder.SQLOperator {
 			}
 		});
 
+		this.$distinct = new SQLBuilder.SQLPredefined.AcceptIfTrue(sql);
+
+		if (sql.isMySQL() || sql.isMariaDB()) {
+			this.$calcFoundRows = new SQLBuilder.SQLPredefined.AcceptIfTrue(sql);
+		}
+
 		// Add private ANSI helpers
+		this.registerPrivateHelper('top');
+		this.registerPrivateHelper('into');
 		this.registerPrivateHelper('from');
 		this.registerPrivateHelper('columns');
 		this.registerPrivateHelper('where');
@@ -185,6 +193,47 @@ module.exports = {
 					expectedResults: {
 						sql: 'SELECT first_name, last_name, (SELECT COUNT(*) AS total_likes FROM people_likes WHERE people_likes.people_id = people.people_id) AS total_likes FROM people',
 						values: {}
+					}
+				}
+			},
+			'Usage with DISTINCT': function(sql) {
+				return {
+					test: function() {
+						return sql.$select({
+							$distinct: true,
+							job_title: true,
+							$from: 'people'
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT DISTINCT job_title FROM people',
+						values: {}
+					}
+				}
+			},
+
+			'Usage for SQL_CALC_FOUND_ROWS': function(sql) {
+				return {
+					supportedBy: {
+						MySQL: true,
+						MariaDB: true
+					},
+					test: function() {
+						return sql.$select({
+							$calcFoundRows: true,
+							$from: 'people',
+							$where: {
+								people_id: { $gt: 100 }
+							},
+							$limit: 10
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT SQL_CALC_FOUND_ROWS * FROM people WHERE people_id > $1 LIMIT $2',
+						values: {
+							$1: 100,
+							$2: 10
+						}
 					}
 				}
 			}
