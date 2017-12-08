@@ -8,8 +8,7 @@ const SYNTAX_SELECT =
 	{ <$columns>}
 		{ [$into]}-->(MySQL,MariaDB,SQLServer)
 
-	{ FROM [$from]}
-	{ [$joins]}
+	{ FROM [$from]}	{ [$join]}
 	{ WHERE [$where]}
 	{ GROUP BY [$groupBy]}
 		{ WITH ROLLUP[$withRollup]}-->(MariaDB,MySQL)
@@ -40,6 +39,7 @@ class select extends SQLBuilder.SQLOperator {
 		this.registerPrivateHelper('top');
 		this.registerPrivateHelper('into');
 		this.registerPrivateHelper('from');
+		this.registerPrivateHelper('join');
 		this.registerPrivateHelper('columns');
 		this.registerPrivateHelper('where');
 		this.registerPrivateHelper('groupBy');
