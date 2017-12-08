@@ -4,6 +4,11 @@ class orderBy extends SQLBuilder.SQLHelper {
 	constructor(sql){
 		super(sql);
 
+		const OBJECT_SYNTAX =
+`<key-ident>{ ASC[$asc]}{ DESC[$desc]}
+	{ NULLS [$nullsFirst]}-->(Oracle,PostgreSQL)
+	{ NULLS [$nullsLast]}-->(Oracle,PostgreSQL)
+	[ , ... ]`;
 		this.Types({
 			Object: {
 				eachItemOf: {
@@ -25,7 +30,8 @@ class orderBy extends SQLBuilder.SQLHelper {
 							ASC: this.Syntax('<key-ident> ASC[ , ... ]'),
 							DESC: this.Syntax('<key-ident> DESC[ , ... ]'),
 						}
-					}
+					},
+					Object: { syntax: this.Syntax(OBJECT_SYNTAX) },
 				}
 			},
 			Array: {
@@ -35,6 +41,11 @@ class orderBy extends SQLBuilder.SQLHelper {
 			},
 			String: { syntax: this.Syntax('<value-ident> ASC') }
 		});
+
+		this.registerPrivateHelper('asc');
+		this.registerPrivateHelper('desc');
+		this.registerPrivateHelper('nullsFirst');
+		this.registerPrivateHelper('nullsLast');
 	}
 }
 
@@ -47,7 +58,7 @@ module.exports = {
 		PostgreSQL: 'https://www.postgresql.org/docs/9.5/static/sql-select.html',
 		SQLite: 'https://sqlite.org/lang_select.html',
 		Oracle: 'https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_10002.htm',
-		SQLServer: 'https://docs.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql'
+		SQLServer: 'https://docs.microsoft.com/en-us/sql/t-sql/queries/select-order-by-clause-transact-sql'
 	},
 	examples: {
 		Object: {
@@ -201,6 +212,34 @@ module.exports = {
 									sql: 'SELECT * FROM people ORDER BY last_name ASC, age DESC',
 									values:{}
 								}
+							}
+						}
+					}
+				},
+				Object: {
+					'Basic Usage': function(sql) {
+						return {
+							supportedBy: {
+								Oracle: true,
+								PostgreSQL: true,
+							},
+							test: function() {
+								let query = sql.build({
+									$select: {
+										$from: 'people',
+										$orderBy: {
+											last_name: true,
+											first_name: { $asc: true, $nullsFirst: true },
+											age: { $desc: true, $nullsLast: true }
+										}
+									}
+								});
+
+								return query;
+							},
+							expectedResults: {
+								sql: 'SELECT * FROM people ORDER BY last_name ASC, first_name ASC NULLS FIRST, age DESC NULLS LAST',
+								values: {}
 							}
 						}
 					}

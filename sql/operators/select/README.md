@@ -27,18 +27,18 @@ SELECT
   { [$top]}-->(SQLServer)  { DISTINCT[$distinct]}
   { SQL_CALC_FOUND_ROWS[$calcFoundRows]}-->(MySQL,MariaDB)
 
-  { <$columns>}  { [$into]}-->(MySQL,MariaDB,SQLServer)
+  { <$columns>}
+    { [$into]}-->(MySQL,MariaDB,SQLServer)
 
   { FROM [$from]}
   { [$joins]}
   { WHERE [$where]}
-  { GROUP BY [$groupBy]}  { WITH ROLLUP[$rollup]}-->(MySQL)
+  { GROUP BY [$groupBy]}
+    { WITH ROLLUP[$withRollup]}-->(MariaDB,MySQL)
   { HAVING [$having]}
   { ORDER BY [$orderBy]}
   { LIMIT [$limit]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
   { OFFSET [$offset]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
-  { INTO OUTFILE [$outfile]}-->(MySQL)
-  { INTO DUMPFILE [$dumpfile]}-->(MySQL)
 ```
 
 **Registered Helpers**
@@ -54,13 +54,11 @@ Name|Required|Public|SQL-Definition|Supported by
 [joins](./private/joins/)|*optional*|*private*|  [$joins]|
 [where](./private/where/)|*optional*|*private*| WHERE  [$where]|
 [groupBy](./private/groupBy/)|*optional*|*private*| GROUP BY  [$groupBy]|
-[rollup](./private/rollup/)|*optional*|*private*| WITH ROLLUP [$rollup]|`MySQL` 
+[withRollup](./private/withRollup/)|*optional*|*private*| WITH ROLLUP [$withRollup]|`MariaDB` `MySQL` 
 [having](./private/having/)|*optional*|*private*| HAVING  [$having]|
 [orderBy](./private/orderBy/)|*optional*|*private*| ORDER BY  [$orderBy]|
 [limit](./private/limit/)|*optional*|*private*| LIMIT  [$limit]|`MariaDB` `MySQL` `PostgreSQL` `SQLite` 
 [offset](./private/offset/)|*optional*|*private*| OFFSET  [$offset]|`MariaDB` `MySQL` `PostgreSQL` `SQLite` 
-[outfile](./private/outfile/)|*optional*|*private*| INTO OUTFILE  [$outfile]|`MySQL` 
-[dumpfile](./private/dumpfile/)|*optional*|*private*| INTO DUMPFILE  [$dumpfile]|`MySQL` 
 
 :bulb: **Example:**
 ```javascript
@@ -229,5 +227,36 @@ LIMIT
     "$1": 100,
     "$2": 10
 }
+```
+
+:bulb: **Usage WITH ROLLUP option**
+```javascript
+function() {
+    return sql.$select({
+        state: true,
+        city: true,
+        total_sales: { $sum: 'sales' },
+        $from: 'sales_pipline',
+        $groupBy: {
+            state: true,
+            city: true
+        },
+        $withRollup: true
+    });
+}
+
+// SQL output
+SELECT
+    state,
+    city,
+    SUM(sales) AS total_sales
+FROM
+    sales_pipline
+GROUP BY
+    state,
+    city WITH ROLLUP
+
+// Values
+{}
 ```
 

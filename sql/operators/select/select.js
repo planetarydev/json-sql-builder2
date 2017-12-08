@@ -5,18 +5,18 @@ const SYNTAX_SELECT =
 	{ [$top]}-->(SQLServer)	{ DISTINCT[$distinct]}
 	{ SQL_CALC_FOUND_ROWS[$calcFoundRows]}-->(MySQL,MariaDB)
 
-	{ <$columns>}	{ [$into]}-->(MySQL,MariaDB,SQLServer)
+	{ <$columns>}
+		{ [$into]}-->(MySQL,MariaDB,SQLServer)
 
 	{ FROM [$from]}
 	{ [$joins]}
 	{ WHERE [$where]}
-	{ GROUP BY [$groupBy]}	{ WITH ROLLUP[$rollup]}-->(MySQL)
+	{ GROUP BY [$groupBy]}
+		{ WITH ROLLUP[$withRollup]}-->(MariaDB,MySQL)
 	{ HAVING [$having]}
 	{ ORDER BY [$orderBy]}
 	{ LIMIT [$limit]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
-	{ OFFSET [$offset]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
-	{ INTO OUTFILE [$outfile]}-->(MySQL)
-	{ INTO DUMPFILE [$dumpfile]}-->(MySQL)`;
+	{ OFFSET [$offset]}-->(MariaDB,MySQL,PostgreSQL,SQLite)`;
 
 // Define select Operator
 class select extends SQLBuilder.SQLOperator {
@@ -33,6 +33,7 @@ class select extends SQLBuilder.SQLOperator {
 
 		if (sql.isMySQL() || sql.isMariaDB()) {
 			this.$calcFoundRows = new SQLBuilder.SQLPredefined.AcceptIfTrue(sql);
+			this.$withRollup = new SQLBuilder.SQLPredefined.AcceptIfTrue(sql);
 		}
 
 		// Add private ANSI helpers
@@ -52,6 +53,7 @@ class select extends SQLBuilder.SQLOperator {
 			sql.isSQLite()
 		) {
 			this.registerPrivateHelper('limit');
+			this.registerPrivateHelper('offset');
 		}
 	}
 
@@ -196,6 +198,7 @@ module.exports = {
 					}
 				}
 			},
+
 			'Usage with DISTINCT': function(sql) {
 				return {
 					test: function() {
@@ -234,6 +237,32 @@ module.exports = {
 							$1: 100,
 							$2: 10
 						}
+					}
+				}
+			},
+
+			'Usage WITH ROLLUP option': function(sql) {
+				return {
+					supportedBy: {
+						MySQL: true,
+						MariaDB: true
+					},
+					test: function() {
+						return sql.$select({
+							state: true,
+							city: true,
+							total_sales: { $sum: 'sales' },
+							$from: 'sales_pipline',
+							$groupBy: {
+								state: true,
+								city: true
+							},
+							$withRollup: true
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT state, city, SUM(sales) AS total_sales FROM sales_pipline GROUP BY state, city WITH ROLLUP',
+						values: {}
 					}
 				}
 			}

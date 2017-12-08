@@ -34,7 +34,7 @@ module.exports = {
 	definition: limit,
 	description: 'Specifies the `LIMIT` clause for the `SELECT` Statement.',
  	supportedBy: {
-		MySQL: 'https://dev.mysql.com/doc/refman/5.5/en/select.html#idm140536593160960',
+		MySQL: 'https://dev.mysql.com/doc/refman/5.7/en/select.html',
 		MariaDB: 'https://mariadb.com/kb/en/library/limit/',
 		PostgreSQL: 'https://www.postgresql.org/docs/9.5/static/sql-select.html#SQL-LIMIT',
 		SQLite: 'https://sqlite.org/lang_select.html#limitoffset'

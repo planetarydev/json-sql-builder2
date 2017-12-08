@@ -7,7 +7,7 @@ Specifies the `ORDER BY` clause for the `SELECT` Statement.
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/sql-select.html)
 - [SQLite](https://sqlite.org/lang_select.html)
 - [Oracle](https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_10002.htm)
-- [SQLServer](https://docs.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql)
+- [SQLServer](https://docs.microsoft.com/en-us/sql/t-sql/queries/select-order-by-clause-transact-sql)
 
 # Allowed Types and Usage
 
@@ -18,6 +18,7 @@ The Usage of `orderBy` as **Object** is restricted to childs have the following 
 - Boolean
 - Number
 - String
+- Object
 
 ## as Object :arrow_right: Boolean:
 
@@ -316,6 +317,65 @@ FROM
 ORDER BY
     last_name ASC,
     age DESC
+
+// Values
+{}
+```
+## as Object :arrow_right: Object:
+
+Usage of `orderBy` as **Object** with a child of Type **Object** :
+
+**Syntax:**
+
+```javascript
+$orderBy: {
+    "<identifier | $Helper | $operator>": { ... } [, ... ]
+}
+```
+
+**SQL-Definition:**
+```javascript
+<key-ident>{ ASC[$asc]}{ DESC[$desc]}
+	{ NULLS [$nullsFirst]}-->(Oracle,PostgreSQL)
+	{ NULLS [$nullsLast]}-->(Oracle,PostgreSQL)
+	[ , ... ]
+```
+
+**Registered Helpers**
+
+Name|Required|Public|SQL-Definition|Supported by
+:---|:------:|:----:|:-------------|:-----------
+[asc](./private/asc/)|*optional*|*private*| ASC [$asc]|
+[desc](./private/desc/)|*optional*|*private*| DESC [$desc]|
+[nullsFirst](./private/nullsFirst/)|*optional*|*private*| NULLS  [$nullsFirst]|`Oracle` `PostgreSQL` 
+[nullsLast](./private/nullsLast/)|*optional*|*private*| NULLS  [$nullsLast]|`Oracle` `PostgreSQL` 
+
+:bulb: **Example:**
+```javascript
+function() {
+    let query = sql.build({
+        $select: {
+            $from: 'people',
+            $orderBy: {
+                last_name: true,
+                first_name: { $asc: true, $nullsFirst: true },
+                age: { $desc: true, $nullsLast: true }
+            }
+        }
+    });
+
+    return query;
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people
+ORDER BY
+    last_name ASC,
+    first_name ASC NULLS FIRST,
+    age DESC NULLS LAST
 
 // Values
 {}

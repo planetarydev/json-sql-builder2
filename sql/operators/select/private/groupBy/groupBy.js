@@ -4,7 +4,7 @@ class groupBy extends SQLBuilder.SQLHelper {
 	constructor(sql){
 		super(sql);
 
-		this.Types({
+		let definedTypes = {
 			Object: {
 				eachItemOf: {
 					Boolean: {
@@ -27,7 +27,19 @@ class groupBy extends SQLBuilder.SQLHelper {
 				}
 			},
 			String: { syntax: this.Syntax('<value-ident>') }
-		});
+		};
+
+		// the ROLLUP, CUBE and GROUPING SETS option only
+		// supported by SQLServer, PostgreSQL and Oracle
+		if (sql.isSQLServer() || sql.isPostgreSQL() || sql.isOracle()) {
+			definedTypes.Object.eachItemOf.Object = { syntax: this.Syntax('{ROLLUP ([$rollup])}{CUBE ([$cube])}{GROUPING SETS ([$groupingSets])}[ , ... ]') };
+
+			this.registerPrivateHelper('rollup');
+			this.registerPrivateHelper('cube');
+			this.registerPrivateHelper('groupingSets');
+		}
+
+		this.Types(definedTypes);
 	}
 }
 
@@ -45,6 +57,40 @@ module.exports = {
 	examples: {
 		Object: {
 			eachItemOf: {
+				Object: {
+					"Basic Usage": function(sql) {
+						return {
+							supportedBy: {
+								SQLServer: true,
+								PostgreSQL: true,
+								Oracle: true
+							},
+							test: function(){
+								return sql.build({
+									$select: {
+										state: 1,
+										city: 1,
+										total_sales: sql.sum('sales'),
+
+										$from: 'sales_pipline',
+										$groupBy: {
+											myRollupGroup: {
+												$rollup: {
+													state: 1,
+													city: 1
+												}
+											}
+										}
+									}
+								});
+							},
+							expectedResults: {
+								sql: 'SELECT state, city, SUM(sales) AS total_sales FROM sales_pipline GROUP BY ROLLUP (state, city)',
+								values:{}
+							}
+						}
+					}
+				},
 				Boolean: {
 					true: {
 						"Basic Usage": function(sql) {
@@ -63,7 +109,7 @@ module.exports = {
 								},
 								expectedResults: {
 									sql: 'SELECT city, SUM(salary) AS total_salary_by_city FROM people GROUP BY city',
-									values:{}
+									values: {}
 								}
 							}
 						}

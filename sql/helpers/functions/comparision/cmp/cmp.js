@@ -9,9 +9,9 @@ class cmp extends SQLBuilder.SQLHelper {
 		});
 
 		this.registerPrivateHelper('comparator');
-		
-		this.$value = new SQLBuilder.SQLPredefined.PrimitivValueParam(sql);
-		this.$other = new SQLBuilder.SQLPredefined.PrimitivValueParam(sql);
+
+		this.$value = new SQLBuilder.SQLPredefined.PrimitiveValueParam(sql);
+		this.$other = new SQLBuilder.SQLPredefined.PrimitiveValueParam(sql);
 	}
 }
 
