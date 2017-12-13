@@ -27,6 +27,7 @@ Specifies the `JOIN` operator for the `FROM` clause.
 The Usage of `join` as **Object** is restricted to childs have the following Type:
 
 - Object
+- Function
 
 ## as Object :arrow_right: Object:
 
@@ -43,13 +44,20 @@ $join: {
 **SQL-Definition:**
 ```javascript
 
-{INNER JOIN [$inner] AS <key-ident>}
-{LEFT JOIN [$left] AS <key-ident>}
-{RIGHT JOIN [$right] AS <key-ident>}
-{FULL JOIN [$full] AS <key-ident>}
-{CROSS JOIN [$cross] AS <key-ident>}-->(PostgreSQL)
-	{ ON ([$on])}
-	{ USING [$using]}
+{*INNER JOIN [$innerJoin]*}
+{*LEFT JOIN [$leftJoin]*}
+{*RIGHT JOIN [$rightJoin]*}
+{*FULL JOIN [$fullOuterJoin]*}
+{*CROSS JOIN [$crossJoin]*}
+{CROSS APPLY [$crossApply]}-->(SQLServer)
+{*INNER|LEFT|RIGHT|FULL JOIN LATERAL [$lateral]*}-->(PostgreSQL)
+{CROSS JOIN [$cross]}
+{INNER JOIN [$inner]}
+{LEFT JOIN [$left]}
+{RIGHT JOIN [$right]}
+{FULL JOIN [$full]}
+	{ ON [$on]}
+	{ USING ([$using])}
 
 [  ... ]
 ```
@@ -58,13 +66,20 @@ $join: {
 
 Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
-[inner](./private/inner/)|*optional*|*private*|INNER JOIN  [$inner] AS <key-ident>|
-[left](./private/left/)|*optional*|*private*|LEFT JOIN  [$left] AS <key-ident>|
-[right](./private/right/)|*optional*|*private*|RIGHT JOIN  [$right] AS <key-ident>|
-[full](./private/full/)|*optional*|*private*|FULL JOIN  [$full] AS <key-ident>|
-[cross](./private/cross/)|*optional*|*private*|CROSS JOIN  [$cross] AS <key-ident>|`PostgreSQL` 
-[on](./private/on/)|*optional*|*private*| ON ( [$on])|
-[using](./private/using/)|*optional*|*private*| USING  [$using]|
+[innerJoin](../../../../helpers/join/innerJoin/)|*optional*|:heavy_check_mark:||
+[leftJoin](../../../../helpers/join/leftJoin/)|*optional*|:heavy_check_mark:||
+[rightJoin](../../../../helpers/join/rightJoin/)|*optional*|:heavy_check_mark:||
+[fullOuterJoin](../../../../helpers/join/fullOuterJoin/)|*optional*|:heavy_check_mark:||
+[crossJoin](../../../../helpers/join/crossJoin/)|*optional*|:heavy_check_mark:||
+[crossApply](./private/crossApply/)|*optional*|*private*|CROSS APPLY  [$crossApply]|`SQLServer` 
+[lateral](./private/lateral/)|*optional*|*private*||`PostgreSQL` 
+[cross](./private/cross/)|*optional*|*private*|CROSS JOIN  [$cross]|
+[inner](./private/inner/)|*optional*|*private*|INNER JOIN  [$inner]|
+[left](./private/left/)|*optional*|*private*|LEFT JOIN  [$left]|
+[right](./private/right/)|*optional*|*private*|RIGHT JOIN  [$right]|
+[full](./private/full/)|*optional*|*private*|FULL JOIN  [$full]|
+[on](./private/on/)|*optional*|*private*| ON  [$on]|
+[using](./private/using/)|*optional*|*private*| USING ( [$using])|
 
 :bulb: **Example:**
 ```javascript
@@ -79,16 +94,16 @@ function() {
             },
             $from: 'people',
             $join: {
-                skills: {
-                    $inner: 'people_skills',
+                people_skills: {
+                    $inner: 'skills',
                     $on: {
                         'skills.people_id': { $eq: '~~people.people_id' }
                     }
                 },
                 ratings: {
-                    $left: 'skill_ratings',
-                    $on: {
-                        'skills.rate_id': '~~ratings.rate_id'
+                    $leftJoin: {
+                        $table: 'skill_ratings',
+                        $on: { 'skills.rate_id': '~~ratings.rate_id' }
                     }
                 }
             },
@@ -108,8 +123,8 @@ SELECT
     ratings.description
 FROM
     people
-    INNER JOIN people_skills AS skills ON (skills.people_id = people.people_id)
-    LEFT JOIN skill_ratings AS ratings ON (skills.rate_id = ratings.rate_id)
+    INNER JOIN people_skills AS skills ON skills.people_id = people.people_id
+    LEFT JOIN skill_ratings AS ratings ON skills.rate_id = ratings.rate_id
 WHERE
     skills.rate > $1
 
@@ -118,3 +133,135 @@ WHERE
     "$1": 50
 }
 ```
+## as Object :arrow_right: Function:
+
+Usage of `join` as **Object** with a child of Type **Function** :
+
+**Syntax:**
+
+```javascript
+$join: {
+    "<identifier | $Helper | $operator>": sql.<callee>([params])
+}
+```
+
+**SQL-Definition:**
+```javascript
+<value>[  ... ]
+```
+
+:bulb: **Example:**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $columns: {
+                'people.first_name': true,
+                'people.last_name': true,
+                'skills.description': true,
+                'ratings.description': true
+            },
+            $from: 'people',
+            $join: {
+                people_skills: {
+                    $inner: 'skills',
+                    $on: {
+                        'skills.people_id': { $eq: '~~people.people_id' }
+                    }
+                },
+                ratings: sql.leftJoin('skill_ratings', { $on: { 'skills.rate_id': '~~ratings.rate_id' } })
+            },
+            $where: {
+                'skills.rate': { $gt: 50 }
+            }
+
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    ratings.description
+FROM
+    people
+    INNER JOIN people_skills AS skills ON skills.people_id = people.people_id
+    LEFT JOIN skill_ratings AS ratings ON skills.rate_id = ratings.rate_id
+WHERE
+    skills.rate > $1
+
+// Values
+{
+    "$1": 50
+}
+```
+## Further Examples
+
+:bulb: **Join using sub-selects**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $columns: {
+                'people.first_name': true,
+                'people.last_name': true,
+                'skills.description': true,
+                'ratings.description': true
+            },
+            $from: 'people',
+            $join: {
+                people_skills: {
+                    $inner: 'skills',
+                    $on: {
+                        'skills.people_id': { $eq: '~~people.people_id' }
+                    }
+                },
+                ratings: {
+                    $leftJoin: {
+                        $select: {
+                            $from: 'skill_ratings',
+                            $where: {
+                                'is_people_skill': 1
+                            }
+                        },
+                        $on: { 'skills.rate_id': '~~ratings.rate_id' }
+                    }
+                }
+            },
+            $where: {
+                'skills.rate': { $gt: 50 }
+            }
+
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    ratings.description
+FROM
+    people
+    INNER JOIN people_skills AS skills ON skills.people_id = people.people_id
+    LEFT JOIN (
+        SELECT
+            *
+        FROM
+            skill_ratings
+        WHERE
+            is_people_skill = $1
+    ) AS ratings ON skills.rate_id = ratings.rate_id
+WHERE
+    skills.rate > $2
+
+// Values
+{
+    "$1": 1,
+    "$2": 50
+}
+```
+

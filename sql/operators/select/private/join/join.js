@@ -5,13 +5,20 @@ class join extends SQLBuilder.SQLHelper {
 		super(sql);
 
 		let SYNTAX = `
-{INNER JOIN [$inner] AS <key-ident>}
-{LEFT OUTER JOIN [$left] AS <key-ident>}
-{RIGHT OUTER JOIN [$right] AS <key-ident>}
-{FULL OUTER JOIN [$full] AS <key-ident>}
-{CROSS JOIN [$cross] AS <key-ident>}-->(PostgreSQL)
-	{ ON ([$on])}
-	{ USING [$using]}
+{*INNER JOIN [$innerJoin]*}
+{*LEFT OUTER JOIN [$leftJoin]*}
+{*RIGHT OUTER JOIN [$rightJoin]*}
+{*FULL OUTER JOIN [$fullOuterJoin]*}
+{*CROSS JOIN [$crossJoin]*}
+{CROSS APPLY [$crossApply]}-->(SQLServer)
+{*INNER|LEFT|RIGHT|FULL JOIN LATERAL [$lateral]*}-->(PostgreSQL)
+{CROSS JOIN [$cross]}
+{INNER JOIN [$inner]}
+{LEFT OUTER JOIN [$left]}
+{RIGHT OUTER JOIN [$right]}
+{FULL OUTER JOIN [$full]}
+	{ ON [$on]}
+	{ USING ([$using])}
 
 [  ... ]`;
 
@@ -23,17 +30,21 @@ class join extends SQLBuilder.SQLHelper {
 		this.Types({
 			Object: {
 				eachItemOf: {
-					Object: { syntax: this.Syntax(SYNTAX) }
+					Object: { syntax: this.Syntax(SYNTAX) },
+					Function: { syntax: this.Syntax('<value>[  ... ]') }
 				}
 			}
 		});
 
+		this.registerPrivateHelper('lateral');
+		this.registerPrivateHelper('cross');
 		this.registerPrivateHelper('inner');
 		this.registerPrivateHelper('left');
 		this.registerPrivateHelper('right');
 		this.registerPrivateHelper('full');
 
 		this.registerPrivateHelper('on');
+		this.registerPrivateHelper('using');
 	}
 }
 
@@ -76,16 +87,16 @@ module.exports = {
 										},
 										$from: 'people',
 										$join: {
-											skills: {
-												$inner: 'people_skills',
+											people_skills: {
+												$inner: 'skills',
 												$on: {
 													'skills.people_id': { $eq: '~~people.people_id' }
 												}
 											},
 											ratings: {
-												$left: 'skill_ratings',
-												$on: {
-													'skills.rate_id': '~~ratings.rate_id'
+												$leftJoin: {
+													$table: 'skill_ratings',
+													$on: { 'skills.rate_id': '~~ratings.rate_id' }
 												}
 											}
 										},
@@ -97,7 +108,92 @@ module.exports = {
 								});
 							},
 							expectedResults: {
-								sql: 'SELECT people.first_name, people.last_name, skills.description, ratings.description FROM people INNER JOIN people_skills AS skills ON (skills.people_id = people.people_id) LEFT JOIN skill_ratings AS ratings ON (skills.rate_id = ratings.rate_id) WHERE skills.rate > $1',
+								sql: 'SELECT people.first_name, people.last_name, skills.description, ratings.description FROM people INNER JOIN people_skills AS skills ON skills.people_id = people.people_id LEFT JOIN skill_ratings AS ratings ON skills.rate_id = ratings.rate_id WHERE skills.rate > $1',
+								values:{
+									$1: 50
+								}
+							}
+						}
+					},
+					'Join using sub-selects': function(sql) {
+						return {
+							test: function(){
+								return sql.build({
+									$select: {
+										$columns: {
+											'people.first_name': true,
+											'people.last_name': true,
+											'skills.description': true,
+											'ratings.description': true
+										},
+										$from: 'people',
+										$join: {
+											people_skills: {
+												$inner: 'skills',
+												$on: {
+													'skills.people_id': { $eq: '~~people.people_id' }
+												}
+											},
+											ratings: {
+												$leftJoin: {
+													$select: {
+														$from: 'skill_ratings',
+														$where: {
+															'is_people_skill': 1
+														}
+													},
+													$on: { 'skills.rate_id': '~~ratings.rate_id' }
+												}
+											}
+										},
+										$where: {
+											'skills.rate': { $gt: 50 }
+										}
+
+									}
+								});
+							},
+							expectedResults: {
+								sql: 'SELECT people.first_name, people.last_name, skills.description, ratings.description FROM people INNER JOIN people_skills AS skills ON skills.people_id = people.people_id LEFT JOIN (SELECT * FROM skill_ratings WHERE is_people_skill = $1) AS ratings ON skills.rate_id = ratings.rate_id WHERE skills.rate > $2',
+								values:{
+									$1: 1,
+									$2: 50
+								}
+							}
+						}
+					}
+				},
+				Function: {
+					'Basic Usage': function(sql) {
+						return {
+							test: function(){
+								return sql.build({
+									$select: {
+										$columns: {
+											'people.first_name': true,
+											'people.last_name': true,
+											'skills.description': true,
+											'ratings.description': true
+										},
+										$from: 'people',
+										$join: {
+											people_skills: {
+												$inner: 'skills',
+												$on: {
+													'skills.people_id': { $eq: '~~people.people_id' }
+												}
+											},
+											ratings: sql.leftJoin('skill_ratings', { $on: { 'skills.rate_id': '~~ratings.rate_id' } })
+										},
+										$where: {
+											'skills.rate': { $gt: 50 }
+										}
+
+									}
+								});
+							},
+							expectedResults: {
+								sql: 'SELECT people.first_name, people.last_name, skills.description, ratings.description FROM people INNER JOIN people_skills AS skills ON skills.people_id = people.people_id LEFT JOIN skill_ratings AS ratings ON skills.rate_id = ratings.rate_id WHERE skills.rate > $1',
 								values:{
 									$1: 50
 								}

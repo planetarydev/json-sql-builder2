@@ -1,5 +1,5 @@
-# full Helper
-Specifies the `FULL OUTER JOIN` operator for the `FROM` clause.
+# cross Helper
+Specifies the `CROSS JOIN` operator for the `FROM` clause.
 
 #### Supported by
 - [MySQL](https://dev.mysql.com/doc/refman/5.7/en/select.html)
@@ -13,12 +13,12 @@ Specifies the `FULL OUTER JOIN` operator for the `FROM` clause.
 
 ## as String:
 
-Usage of `full` as **String** with the following Syntax:
+Usage of `cross` as **String** with the following Syntax:
 
 **Syntax:**
 
 ```javascript
-$full: < String >
+$cross: < String >
 ```
 
 **SQL-Definition:**
@@ -39,12 +39,7 @@ function() {
             },
             $from: 'people',
             $join: {
-                people_skills: {
-                    $full: 'skills',
-                    $on: {
-                        'skills.people_id': { $eq: '~~people.people_id' }
-                    }
-                }
+                people_skills: { $cross: 'skills' }
             },
             $where: {
                 'skills.rate': { $gt: 50 }
@@ -60,8 +55,8 @@ SELECT
     skills.description,
     skills.rate
 FROM
-    people FULL
-    JOIN people_skills AS skills ON skills.people_id = people.people_id
+    people
+    CROSS JOIN people_skills AS skills
 WHERE
     skills.rate > $1
 
@@ -73,12 +68,12 @@ WHERE
 
 ## as Object:
 
-Usage of `full` as **Object** with the following Syntax:
+Usage of `cross` as **Object** with the following Syntax:
 
 **Syntax:**
 
 ```javascript
-$full: { ... }
+$cross: { ... }
 ```
 
 **SQL-Definition:**
@@ -100,16 +95,13 @@ function() {
             $from: 'people',
             $join: {
                 skills: {
-                    $right: {
+                    $cross: {
                         $select: {
                             $from: 'people_skills',
                             $where: {
                                 is_skill: 1
                             }
                         }
-                    },
-                    $on: {
-                        'skills.people_id': { $eq: '~~people.people_id' }
                     }
                 }
             },
@@ -129,14 +121,14 @@ SELECT
     skills.rate
 FROM
     people
-    RIGHT JOIN (
+    CROSS JOIN (
         SELECT
             *
         FROM
             people_skills
         WHERE
             is_skill = $1
-    ) AS skills ON skills.people_id = people.people_id
+    ) AS skills
 WHERE
     skills.rate > $2
 
@@ -149,12 +141,12 @@ WHERE
 
 ## as Function:
 
-Usage of `full` as **Function** with the following Syntax:
+Usage of `cross` as **Function** with the following Syntax:
 
 **Syntax:**
 
 ```javascript
-$full: sql.<callee>([params])
+$cross: sql.<callee>([params])
 ```
 
 **SQL-Definition:**
@@ -176,15 +168,12 @@ function() {
             $from: 'people',
             $join: {
                 skills: {
-                    $right: sql.select('*', {
+                    $cross: sql.select('*', {
                         $from: 'people_skills',
                         $where: {
                             is_skill: 1
                         }
-                    }),
-                    $on: {
-                        'skills.people_id': { $eq: '~~people.people_id' }
-                    }
+                    })
                 }
             },
             $where: {
@@ -203,14 +192,14 @@ SELECT
     skills.rate
 FROM
     people
-    RIGHT JOIN (
+    CROSS JOIN (
         SELECT
             *
         FROM
             people_skills
         WHERE
             is_skill = $1
-    ) AS skills ON skills.people_id = people.people_id
+    ) AS skills
 WHERE
     skills.rate > $2
 

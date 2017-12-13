@@ -23,7 +23,7 @@ $inner: < String >
 
 **SQL-Definition:**
 ```javascript
-<value-ident>
+<key-ident> AS <value-ident>
 ```
 
 :bulb: **Example:**
@@ -39,8 +39,8 @@ function() {
             },
             $from: 'people',
             $join: {
-                skills: {
-                    $inner: 'people_skills',
+                people_skills: {
+                    $inner: 'skills',
                     $on: {
                         'skills.people_id': { $eq: '~~people.people_id' }
                     }
@@ -62,7 +62,7 @@ SELECT
     skills.rate
 FROM
     people
-    INNER JOIN people_skills AS skills ON (skills.people_id = people.people_id)
+    INNER JOIN people_skills AS skills ON skills.people_id = people.people_id
 WHERE
     skills.rate > $1
 
@@ -84,7 +84,7 @@ $inner: { ... }
 
 **SQL-Definition:**
 ```javascript
-<value>
+<value> AS <identifier>
 ```
 
 :bulb: **Example:**
@@ -137,7 +137,7 @@ FROM
             people_skills
         WHERE
             is_skill = $1
-    ) AS skills ON (skills.people_id = people.people_id)
+    ) AS skills ON skills.people_id = people.people_id
 WHERE
     skills.rate > $2
 
@@ -160,7 +160,7 @@ $inner: sql.<callee>([params])
 
 **SQL-Definition:**
 ```javascript
-<value>
+<value> AS <key-ident>
 ```
 
 :bulb: **Example:**
@@ -211,7 +211,7 @@ FROM
             people_skills
         WHERE
             is_skill = $1
-    ) AS skills ON (skills.people_id = people.people_id)
+    ) AS skills ON skills.people_id = people.people_id
 WHERE
     skills.rate > $2
 

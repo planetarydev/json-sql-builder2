@@ -2,15 +2,15 @@
 
 const joinHelper = require('../.joinHelper');
 
-class right extends joinHelper {
+class cross extends joinHelper {
 	constructor(sql){
-		super(sql, 'right');
+		super(sql, 'cross');
 	}
 }
 
 module.exports = {
-	definition: right,
-	description: 'Specifies the `RIGHT OUTER JOIN` operator for the `FROM` clause.',
+	definition: cross,
+	description: 'Specifies the `CROSS JOIN` operator for the `FROM` clause.',
 	supportedBy: {
 		MySQL: 'https://dev.mysql.com/doc/refman/5.7/en/select.html',
 		MariaDB: 'https://mariadb.com/kb/en/library/select/',
@@ -34,12 +34,7 @@ module.exports = {
 								},
 								$from: 'people',
 								$join: {
-									people_skills: {
-										$right: 'skills',
-										$on: {
-											'skills.people_id': { $eq: '~~people.people_id' }
-										}
-									}
+									people_skills: { $cross: 'skills' }
 								},
 								$where: {
 									'skills.rate': { $gt: 50 }
@@ -48,7 +43,7 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people RIGHT JOIN people_skills AS skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people CROSS JOIN people_skills AS skills WHERE skills.rate > $1',
 						values:{
 							$1: 50
 						}
@@ -71,16 +66,13 @@ module.exports = {
 								$from: 'people',
 								$join: {
 									skills: {
-										$right: {
+										$cross: {
 											$select: {
 												$from: 'people_skills',
 												$where: {
 													is_skill: 1
 												}
 											}
-										},
-										$on: {
-											'skills.people_id': { $eq: '~~people.people_id' }
 										}
 									}
 								},
@@ -92,7 +84,7 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people RIGHT JOIN (SELECT * FROM people_skills WHERE is_skill = $1) AS skills ON skills.people_id = people.people_id WHERE skills.rate > $2',
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people CROSS JOIN (SELECT * FROM people_skills WHERE is_skill = $1) AS skills WHERE skills.rate > $2',
 						values:{
 							$1: 1,
 							$2: 50
@@ -116,15 +108,12 @@ module.exports = {
 								$from: 'people',
 								$join: {
 									skills: {
-										$right: sql.select('*', {
+										$cross: sql.select('*', {
 											$from: 'people_skills',
 											$where: {
 												is_skill: 1
 											}
-										}),
-										$on: {
-											'skills.people_id': { $eq: '~~people.people_id' }
-										}
+										})
 									}
 								},
 								$where: {
@@ -135,7 +124,7 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people RIGHT JOIN (SELECT * FROM people_skills WHERE is_skill = $1) AS skills ON skills.people_id = people.people_id WHERE skills.rate > $2',
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people CROSS JOIN (SELECT * FROM people_skills WHERE is_skill = $1) AS skills WHERE skills.rate > $2',
 						values:{
 							$1: 1,
 							$2: 50

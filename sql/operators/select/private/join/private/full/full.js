@@ -34,8 +34,8 @@ module.exports = {
 								},
 								$from: 'people',
 								$join: {
-									skills: {
-										$full: 'people_skills',
+									people_skills: {
+										$full: 'skills',
 										$on: {
 											'skills.people_id': { $eq: '~~people.people_id' }
 										}
@@ -48,7 +48,7 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people FULL JOIN people_skills AS skills ON (skills.people_id = people.people_id) WHERE skills.rate > $1',
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people FULL JOIN people_skills AS skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
 						values:{
 							$1: 50
 						}
@@ -92,7 +92,7 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people RIGHT JOIN (SELECT * FROM people_skills WHERE is_skill = $1) AS skills ON (skills.people_id = people.people_id) WHERE skills.rate > $2',
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people RIGHT JOIN (SELECT * FROM people_skills WHERE is_skill = $1) AS skills ON skills.people_id = people.people_id WHERE skills.rate > $2',
 						values:{
 							$1: 1,
 							$2: 50
@@ -135,7 +135,7 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people RIGHT JOIN (SELECT * FROM people_skills WHERE is_skill = $1) AS skills ON (skills.people_id = people.people_id) WHERE skills.rate > $2',
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people RIGHT JOIN (SELECT * FROM people_skills WHERE is_skill = $1) AS skills ON skills.people_id = people.people_id WHERE skills.rate > $2',
 						values:{
 							$1: 1,
 							$2: 50
