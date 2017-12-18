@@ -32,7 +32,7 @@ Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
 [lateral](./private/lateral/)|*optional*|*private*| LATERAL [$lateral]|`PostgreSQL` 
 [table](./private/table/)|*optional*|*private*|  [$table]|
-[select](../../../../sql/operators/select/)|*optional*|:heavy_check_mark:|  [$select]|
+[select](../../../operators/select/)|*optional*|:heavy_check_mark:|  [$select]|
 [on](./private/on/)|*optional*|*private*| ON  [$on]|
 [using](./private/using/)|*optional*|*private*| USING  [$using]|
 

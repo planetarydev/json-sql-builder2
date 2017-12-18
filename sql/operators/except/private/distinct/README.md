@@ -42,10 +42,10 @@ $distinct: [
 
 Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
-[select](../../../../sql/operators/select/)|*optional*|:heavy_check_mark:||
-[union](../../../../sql/operators/union/)|*optional*|:heavy_check_mark:| [$union]|
-[intersect](../../../../sql/operators/intersect/)|*optional*|:heavy_check_mark:| [$intersect]|
-[except](../../../../sql/operators/except/)|*optional*|:heavy_check_mark:| [$except]|
+[select](../../../operators/select/)|*optional*|:heavy_check_mark:||
+[union](../../../operators/union/)|*optional*|:heavy_check_mark:| [$union]|
+[intersect](../../../operators/intersect/)|*optional*|:heavy_check_mark:| [$intersect]|
+[except](../../../operators/except/)|*optional*|:heavy_check_mark:| [$except]|
 
 :bulb: **Example:**
 ```javascript
