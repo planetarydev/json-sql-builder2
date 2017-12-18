@@ -2,22 +2,22 @@
 
 const joinHelper = require('../.joinhelper');
 
-class crossJoin extends joinHelper.definition {
+class fullOuterJoin extends joinHelper.definition {
 	constructor(sql){
-		super(sql, 'CROSS JOIN');
+		super(sql, 'FULL OUTER JOIN');
 	}
 }
 
 module.exports = {
-	definition: crossJoin,
-	description: 'Specifies the `CROSS JOIN` operator for the `FROM` clause.',
+	definition: fullOuterJoin,
+	description: 'Specifies the `FULL OUTER JOIN` operator for the `FROM` clause.',
 	supportedBy: {
 		MySQL: 'https://dev.mysql.com/doc/refman/5.7/en/select.html',
 		MariaDB: 'https://mariadb.com/kb/en/library/select/',
 		PostgreSQL: 'https://www.postgresql.org/docs/9.5/static/sql-select.html',
 		SQLite: 'https://sqlite.org/lang_select.html',
 		Oracle: 'https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_10002.htm',
-		SQLServer: 'https://docs.microsoft.com/en-us/sql/t-sql/queries/select-having-transact-sql'
+		SQLServer: 'https://docs.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql'
 	},
 	examples: {
 		Object: {
@@ -34,7 +34,12 @@ module.exports = {
 								},
 								$from: 'people',
 								$join: {
-									skills: { $crossJoin: { $table: 'people_skills' } }
+									skills: {
+										$fullOuterJoin: {
+											$table: 'people_skills',
+											$on: { 'skills.people_id': { $eq: '~~people.people_id' } },
+										}
+									}
 
 								},
 								$where: {
@@ -44,7 +49,7 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people CROSS JOIN people_skills AS skills WHERE skills.rate > $1',
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people FULL JOIN people_skills AS skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
 						values:{
 							$1: 50
 						}
@@ -64,7 +69,9 @@ module.exports = {
 								},
 								$from: 'people',
 								$join: {
-									skills: sql.crossJoin('people_skills')
+									skills: sql.fullOuterJoin('people_skills', {
+										$on: { 'skills.people_id': { $eq: '~~people.people_id' } }
+									})
 								},
 								$where: {
 									'skills.rate': { $gt: 50 }
@@ -73,7 +80,7 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people CROSS JOIN people_skills AS skills WHERE skills.rate > $1',
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people FULL JOIN people_skills AS skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
 						values:{
 							$1: 50
 						}

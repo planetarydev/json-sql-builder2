@@ -1,5 +1,5 @@
-# innerJoin Helper
-Specifies the `INNER JOIN` operator for the `FROM` clause.
+# crossJoin Helper
+Specifies the `CROSS JOIN` operator for the `FROM` clause.
 
 #### Supported by
 - [MySQL](https://dev.mysql.com/doc/refman/5.7/en/select.html)
@@ -7,23 +7,23 @@ Specifies the `INNER JOIN` operator for the `FROM` clause.
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/sql-select.html)
 - [SQLite](https://sqlite.org/lang_select.html)
 - [Oracle](https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_10002.htm)
-- [SQLServer](https://docs.microsoft.com/en-us/sql/t-sql/queries/select-having-transact-sql)
+- [SQLServer](https://docs.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql)
 
 # Allowed Types and Usage
 
 ## as Object:
 
-Usage of `innerJoin` as **Object** with the following Syntax:
+Usage of `crossJoin` as **Object** with the following Syntax:
 
 **Syntax:**
 
 ```javascript
-$innerJoin: { ... }
+$crossJoin: { ... }
 ```
 
 **SQL-Definition:**
 ```javascript
-INNER JOIN{ LATERAL[$lateral]}-->(PostgreSQL){ [$table]}{ [$select]} AS <key-ident>{ ON [$on]}{ USING [$using]}
+CROSS JOIN{ LATERAL[$lateral]}-->(PostgreSQL){ [$table]}{ [$select]} AS <key-ident>{ ON [$on]}{ USING [$using]}
 ```
 
 **Registered Helpers**
@@ -49,12 +49,7 @@ function() {
             },
             $from: 'people',
             $join: {
-                skills: {
-                    $innerJoin: {
-                        $table: 'people_skills',
-                        $on: { 'skills.people_id': { $eq: '~~people.people_id' } },
-                    }
-                }
+                skills: { $crossJoin: { $table: 'people_skills' } }
 
             },
             $where: {
@@ -72,7 +67,7 @@ SELECT
     skills.rate
 FROM
     people
-    INNER JOIN people_skills AS skills ON skills.people_id = people.people_id
+    CROSS JOIN people_skills AS skills
 WHERE
     skills.rate > $1
 
@@ -97,9 +92,7 @@ function() {
             },
             $from: 'people',
             $join: {
-                skills: sql.innerJoin('people_skills', {
-                    $on: { 'skills.people_id': { $eq: '~~people.people_id' } }
-                })
+                skills: sql.crossJoin('people_skills')
             },
             $where: {
                 'skills.rate': { $gt: 50 }
@@ -116,7 +109,7 @@ SELECT
     skills.rate
 FROM
     people
-    INNER JOIN people_skills AS skills ON skills.people_id = people.people_id
+    CROSS JOIN people_skills AS skills
 WHERE
     skills.rate > $1
 

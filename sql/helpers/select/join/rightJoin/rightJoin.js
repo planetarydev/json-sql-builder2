@@ -2,22 +2,22 @@
 
 const joinHelper = require('../.joinhelper');
 
-class leftJoin extends joinHelper.definition {
+class rightJoin extends joinHelper.definition {
 	constructor(sql){
-		super(sql, 'LEFT OUTER JOIN');
+		super(sql, 'RIGHT OUTER JOIN');
 	}
 }
 
 module.exports = {
-	definition: leftJoin,
-	description: 'Specifies the `LEFT JOIN` operator for the `FROM` clause.',
+	definition: rightJoin,
+	description: 'Specifies the `RIGHT JOIN` operator for the `FROM` clause.',
 	supportedBy: {
 		MySQL: 'https://dev.mysql.com/doc/refman/5.7/en/select.html',
 		MariaDB: 'https://mariadb.com/kb/en/library/select/',
 		PostgreSQL: 'https://www.postgresql.org/docs/9.5/static/sql-select.html',
 		SQLite: 'https://sqlite.org/lang_select.html',
 		Oracle: 'https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_10002.htm',
-		SQLServer: 'https://docs.microsoft.com/en-us/sql/t-sql/queries/select-having-transact-sql'
+		SQLServer: 'https://docs.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql'
 	},
 	examples: {
 		Object: {
@@ -35,7 +35,7 @@ module.exports = {
 								$from: 'people',
 								$join: {
 									skills: {
-										$leftJoin: {
+										$rightJoin: {
 											$table: 'people_skills',
 											$on: { 'skills.people_id': { $eq: '~~people.people_id' } },
 										}
@@ -49,7 +49,7 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people LEFT JOIN people_skills AS skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people RIGHT JOIN people_skills AS skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
 						values:{
 							$1: 50
 						}
@@ -69,7 +69,7 @@ module.exports = {
 								},
 								$from: 'people',
 								$join: {
-									skills: sql.leftJoin('people_skills', {
+									skills: sql.rightJoin('people_skills', {
 										$on: { 'skills.people_id': { $eq: '~~people.people_id' } }
 									})
 								},
@@ -80,7 +80,7 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people LEFT JOIN people_skills AS skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people RIGHT JOIN people_skills AS skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
 						values:{
 							$1: 50
 						}

@@ -44,7 +44,7 @@ class select extends SQLBuilder.SQLOperator {
 		this.registerPrivateHelper('where');
 		this.registerPrivateHelper('groupBy');
 		this.registerPrivateHelper('having');
-		this.registerPrivateHelper('orderBy');
+		//this.registerPrivateHelper('orderBy');
 
 		// Add specific Helpers depending on the current SQL-Language dialect
 		if (sql.isPostgreSQL() ||
@@ -52,8 +52,8 @@ class select extends SQLBuilder.SQLOperator {
 			sql.isMariaDB() ||
 			sql.isSQLite()
 		) {
-			this.registerPrivateHelper('limit');
-			this.registerPrivateHelper('offset');
+			//this.registerPrivateHelper('limit');
+			//this.registerPrivateHelper('offset');
 		}
 	}
 
@@ -80,8 +80,12 @@ class select extends SQLBuilder.SQLOperator {
 	}
 
 	postBuild(result, type, itemType){
-		// check for a subquery and use round bracket on sub-selects
-		if (this.isCurrent('$select') && !this.isPreviousHelper('$in') && !this.isPreviousHelper('$nin')) {
+		// check for a type of union or a subquery and use round bracket on sub-selects
+		if (this.isCurrent('$union') ||
+			this.isCurrent('$intersect') ||
+			this.isCurrent('$except') ||
+			(this.isCurrent('$select') && !this.isPreviousHelper('$in') && !this.isPreviousHelper('$nin'))
+		) {
 			result = '(' + result + ')';
 		}
 		return result;

@@ -2,22 +2,22 @@
 
 const joinHelper = require('../.joinhelper');
 
-class fullOuterJoin extends joinHelper.definition {
+class innerJoin extends joinHelper.definition {
 	constructor(sql){
-		super(sql, 'FULL OUTER JOIN');
+		super(sql, 'INNER JOIN');
 	}
 }
 
 module.exports = {
-	definition: fullOuterJoin,
-	description: 'Specifies the `FULL OUTER JOIN` operator for the `FROM` clause.',
+	definition: innerJoin,
+	description: 'Specifies the `INNER JOIN` operator for the `FROM` clause.',
 	supportedBy: {
 		MySQL: 'https://dev.mysql.com/doc/refman/5.7/en/select.html',
 		MariaDB: 'https://mariadb.com/kb/en/library/select/',
 		PostgreSQL: 'https://www.postgresql.org/docs/9.5/static/sql-select.html',
 		SQLite: 'https://sqlite.org/lang_select.html',
 		Oracle: 'https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_10002.htm',
-		SQLServer: 'https://docs.microsoft.com/en-us/sql/t-sql/queries/select-having-transact-sql'
+		SQLServer: 'https://docs.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql'
 	},
 	examples: {
 		Object: {
@@ -35,7 +35,7 @@ module.exports = {
 								$from: 'people',
 								$join: {
 									skills: {
-										$fullOuterJoin: {
+										$innerJoin: {
 											$table: 'people_skills',
 											$on: { 'skills.people_id': { $eq: '~~people.people_id' } },
 										}
@@ -49,7 +49,7 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people FULL JOIN people_skills AS skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people INNER JOIN people_skills AS skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
 						values:{
 							$1: 50
 						}
@@ -69,7 +69,7 @@ module.exports = {
 								},
 								$from: 'people',
 								$join: {
-									skills: sql.fullOuterJoin('people_skills', {
+									skills: sql.innerJoin('people_skills', {
 										$on: { 'skills.people_id': { $eq: '~~people.people_id' } }
 									})
 								},
@@ -80,7 +80,7 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people FULL JOIN people_skills AS skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people INNER JOIN people_skills AS skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
 						values:{
 							$1: 50
 						}

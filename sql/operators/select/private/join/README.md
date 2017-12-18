@@ -18,7 +18,7 @@ Specifies the `JOIN` operator for the `FROM` clause.
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/sql-select.html)
 - [SQLite](https://sqlite.org/lang_select.html)
 - [Oracle](https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_10002.htm)
-- [SQLServer](https://docs.microsoft.com/en-us/sql/t-sql/queries/select-having-transact-sql)
+- [SQLServer](https://docs.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql)
 
 # Allowed Types and Usage
 
@@ -66,11 +66,11 @@ $join: {
 
 Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
-[innerJoin](../../../../helpers/join/innerJoin/)|*optional*|:heavy_check_mark:||
-[leftJoin](../../../../helpers/join/leftJoin/)|*optional*|:heavy_check_mark:||
-[rightJoin](../../../../helpers/join/rightJoin/)|*optional*|:heavy_check_mark:||
-[fullOuterJoin](../../../../helpers/join/fullOuterJoin/)|*optional*|:heavy_check_mark:||
-[crossJoin](../../../../helpers/join/crossJoin/)|*optional*|:heavy_check_mark:||
+[innerJoin](../../../../../helpers/select/join/innerJoin/)|*optional*|:heavy_check_mark:||
+[leftJoin](../../../../../helpers/select/join/leftJoin/)|*optional*|:heavy_check_mark:||
+[rightJoin](../../../../../helpers/select/join/rightJoin/)|*optional*|:heavy_check_mark:||
+[fullOuterJoin](../../../../../helpers/select/join/fullOuterJoin/)|*optional*|:heavy_check_mark:||
+[crossJoin](../../../../../helpers/select/join/crossJoin/)|*optional*|:heavy_check_mark:||
 [crossApply](./private/crossApply/)|*optional*|*private*|CROSS APPLY  [$crossApply]|`SQLServer` 
 [lateral](./private/lateral/)|*optional*|*private*||`PostgreSQL` 
 [cross](./private/cross/)|*optional*|*private*|CROSS JOIN  [$cross]|

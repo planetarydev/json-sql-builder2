@@ -55,9 +55,9 @@ Name|Required|Public|SQL-Definition|Supported by
 [groupBy](./private/groupBy/)|*optional*|*private*| GROUP BY  [$groupBy]|
 [withRollup](./private/withRollup/)|*optional*|*private*| WITH ROLLUP [$withRollup]|`MariaDB` `MySQL` 
 [having](./private/having/)|*optional*|*private*| HAVING  [$having]|
-[orderBy](./private/orderBy/)|*optional*|*private*| ORDER BY  [$orderBy]|
-[limit](./private/limit/)|*optional*|*private*| LIMIT  [$limit]|`MariaDB` `MySQL` `PostgreSQL` `SQLite` 
-[offset](./private/offset/)|*optional*|*private*| OFFSET  [$offset]|`MariaDB` `MySQL` `PostgreSQL` `SQLite` 
+[orderBy](../../../../helpers/select/orderBy/)|*optional*|:heavy_check_mark:| ORDER BY  [$orderBy]|
+[limit](../../../../helpers/select/limit/)|*optional*|:heavy_check_mark:| LIMIT  [$limit]|`MariaDB` `MySQL` `PostgreSQL` `SQLite` 
+[offset](../../../../helpers/select/offset/)|*optional*|:heavy_check_mark:| OFFSET  [$offset]|`MariaDB` `MySQL` `PostgreSQL` `SQLite` 
 
 :bulb: **Example:**
 ```javascript

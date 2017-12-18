@@ -7,7 +7,7 @@ Specifies the `LEFT JOIN` operator for the `FROM` clause.
 - [PostgreSQL](https://www.postgresql.org/docs/9.5/static/sql-select.html)
 - [SQLite](https://sqlite.org/lang_select.html)
 - [Oracle](https://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_10002.htm)
-- [SQLServer](https://docs.microsoft.com/en-us/sql/t-sql/queries/select-having-transact-sql)
+- [SQLServer](https://docs.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql)
 
 # Allowed Types and Usage
 
@@ -52,7 +52,7 @@ function() {
                 skills: {
                     $leftJoin: {
                         $table: 'people_skills',
-                        $on: { 'skills.people_id': { $eq: '~~people.people_id' } },
+                        $on: { 'skills.people_id': { $eq: '~~people.people_id' } }
                     }
                 }
 
