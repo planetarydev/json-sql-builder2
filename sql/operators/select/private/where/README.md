@@ -30,8 +30,8 @@ $where: { ... }
 
 Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
-[and](../../../../helpers/logical/and/)|*optional*|:heavy_check_mark:||
-[or](../../../../helpers/logical/or/)|*optional*|:heavy_check_mark:||
+[and](../../../../../sql/helpers/logical/and/)|*optional*|:heavy_check_mark:||
+[or](../../../../../sql/helpers/logical/or/)|*optional*|:heavy_check_mark:||
 
 :bulb: **Example:**
 ```javascript

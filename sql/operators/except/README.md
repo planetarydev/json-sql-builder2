@@ -35,9 +35,9 @@ Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
 [distinct](./private/distinct/)|*optional*|*private*||
 [all](./private/all/)|*optional*|*private*||
-[orderBy](../../../../helpers/select/orderBy/)|*optional*|:heavy_check_mark:| ORDER BY  [$orderBy]|
-[limit](../../../../helpers/select/limit/)|*optional*|:heavy_check_mark:| LIMIT  [$limit]|
-[offset](../../../../helpers/select/offset/)|*optional*|:heavy_check_mark:| OFFSET  [$offset]|
+[orderBy](../../../../../sql/helpers/select/orderBy/)|*optional*|:heavy_check_mark:| ORDER BY  [$orderBy]|
+[limit](../../../../../sql/helpers/select/limit/)|*optional*|:heavy_check_mark:| LIMIT  [$limit]|
+[offset](../../../../../sql/helpers/select/offset/)|*optional*|:heavy_check_mark:| OFFSET  [$offset]|
 
 :bulb: **Example:**
 ```javascript
@@ -129,10 +129,10 @@ $except: [
 
 Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
-[select](../../../operators/select/)|*optional*|:heavy_check_mark:||
-[union](../../../operators/union/)|*optional*|:heavy_check_mark:| [$union]|
-[intersect](../../../operators/intersect/)|*optional*|:heavy_check_mark:| [$intersect]|
-[except](../../../operators/except/)|*optional*|:heavy_check_mark:| [$except]|
+[select](../../../../sql/operators/select/)|*optional*|:heavy_check_mark:||
+[union](../../../../sql/operators/union/)|*optional*|:heavy_check_mark:| [$union]|
+[intersect](../../../../sql/operators/intersect/)|*optional*|:heavy_check_mark:| [$intersect]|
+[except](../../../../sql/operators/except/)|*optional*|:heavy_check_mark:| [$except]|
 
 :bulb: **Example:**
 ```javascript

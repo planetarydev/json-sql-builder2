@@ -30,8 +30,8 @@ BETWEEN <$min> AND <$max>
 
 Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
-[min](../../../../helpers/aggregation/min/)|:heavy_check_mark:|:heavy_check_mark:||
-[max](../../../../helpers/aggregation/max/)|:heavy_check_mark:|:heavy_check_mark:||
+[min](../../../../../sql/helpers/aggregation/min/)|:heavy_check_mark:|:heavy_check_mark:||
+[max](../../../../../sql/helpers/aggregation/max/)|:heavy_check_mark:|:heavy_check_mark:||
 
 :bulb: **Example:**
 ```javascript
