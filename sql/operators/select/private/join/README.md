@@ -66,11 +66,11 @@ $join: {
 
 Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
-[innerJoin](../../../../../helpers/select/join/innerJoin/)|*optional*|:heavy_check_mark:||
-[leftJoin](../../../../../helpers/select/join/leftJoin/)|*optional*|:heavy_check_mark:||
-[rightJoin](../../../../../helpers/select/join/rightJoin/)|*optional*|:heavy_check_mark:||
-[fullOuterJoin](../../../../../helpers/select/join/fullOuterJoin/)|*optional*|:heavy_check_mark:||
-[crossJoin](../../../../../helpers/select/join/crossJoin/)|*optional*|:heavy_check_mark:||
+[innerJoin](../../../../helpers/select/join/innerJoin/)|*optional*|:heavy_check_mark:||
+[leftJoin](../../../../helpers/select/join/leftJoin/)|*optional*|:heavy_check_mark:||
+[rightJoin](../../../../helpers/select/join/rightJoin/)|*optional*|:heavy_check_mark:||
+[fullOuterJoin](../../../../helpers/select/join/fullOuterJoin/)|*optional*|:heavy_check_mark:||
+[crossJoin](../../../../helpers/select/join/crossJoin/)|*optional*|:heavy_check_mark:||
 [crossApply](./private/crossApply/)|*optional*|*private*|CROSS APPLY  [$crossApply]|`SQLServer` 
 [lateral](./private/lateral/)|*optional*|*private*||`PostgreSQL` 
 [cross](./private/cross/)|*optional*|*private*|CROSS JOIN  [$cross]|
