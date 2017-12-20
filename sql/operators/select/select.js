@@ -81,10 +81,14 @@ class select extends SQLBuilder.SQLOperator {
 
 	postBuild(result, type, itemType){
 		// check for a type of union or a subquery and use round bracket on sub-selects
+		// TODO: think about a more generic way to force round brackets
+		// instead of checking each situation
 		if (this.isCurrent('$union') ||
 			this.isCurrent('$intersect') ||
 			this.isCurrent('$except') ||
 			this.isCurrent('$set') || // using SELECT within the UPDATE... SET column = (SELECT...)
+			this.isCurrent('$onDuplicateKeyUpdate') ||
+			this.isCurrent('$doUpdateSet') ||
 			(this.isCurrent('$select') && !this.isPreviousHelper('$in') && !this.isPreviousHelper('$nin'))
 		) {
 			result = '(' + result + ')';
