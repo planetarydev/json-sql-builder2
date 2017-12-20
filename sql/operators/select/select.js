@@ -36,12 +36,12 @@ class select extends SQLBuilder.SQLOperator {
 		}
 
 		// Add private ANSI helpers
-		this.registerPrivateHelper('top');
+		//this.registerPrivateHelper('top');
 		this.registerPrivateHelper('into');
-		this.registerPrivateHelper('from');
+		//this.registerPrivateHelper('from');
 		this.registerPrivateHelper('join');
 		this.registerPrivateHelper('columns');
-		this.registerPrivateHelper('where');
+		//this.registerPrivateHelper('where');
 		this.registerPrivateHelper('groupBy');
 		this.registerPrivateHelper('having');
 		//this.registerPrivateHelper('orderBy');
@@ -84,6 +84,7 @@ class select extends SQLBuilder.SQLOperator {
 		if (this.isCurrent('$union') ||
 			this.isCurrent('$intersect') ||
 			this.isCurrent('$except') ||
+			this.isCurrent('$set') || // using SELECT within the UPDATE... SET column = (SELECT...)
 			(this.isCurrent('$select') && !this.isPreviousHelper('$in') && !this.isPreviousHelper('$nin'))
 		) {
 			result = '(' + result + ')';

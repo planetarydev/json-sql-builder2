@@ -36,9 +36,9 @@ Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
 [distinct](./private/distinct/)|*optional*|*private*||
 [all](./private/all/)|*optional*|*private*||
-[orderBy](../../helpers/select/orderBy/)|*optional*|:heavy_check_mark:| ORDER BY  [$orderBy]|
-[limit](../../helpers/select/limit/)|*optional*|:heavy_check_mark:| LIMIT  [$limit]|
-[offset](../../helpers/select/offset/)|*optional*|:heavy_check_mark:| OFFSET  [$offset]|
+[orderBy](../../helpers/queries/orderBy/)|*optional*|:heavy_check_mark:| ORDER BY  [$orderBy]|
+[limit](../../helpers/queries/limit/)|*optional*|:heavy_check_mark:| LIMIT  [$limit]|
+[offset](../../helpers/queries/offset/)|*optional*|:heavy_check_mark:| OFFSET  [$offset]|
 
 :bulb: **Example:**
 ```javascript

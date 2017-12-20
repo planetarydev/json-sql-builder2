@@ -44,20 +44,20 @@ SELECT
 
 Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
-[top](./private/top/)|*optional*|*private*|  [$top]|`SQLServer` 
+[top](../../helpers/queries/top/)|*optional*|:heavy_check_mark:|  [$top]|`SQLServer` 
 [distinct](./private/distinct/)|*optional*|*private*| DISTINCT [$distinct]|
 [calcFoundRows](./private/calcFoundRows/)|*optional*|*private*| SQL_CALC_FOUND_ROWS [$calcFoundRows]|`MySQL` `MariaDB` 
 [columns](./private/columns/)|:heavy_check_mark:|*private*|  <$columns>|
 [into](./private/into/)|*optional*|*private*|  [$into]|`MySQL` `MariaDB` `SQLServer` 
-[from](./private/from/)|*optional*|*private*| FROM  [$from]|
+[from](../../helpers/queries/from/)|*optional*|:heavy_check_mark:| FROM  [$from]|
 [join](./private/join/)|*optional*|*private*|  [$join]|
-[where](./private/where/)|*optional*|*private*| WHERE  [$where]|
+[where](../../helpers/queries/where/)|*optional*|:heavy_check_mark:| WHERE  [$where]|
 [groupBy](./private/groupBy/)|*optional*|*private*| GROUP BY  [$groupBy]|
 [withRollup](./private/withRollup/)|*optional*|*private*| WITH ROLLUP [$withRollup]|`MariaDB` `MySQL` 
 [having](./private/having/)|*optional*|*private*| HAVING  [$having]|
-[orderBy](../../helpers/select/orderBy/)|*optional*|:heavy_check_mark:| ORDER BY  [$orderBy]|
-[limit](../../helpers/select/limit/)|*optional*|:heavy_check_mark:| LIMIT  [$limit]|`MariaDB` `MySQL` `PostgreSQL` `SQLite` 
-[offset](../../helpers/select/offset/)|*optional*|:heavy_check_mark:| OFFSET  [$offset]|`MariaDB` `MySQL` `PostgreSQL` `SQLite` 
+[orderBy](../../helpers/queries/orderBy/)|*optional*|:heavy_check_mark:| ORDER BY  [$orderBy]|
+[limit](../../helpers/queries/limit/)|*optional*|:heavy_check_mark:| LIMIT  [$limit]|`MariaDB` `MySQL` `PostgreSQL` `SQLite` 
+[offset](../../helpers/queries/offset/)|*optional*|:heavy_check_mark:| OFFSET  [$offset]|`MariaDB` `MySQL` `PostgreSQL` `SQLite` 
 
 :bulb: **Example:**
 ```javascript
