@@ -18,7 +18,7 @@ Usage of `gt` as **Primitive** with the following Syntax:
 **Syntax:**
 
 ```javascript
-$gt: < value: String | Number | Boolean >
+$gt: < String | Number | Boolean >
 ```
 
 **SQL-Definition:**

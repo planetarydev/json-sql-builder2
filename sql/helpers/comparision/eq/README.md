@@ -18,7 +18,7 @@ Usage of `eq` as **Primitive** with the following Syntax:
 **Syntax:**
 
 ```javascript
-$eq: < value: String | Number | Boolean >
+$eq: < String | Number | Boolean >
 ```
 
 **SQL-Definition:**

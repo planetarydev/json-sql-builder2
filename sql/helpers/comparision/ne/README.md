@@ -18,7 +18,7 @@ Usage of `ne` as **Primitive** with the following Syntax:
 **Syntax:**
 
 ```javascript
-$ne: < value: String | Number | Boolean >
+$ne: < String | Number | Boolean >
 ```
 
 **SQL-Definition:**

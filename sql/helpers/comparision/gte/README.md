@@ -18,7 +18,7 @@ Usage of `gte` as **Primitive** with the following Syntax:
 **Syntax:**
 
 ```javascript
-$gte: < value: String | Number | Boolean >
+$gte: < String | Number | Boolean >
 ```
 
 **SQL-Definition:**

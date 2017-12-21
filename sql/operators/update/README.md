@@ -30,6 +30,7 @@ UPDATE  { [$top]}-->(SQLServer){ <$table>}
   { ORDER BY [$orderBy]}-->(MariaDB,MySQL,SQLite)
   { LIMIT [$limit]}-->(MariaDB,MySQL,SQLite)
   { OFFSET [$offset]}-->(MariaDB,MySQL,SQLite)
+  { RETURNING [$returning]}-->(PostgreSQL)
 ```
 
 **Registered Helpers**
@@ -45,6 +46,7 @@ Name|Required|Public|SQL-Definition|Supported by
 [orderBy](../../helpers/queries/orderBy/)|*optional*|:heavy_check_mark:| ORDER BY  [$orderBy]|`MariaDB` `MySQL` `SQLite` 
 [limit](../../helpers/queries/limit/)|*optional*|:heavy_check_mark:| LIMIT  [$limit]|`MariaDB` `MySQL` `SQLite` 
 [offset](../../helpers/queries/offset/)|*optional*|:heavy_check_mark:| OFFSET  [$offset]|`MariaDB` `MySQL` `SQLite` 
+[returning](../../helpers/queries/PostgreSQL/returning/)|*optional*|:heavy_check_mark:| RETURNING  [$returning]|`PostgreSQL` 
 
 :bulb: **Example:**
 ```javascript
@@ -113,6 +115,34 @@ LIMIT
     "$1": 6000,
     "$2": "John",
     "$3": 1
+}
+```
+
+:bulb: **Using RETURNING**
+```javascript
+function() {
+    return sql.$update({
+        $table: 'people',
+        $set: {
+            salary: { $mul: 1.1 }
+        },
+        $returning: {
+            people_id: 1,
+            salary: 'new_salary'
+        }
+    });
+}
+
+// SQL output
+UPDATE
+    people
+SET
+    salary = salary * $1 RETURNING people_id,
+    salary AS new_salary
+
+// Values
+{
+    "$1": 1.1
 }
 ```
 

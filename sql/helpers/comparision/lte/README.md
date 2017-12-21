@@ -18,7 +18,7 @@ Usage of `lte` as **Primitive** with the following Syntax:
 **Syntax:**
 
 ```javascript
-$lte: < value: String | Number | Boolean >
+$lte: < String | Number | Boolean >
 ```
 
 **SQL-Definition:**

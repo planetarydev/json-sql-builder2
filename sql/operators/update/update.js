@@ -57,7 +57,8 @@ const SYNTAX =
 	{ WHERE [$where]}
 	{ ORDER BY [$orderBy]}-->(MariaDB,MySQL,SQLite)
 	{ LIMIT [$limit]}-->(MariaDB,MySQL,SQLite)
-	{ OFFSET [$offset]}-->(MariaDB,MySQL,SQLite)`;
+	{ OFFSET [$offset]}-->(MariaDB,MySQL,SQLite)
+	{ RETURNING [$returning]}-->(PostgreSQL)`;
 
 class update extends SQLBuilder.SQLOperator {
 	constructor(sql){
@@ -138,6 +139,31 @@ module.exports = {
 							$1: 6000,
 							$2: 'John',
 							$3: 1
+						}
+					}
+				}
+			},
+			'Using RETURNING': function(sql) {
+				return {
+					supportedBy: {
+						PostgreSQL: true
+					},
+					test: function() {
+						return sql.$update({
+							$table: 'people',
+							$set: {
+								salary: { $mul: 1.1 }
+							},
+							$returning: {
+								people_id: 1,
+								salary: 'new_salary'
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'UPDATE people SET salary = salary * $1 RETURNING people_id, salary AS new_salary',
+						values: {
+							$1: 1.1
 						}
 					}
 				}

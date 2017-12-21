@@ -1,6 +1,6 @@
 'use strict';
 
-class values extends SQLBuilder.SQLHelper {
+class columns extends SQLBuilder.SQLHelper {
 	constructor(sql){
 		super(sql);
 
@@ -15,7 +15,7 @@ class values extends SQLBuilder.SQLHelper {
 }
 
 module.exports = {
-	definition: values,
+	definition: columns,
 	description: `Specifies the columns Array Helper for the \`ON CONFLICT\` clause.`,
 	supportedBy: {
 		PostgreSQL: 'https://www.postgresql.org/docs/9.5/static/sql-insert.html#SQL-ON-CONFLICT',

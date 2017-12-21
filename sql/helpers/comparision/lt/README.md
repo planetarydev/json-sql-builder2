@@ -18,7 +18,7 @@ Usage of `lt` as **Primitive** with the following Syntax:
 **Syntax:**
 
 ```javascript
-$lt: < value: String | Number | Boolean >
+$lt: < String | Number | Boolean >
 ```
 
 **SQL-Definition:**

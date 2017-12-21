@@ -13,7 +13,7 @@ Usage of `target` as **Primitive** with the following Syntax:
 **Syntax:**
 
 ```javascript
-$target: < value: String | Number | Boolean >
+$target: < String | Number | Boolean >
 ```
 
 **SQL-Definition:**

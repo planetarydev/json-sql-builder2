@@ -1,4 +1,4 @@
-# values Helper
+# columns Helper
 Specifies the columns Array Helper for the `ON CONFLICT` clause.
 
 #### Supported by
@@ -8,18 +8,18 @@ Specifies the columns Array Helper for the `ON CONFLICT` clause.
 
 ## as Array:
 
-The Usage of `values` as **Array** is restricted to childs have the following Type:
+The Usage of `columns` as **Array** is restricted to childs have the following Type:
 
 - String
 
 ## as Array :arrow_right: String:
 
-Usage of `values` as **Array** with a child of Type **String** :
+Usage of `columns` as **Array** with a child of Type **String** :
 
 **Syntax:**
 
 ```javascript
-$values: [
+$columns: [
     <String> [, ... ]
 ]
 ```

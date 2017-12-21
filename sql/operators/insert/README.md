@@ -47,7 +47,7 @@ Name|Required|Public|SQL-Definition|Supported by
 [documents](./private/documents/)|*optional*|*private*| [$documents]|
 [onDuplicateKeyUpdate](./private/onDuplicateKeyUpdate/)|*optional*|*private*| ON DUPLICATE KEY UPDATE  [$onDuplicateKeyUpdate]|`MariaDB` `MySQL` 
 [onConflict](./private/onConflict/)|*optional*|*private*||`PostgreSQL` 
-[returning](./private/returning/)|*optional*|*private*| RETURNING  [$returning]|`PostgreSQL` 
+[returning](../../helpers/queries/PostgreSQL/returning/)|*optional*|:heavy_check_mark:| RETURNING  [$returning]|`PostgreSQL` 
 
 :bulb: **Example:**
 ```javascript

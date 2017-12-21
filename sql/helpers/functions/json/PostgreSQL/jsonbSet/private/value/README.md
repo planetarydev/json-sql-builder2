@@ -13,7 +13,7 @@ Usage of `value` as **Primitive** with the following Syntax:
 **Syntax:**
 
 ```javascript
-$value: < value: String | Number | Boolean >
+$value: < String | Number | Boolean >
 ```
 
 **SQL-Definition:**

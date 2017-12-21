@@ -27,12 +27,25 @@ module.exports = {
 				return {
 					test: function(){
 						return sql.$select({
-							max_age: { $__: 'MAX(age) + 1' },
+							max_age: { __: 'MAX(age) + 1' },
 							$from: 'people'
 						});
 					},
 					expectedResults: {
 						sql: 'SELECT MAX(age) + 1 AS max_age FROM people',
+						values: {}
+					}
+				}
+			},
+			"Only INLINE-SQL test": function(sql) {
+				return {
+					test: function(){
+						return sql.build({
+							__: 'SELECT MAX(age) FROM people'
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT MAX(age) FROM people',
 						values: {}
 					}
 				}
