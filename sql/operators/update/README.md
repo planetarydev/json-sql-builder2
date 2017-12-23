@@ -30,7 +30,7 @@ UPDATE  { [$top]}-->(SQLServer){ <$table>}
   { ORDER BY [$orderBy]}-->(MariaDB,MySQL,SQLite)
   { LIMIT [$limit]}-->(MariaDB,MySQL,SQLite)
   { OFFSET [$offset]}-->(MariaDB,MySQL,SQLite)
-  { RETURNING [$returning]}-->(PostgreSQL)
+  { RETURNING [$returning]}-->(PostgreSQL,Oracle,MariaDB)
 ```
 
 **Registered Helpers**
@@ -41,12 +41,12 @@ Name|Required|Public|SQL-Definition|Supported by
 [table](./private/table/)|:heavy_check_mark:|*private*|  <$table>|
 [set](./private/set/)|:heavy_check_mark:|*private*| SET  <$set>|
 [from](../../helpers/queries/from/)|*optional*|:heavy_check_mark:| FROM  [$from]|
-[join](./private/join/)|*optional*|*private*|  [$join]|
+[join](../../helpers/queries/join/)|*optional*|:heavy_check_mark:|  [$join]|
 [where](../../helpers/queries/where/)|*optional*|:heavy_check_mark:| WHERE  [$where]|
 [orderBy](../../helpers/queries/orderBy/)|*optional*|:heavy_check_mark:| ORDER BY  [$orderBy]|`MariaDB` `MySQL` `SQLite` 
 [limit](../../helpers/queries/limit/)|*optional*|:heavy_check_mark:| LIMIT  [$limit]|`MariaDB` `MySQL` `SQLite` 
 [offset](../../helpers/queries/offset/)|*optional*|:heavy_check_mark:| OFFSET  [$offset]|`MariaDB` `MySQL` `SQLite` 
-[returning](../../helpers/queries/PostgreSQL/returning/)|*optional*|:heavy_check_mark:| RETURNING  [$returning]|`PostgreSQL` 
+[returning](../../helpers/queries/returning/)|*optional*|:heavy_check_mark:| RETURNING  [$returning]|`PostgreSQL` `Oracle` `MariaDB` 
 
 :bulb: **Example:**
 ```javascript

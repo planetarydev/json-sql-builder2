@@ -370,7 +370,7 @@ function() {
 UPDATE
     people
 SET
-    salary = salary * COALESCE(bonus, $1)
+    salary = salary + COALESCE(bonus, $1)
 WHERE
     salary < $2
 

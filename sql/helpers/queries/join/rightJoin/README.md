@@ -34,7 +34,7 @@ Name|Required|Public|SQL-Definition|Supported by
 [table](./private/table/)|*optional*|*private*|  [$table]|
 [select](../../../../operators/select/)|*optional*|:heavy_check_mark:|  [$select]|
 [on](./private/on/)|*optional*|*private*| ON  [$on]|
-[using](./private/using/)|*optional*|*private*| USING  [$using]|
+[using](../../../../helpers/queries/using/)|*optional*|:heavy_check_mark:| USING  [$using]|
 
 :bulb: **Example:**
 ```javascript

@@ -10,7 +10,7 @@ const SYNTAX =
 
 { ON DUPLICATE KEY UPDATE [$onDuplicateKeyUpdate]}-->(MariaDB,MySQL)
 {* ON CONFLICT [$onConflict] *}-->(PostgreSQL)
-{ RETURNING [$returning]}-->(PostgreSQL)`;
+{ RETURNING [$returning]}-->(PostgreSQL,Oracle,MariaDB)`;
 
 class insert extends SQLBuilder.SQLOperator {
 	constructor(sql){
@@ -87,6 +87,27 @@ module.exports = {
 							$1: 'John',
 							$2: 'Doe',
 							$3: 40
+						}
+					}
+				}
+			},
+			"Using Keyword DEFAULT": function(sql) {
+				return {
+					test: function(){
+						return sql.$insert({
+							$table: 'people',
+							$documents: {
+								first_name: 'John',
+								last_name: 'Doe',
+								age: sql.DEFAULT
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'INSERT INTO people (first_name, last_name, age) VALUES ($1, $2, DEFAULT)',
+						values:{
+							$1: 'John',
+							$2: 'Doe'
 						}
 					}
 				}

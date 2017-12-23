@@ -95,6 +95,27 @@ module.exports = {
 						}
 					}
 				}
+			},
+			"Using Keyword DEFAULT": function(sql) {
+				return {
+					test: function(){
+						return sql.$insert({
+							$table: 'people',
+							$documents: {
+								first_name: 'John',
+								last_name: 'Doe',
+								age: sql.DEFAULT
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'INSERT INTO people (first_name, last_name, age) VALUES ($1, $2, DEFAULT)',
+						values:{
+							$1: 'John',
+							$2: 'Doe'
+						}
+					}
+				}
 			}
 		},
 		Array: {

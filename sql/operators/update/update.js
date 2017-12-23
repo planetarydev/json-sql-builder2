@@ -58,7 +58,7 @@ const SYNTAX =
 	{ ORDER BY [$orderBy]}-->(MariaDB,MySQL,SQLite)
 	{ LIMIT [$limit]}-->(MariaDB,MySQL,SQLite)
 	{ OFFSET [$offset]}-->(MariaDB,MySQL,SQLite)
-	{ RETURNING [$returning]}-->(PostgreSQL)`;
+	{ RETURNING [$returning]}-->(PostgreSQL,Oracle,MariaDB)`;
 
 class update extends SQLBuilder.SQLOperator {
 	constructor(sql){

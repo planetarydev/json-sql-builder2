@@ -32,7 +32,7 @@ INSERT INTO{ <$table>}
 
 { ON DUPLICATE KEY UPDATE [$onDuplicateKeyUpdate]}-->(MariaDB,MySQL)
 {* ON CONFLICT [$onConflict] *}-->(PostgreSQL)
-{ RETURNING [$returning]}-->(PostgreSQL)
+{ RETURNING [$returning]}-->(PostgreSQL,Oracle,MariaDB)
 ```
 
 **Registered Helpers**
@@ -47,7 +47,7 @@ Name|Required|Public|SQL-Definition|Supported by
 [documents](./private/documents/)|*optional*|*private*| [$documents]|
 [onDuplicateKeyUpdate](./private/onDuplicateKeyUpdate/)|*optional*|*private*| ON DUPLICATE KEY UPDATE  [$onDuplicateKeyUpdate]|`MariaDB` `MySQL` 
 [onConflict](./private/onConflict/)|*optional*|*private*||`PostgreSQL` 
-[returning](../../helpers/queries/PostgreSQL/returning/)|*optional*|:heavy_check_mark:| RETURNING  [$returning]|`PostgreSQL` 
+[returning](../../helpers/queries/returning/)|*optional*|:heavy_check_mark:| RETURNING  [$returning]|`PostgreSQL` `Oracle` `MariaDB` 
 
 :bulb: **Example:**
 ```javascript
@@ -103,6 +103,32 @@ VALUES
     "$1": "John",
     "$2": "Doe",
     "$3": 40
+}
+```
+
+:bulb: **Using Keyword DEFAULT**
+```javascript
+function() {
+    return sql.$insert({
+        $table: 'people',
+        $documents: {
+            first_name: 'John',
+            last_name: 'Doe',
+            age: sql.DEFAULT
+        }
+    });
+}
+
+// SQL output
+INSERT INTO
+    people (first_name, last_name, age)
+VALUES
+    ($1, $2, DEFAULT)
+
+// Values
+{
+    "$1": "John",
+    "$2": "Doe"
 }
 ```
 

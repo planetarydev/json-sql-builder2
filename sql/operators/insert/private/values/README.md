@@ -57,3 +57,28 @@ VALUES
     "$3": 40
 }
 ```
+## Further Examples
+
+:bulb: **Using Keyword DEFAULT**
+```javascript
+function() {
+    return sql.$insert({
+        $table: 'people',
+        $columns: ['first_name', 'last_name', 'age'],
+        $values: ['John', 'Doe', sql.DEFAULT]
+    });
+}
+
+// SQL output
+INSERT INTO
+    people (first_name, last_name, age)
+VALUES
+    ($1, $2, DEFAULT)
+
+// Values
+{
+    "$1": "John",
+    "$2": "Doe"
+}
+```
+

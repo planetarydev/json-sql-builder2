@@ -50,7 +50,7 @@ Name|Required|Public|SQL-Definition|Supported by
 [columns](./private/columns/)|:heavy_check_mark:|*private*|  <$columns>|
 [into](./private/into/)|*optional*|*private*|  [$into]|`MySQL` `MariaDB` `SQLServer` 
 [from](../../helpers/queries/from/)|*optional*|:heavy_check_mark:| FROM  [$from]|
-[join](./private/join/)|*optional*|*private*|  [$join]|
+[join](../../helpers/queries/join/)|*optional*|:heavy_check_mark:|  [$join]|
 [where](../../helpers/queries/where/)|*optional*|:heavy_check_mark:| WHERE  [$where]|
 [groupBy](./private/groupBy/)|*optional*|*private*| GROUP BY  [$groupBy]|
 [withRollup](./private/withRollup/)|*optional*|*private*| WITH ROLLUP [$withRollup]|`MariaDB` `MySQL` 

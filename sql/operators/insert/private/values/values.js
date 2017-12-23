@@ -11,6 +11,31 @@ class values extends SQLBuilder.SQLHelper {
 				}
 			}
 		});
+
+		this.Keyword('DEFAULT');
+	}
+
+	preBuild(query, identifier){
+		// check for the Keyword default
+		// $insert: {
+		// 		$table: 'people',
+		// 		$documents: {
+		// 			first_name: 'foo',
+		// 			last_name: 'bar',
+		// 			age: sql.DEFAULT,
+		// 			...
+		//		}
+		// 	}
+		//
+		// INSERT INTO people (first_name, last_name, age) VALUES ($1, $2, DEFAULT);
+		//
+		this.forEach(query, (value, index) => {
+			if (value === this.DEFAULT) {
+				query[index] = '__:DEFAULT';
+			}
+		});
+
+		return query;
 	}
 }
 
@@ -44,6 +69,24 @@ module.exports = {
 									$1: 'John',
 									$2: 'Doe',
 									$3: 40
+								}
+							}
+						}
+					},
+					"Using Keyword DEFAULT": function(sql) {
+						return {
+							test: function(){
+								return sql.$insert({
+									$table: 'people',
+									$columns: ['first_name', 'last_name', 'age'],
+									$values: ['John', 'Doe', sql.DEFAULT]
+								});
+							},
+							expectedResults: {
+								sql: 'INSERT INTO people (first_name, last_name, age) VALUES ($1, $2, DEFAULT)',
+								values:{
+									$1: 'John',
+									$2: 'Doe'
 								}
 							}
 						}
