@@ -27,7 +27,7 @@ $returning: { ... }
 
 Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
-[columns](./private/columns/)|:heavy_check_mark:|*private*||
+[columns](../../../helpers/ddl/columns/)|:heavy_check_mark:|:heavy_check_mark:||
 [into](./private/into/)|*optional*|*private*| INTO  [$into]|
 
 :bulb: **Example:**

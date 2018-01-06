@@ -29,7 +29,7 @@ $onConflict: { ... }
 
 Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
-[columns](./private/columns/)|*optional*|*private*| ( [$columns])|
+[columns](../../../../helpers/ddl/columns/)|*optional*|:heavy_check_mark:| ( [$columns])|
 [onConstraint](./private/onConstraint/)|*optional*|*private*| ON CONSTRAINT  [$onConstraint]|
 [doNothing](./private/doNothing/)|*optional*|*private*| DO NOTHING [$doNothing]|
 [doUpdateSet](./private/doUpdateSet/)|*optional*|*private*| DO UPDATE SET  [$doUpdateSet]|

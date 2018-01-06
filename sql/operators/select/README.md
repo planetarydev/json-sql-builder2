@@ -47,7 +47,7 @@ Name|Required|Public|SQL-Definition|Supported by
 [top](../../helpers/queries/top/)|*optional*|:heavy_check_mark:|  [$top]|`SQLServer` 
 [distinct](./private/distinct/)|*optional*|*private*| DISTINCT [$distinct]|
 [calcFoundRows](./private/calcFoundRows/)|*optional*|*private*| SQL_CALC_FOUND_ROWS [$calcFoundRows]|`MySQL` `MariaDB` 
-[columns](./private/columns/)|:heavy_check_mark:|*private*|  <$columns>|
+[columns](../../helpers/ddl/columns/)|:heavy_check_mark:|:heavy_check_mark:|  <$columns>|
 [into](./private/into/)|*optional*|*private*|  [$into]|`MySQL` `MariaDB` `SQLServer` 
 [from](../../helpers/queries/from/)|*optional*|:heavy_check_mark:| FROM  [$from]|
 [join](../../helpers/queries/join/)|*optional*|:heavy_check_mark:|  [$join]|

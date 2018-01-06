@@ -4,6 +4,10 @@ const SQLBuilder = require('./lib/builder');
 global.SQLBuilder = SQLBuilder;
 
 const test = require('./lib/test');
-const docs = require('./lib/docs');
+if (test == true) { // test was successful
+	console.log('Rebuild docs...');
+	const docs = require('./lib/docs');
+	console.log('finished.');
+}
 
 module.exports = SQLBuilder;

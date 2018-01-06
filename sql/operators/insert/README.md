@@ -40,7 +40,7 @@ INSERT INTO{ <$table>}
 Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
 [table](./private/table/)|:heavy_check_mark:|*private*|  <$table>|
-[columns](./private/columns/)|*optional*|*private*| ( [$columns])|
+[columns](../../helpers/ddl/columns/)|*optional*|:heavy_check_mark:| ( [$columns])|
 [values](./private/values/)|*optional*|*private*| VALUES ( [$values])|
 [records](./private/records/)|*optional*|*private*| VALUES  [$records]|
 [select](../../operators/select/)|*optional*|:heavy_check_mark:|  [$select]|
