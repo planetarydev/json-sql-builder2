@@ -4,8 +4,8 @@ const SYNTAX =
 `CREATE
 	{ OR REPLACE[$orReplace]}-->(MariaDB)
 	{ TEMPORARY[$temp]}
-	{ UNLOGGED[$unlogged]}-->(PostgreSQL) TABLE { IF NOT EXISTS [$ine] | [$ifNotExists] } <$table>
-	{ ([$define])}
+	{ UNLOGGED[$unlogged]}-->(PostgreSQL)
+ TABLE { IF NOT EXISTS [$ine] | [$ifNotExists] } <$table> (<$define>)
 	{ WITH [$with]}-->(PostgreSQL,SQLServer)
 	{ TABLESPACE [$tablespace]}`;
 
@@ -61,8 +61,14 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'CREATE TEMPORARY TABLE my_temp_people_table (people_id INT DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT)',
-						values:{ }
+						sql: 'CREATE TEMPORARY TABLE my_temp_people_table (people_id INT DEFAULT $1, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT)',
+						values: {
+							$1: 0
+						},
+						PostgreSQL: {
+							sql: 'CREATE TEMPORARY TABLE my_temp_people_table (people_id INT DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT)',
+							values: {}
+						}
 					}
 				}
 			}

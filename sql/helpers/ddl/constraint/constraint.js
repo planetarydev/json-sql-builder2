@@ -4,10 +4,10 @@ const SYNTAX = `
 CONSTRAINT <key-ident> ` /*keep note of the space after <key-ident>*/ + `
 	{* PRIMARY KEY [$primary] *}
 	{* UNIQUE [$unique] *}
-	{ FOREIGN KEY [$foreignKey] }
-	{ CHECK [$check] }
+	{* FOREIGN KEY [$foreignKey] *}
+	{* CHECK [$check] *}
 	{ ([$columns])}
-	[$references]
+	{ [$references]}
 `;
 
 class constraint extends SQLBuilder.SQLHelper {
@@ -18,6 +18,27 @@ class constraint extends SQLBuilder.SQLHelper {
 			Object: { syntax: this.Syntax(SYNTAX, SQLBuilder.CALLEE) },
 			Function: { syntax: this.Syntax(`CONSTRAINT <key-ident> <value>`) }
 		});
+	}
+
+	//callee(constraintType)
+
+	validate(query) {
+		if (!query.$constraint || this.isFunction(query.$constraint)) return;
+
+		let usedConstraints = 0;
+		// check that only one type of constraint is possible to be used at the same time
+		// and at least one is currently used
+		if (query.$constraint.$primary) usedConstraints++;
+		if (query.$constraint.$unique) usedConstraints++;
+		if (query.$constraint.$foreignKey) usedConstraints++;
+		if (query.$constraint.$check) usedConstraints++;
+
+		if (usedConstraints == 0) {
+			return 'Using $constraint needs to specify at least one of the following Helpers: $primary, $unique, $foreignKey, $check. Query = ' + JSON.stringify(query);
+		}
+		if (usedConstraints > 1) {
+			return 'Using $constraint: Can\'t use the Helpers $primary, $unique, $foreignKey, $check together. You can only specify one of these for the current $constraint. Query = ' + JSON.stringify(query);
+		}
 	}
 }
 
@@ -51,8 +72,14 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'CREATE TEMPORARY TABLE my_temp_people_table (people_id INT DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, CONSTRAINT pk_people PRIMARY KEY (people_id))',
-						values: {}
+						sql: 'CREATE TEMPORARY TABLE my_temp_people_table (people_id INT DEFAULT $1, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, CONSTRAINT pk_people PRIMARY KEY (people_id))',
+						values: {
+							$1: 0
+						},
+						PostgreSQL: {
+							sql: 'CREATE TEMPORARY TABLE my_temp_people_table (people_id INT DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, CONSTRAINT pk_people PRIMARY KEY (people_id))',
+							values: {},
+						}
 					}
 				}
 			}
@@ -75,8 +102,14 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, CONSTRAINT pk_people PRIMARY KEY (people_id), CONSTRAINT uk_people UNIQUE (first_name, last_name))',
-						values: {}
+						sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT $1, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, CONSTRAINT pk_people PRIMARY KEY (people_id), CONSTRAINT uk_people UNIQUE (first_name, last_name))',
+						values: {
+							$1: 0
+						},
+						PostgreSQL: {
+							sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, CONSTRAINT pk_people PRIMARY KEY (people_id), CONSTRAINT uk_people UNIQUE (first_name, last_name))',
+							values: {}
+						}
 					}
 				}
 			}

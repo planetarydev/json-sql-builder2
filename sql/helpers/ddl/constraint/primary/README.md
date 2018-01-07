@@ -131,7 +131,7 @@ function() {
 
 // SQL output
 CREATE TEMPORARY TABLE my_temp_people_table (
-    people_id INT DEFAULT 0,
+    people_id INT DEFAULT $1,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     bio TEXT,
@@ -139,6 +139,8 @@ CREATE TEMPORARY TABLE my_temp_people_table (
 )
 
 // Values
-{}
+{
+    "$1": 0
+}
 ```
 

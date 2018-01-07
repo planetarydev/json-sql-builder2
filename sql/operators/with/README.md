@@ -37,6 +37,63 @@ Name|Required|Public|SQL-Definition|Supported by
 ```javascript
 function() {
     return sql.$with({
+        peoples_after_1999: {
+            $select: {
+                $from: 'people',
+                $where: {
+                    date_of_birth: { $gte: '2000-01-01' }
+                }
+            }
+        },
+        $query: {
+            $insert: {
+                $table: 'peoples_after_1999_named_doe',
+                $columns: ['people_id', 'first_name', 'last_name'],
+                $select: {
+                    $columns: ['people_id', 'first_name', 'last_name'],
+                    $from: 'peoples_after_1999',
+                    $where: {
+                        last_name: 'Doe'
+                    }
+                }
+            }
+        }
+    });
+}
+
+// SQL output
+WITH peoples_after_1999 AS (
+    SELECT
+        *
+    FROM
+        people
+    WHERE
+        date_of_birth >= $1
+)
+INSERT INTO
+    peoples_after_1999_named_doe (people_id, first_name, last_name)
+SELECT
+    people_id,
+    first_name,
+    last_name
+FROM
+    peoples_after_1999
+WHERE
+    last_name = $2
+
+// Values
+{
+    "$1": "2000-01-01",
+    "$2": "Doe"
+}
+```
+
+## Further Examples
+
+:bulb: **PostgreSQL Example using RETURNING**
+```javascript
+function() {
+    return sql.$with({
         moved_rows: {
             $delete: {
                 $from: 'products',
@@ -81,8 +138,6 @@ FROM
     "$2": "2010-11-01"
 }
 ```
-
-## Further Examples
 
 :bulb: **Using RECURSIVE**
 ```javascript

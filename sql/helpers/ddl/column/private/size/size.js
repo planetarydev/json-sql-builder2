@@ -42,8 +42,14 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, weight NUMERIC(3, 2))',
-						values:{ }
+						sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT $1, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, weight NUMERIC(3, 2))',
+						values: {
+							$1: 0
+						},
+						PostgreSQL: {
+							sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, weight NUMERIC(3, 2))',
+							values: {},
+						}
 					}
 				}
 			}
@@ -64,8 +70,14 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, weight NUMERIC(3, 2))',
-						values:{ }
+						sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT $1, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, weight NUMERIC(3, 2))',
+						values: {
+							$1: 0
+						},
+						PostgreSQL: {
+							sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, weight NUMERIC(3, 2))',
+							values: {},
+						}
 					}
 				}
 			}

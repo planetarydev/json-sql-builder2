@@ -32,7 +32,7 @@ function() {
     return sql.$createTable({
         $table: 'my_people_table',
         $define: {
-            people_id: { $column: { $type: 'INT', $default: 0 } },
+            people_id: { $column: { $type: 'INT' } },
             first_name: { $column: { $type: 'VARCHAR', $size: 50, $notNull: true, $default: 'Unknown' } },
             last_name: { $column: { $type: 'VARCHAR', $size: 50, $notNull: true } },
             bio: { $column: { $type: 'TEXT' } }
@@ -42,14 +42,16 @@ function() {
 
 // SQL output
 CREATE TABLE my_people_table (
-    people_id INT DEFAULT 0,
-    first_name VARCHAR(50) NOT NULL DEFAULT 'Unknown',
+    people_id INT,
+    first_name VARCHAR(50) NOT NULL DEFAULT $1,
     last_name VARCHAR(50) NOT NULL,
     bio TEXT
 )
 
 // Values
-{}
+{
+    "$1": "Unknown"
+}
 ```
 
 ## as Number:
@@ -74,7 +76,7 @@ function() {
         $table: 'my_people_table',
         $define: {
             people_id: { $column: { $type: 'INT', $default: 0 } },
-            first_name: { $column: { $type: 'VARCHAR', $size: 50, $notNull: true, $default: 'Unknown' } },
+            first_name: { $column: { $type: 'VARCHAR', $size: 50, $notNull: true } },
             last_name: { $column: { $type: 'VARCHAR', $size: 50, $notNull: true } },
             bio: { $column: { $type: 'TEXT' } },
         }
@@ -83,13 +85,15 @@ function() {
 
 // SQL output
 CREATE TABLE my_people_table (
-    people_id INT DEFAULT 0,
-    first_name VARCHAR(50) NOT NULL DEFAULT 'Unknown',
+    people_id INT DEFAULT $1,
+    first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     bio TEXT
 )
 
 // Values
-{}
+{
+    "$1": 0
+}
 ```
 

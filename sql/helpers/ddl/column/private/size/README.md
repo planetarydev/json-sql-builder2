@@ -43,7 +43,7 @@ function() {
 
 // SQL output
 CREATE TABLE my_people_table (
-    people_id INT DEFAULT 0,
+    people_id INT DEFAULT $1,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     bio TEXT,
@@ -51,7 +51,9 @@ CREATE TABLE my_people_table (
 )
 
 // Values
-{}
+{
+    "$1": 0
+}
 ```
 
 ## as Object:
@@ -93,7 +95,7 @@ function() {
 
 // SQL output
 CREATE TABLE my_people_table (
-    people_id INT DEFAULT 0,
+    people_id INT DEFAULT $1,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     bio TEXT,
@@ -101,6 +103,8 @@ CREATE TABLE my_people_table (
 )
 
 // Values
-{}
+{
+    "$1": 0
+}
 ```
 

@@ -7,9 +7,8 @@ class define extends SQLBuilder.SQLHelper {
 		this.Types({
 			Object: {
 				eachItemOf: {
-					Object: {
-						syntax: this.Syntax(`[$column][$constraint][ , ... ]`)
-					}
+					Object: { syntax: this.Syntax(`[$column][$constraint][ , ... ]`) },
+					Function: { syntax: this.Syntax(`<value>[ , ... ]`) },
 				}
 			}
 		});
@@ -47,8 +46,48 @@ module.exports = {
 								});
 							},
 							expectedResults: {
-								sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, CONSTRAINT pk_people PRIMARY KEY (people_id))',
-								values:{ }
+								sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT $1, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, CONSTRAINT pk_people PRIMARY KEY (people_id))',
+								values: {
+									$1: 0
+								},
+								PostgreSQL: {
+									// PostgreSQL did'nt support parameterized queries for CREATE TABLE ...
+									sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, CONSTRAINT pk_people PRIMARY KEY (people_id))',
+									values: {},
+								}
+							}
+						}
+					}
+				},
+				Function: {
+					"Basic Usage": function(sql) {
+						return {
+							test: function(){
+								return sql.$createTable({
+									$table: 'my_people_table',
+									$define: {
+										people_id: sql.column(sql.INTEGER, { $default: 0 }),
+										first_name: sql.column(sql.VARCHAR, { $size: 50, $notNull: true }),
+										last_name: sql.column(sql.VARCHAR, { $size: 50, $notNull: true }),
+										bio: sql.column(sql.TEXT),
+
+										pk_people: sql.constraint({
+											$primary: true,
+											$columns: 'people_id'
+										})
+									}
+								});
+							},
+							expectedResults: {
+								sql: 'CREATE TABLE my_people_table (people_id INTEGER DEFAULT $1, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, CONSTRAINT pk_people PRIMARY KEY (people_id))',
+								values: {
+									$1: 0
+								},
+								PostgreSQL: {
+									// PostgreSQL did'nt support parameterized queries for CREATE TABLE ...
+									sql: 'CREATE TABLE my_people_table (people_id INTEGER DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, CONSTRAINT pk_people PRIMARY KEY (people_id))',
+									values: {},
+								}
 							}
 						}
 					}

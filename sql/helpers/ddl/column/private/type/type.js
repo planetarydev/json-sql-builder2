@@ -109,8 +109,14 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, weight NUMERIC(3, 2), CONSTRAINT pk_people PRIMARY KEY (people_id))',
-						values:{ }
+						sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT $1, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, weight NUMERIC(3, 2), CONSTRAINT pk_people PRIMARY KEY (people_id))',
+						values: {
+							$1: 0
+						},
+						PostgreSQL: {
+							sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT, weight NUMERIC(3, 2), CONSTRAINT pk_people PRIMARY KEY (people_id))',
+							values: {},
+						}
 					}
 				}
 			}

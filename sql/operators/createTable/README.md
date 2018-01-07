@@ -26,8 +26,8 @@ $createTable: { ... }
 CREATE
   { OR REPLACE[$orReplace]}-->(MariaDB)
   { TEMPORARY[$temp]}
-  { UNLOGGED[$unlogged]}-->(PostgreSQL) TABLE { IF NOT EXISTS [$ine] | [$ifNotExists] } <$table>
-  { ([$define])}
+  { UNLOGGED[$unlogged]}-->(PostgreSQL)
+ TABLE { IF NOT EXISTS [$ine] | [$ifNotExists] } <$table> (<$define>)
   { WITH [$with]}-->(PostgreSQL,SQLServer)
   { TABLESPACE [$tablespace]}
 ```
@@ -42,7 +42,7 @@ Name|Required|Public|SQL-Definition|Supported by
 [ine](./private/ine/)|*optional*|*private*| IF NOT EXISTS  [$ine] |
 [ifNotExists](./private/ifNotExists/)|*optional*|*private*| IF NOT EXISTS  [$ifNotExists] |
 [table](./private/table/)|:heavy_check_mark:|*private*||
-[define](./private/define/)|*optional*|*private*| ( [$define])|
+[define](./private/define/)|:heavy_check_mark:|*private*||
 [with](../../operators/with/)|*optional*|:heavy_check_mark:| WITH  [$with]|`PostgreSQL` `SQLServer` 
 [tablespace](./private/tablespace/)|*optional*|*private*| TABLESPACE  [$tablespace]|
 
@@ -63,13 +63,15 @@ function() {
 
 // SQL output
 CREATE TEMPORARY TABLE my_temp_people_table (
-    people_id INT DEFAULT 0,
+    people_id INT DEFAULT $1,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     bio TEXT
 )
 
 // Values
-{}
+{
+    "$1": 0
+}
 ```
 

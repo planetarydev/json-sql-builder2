@@ -36,6 +36,45 @@ module.exports = {
 				return {
 					test: function(){
 						return sql.$with({
+							peoples_after_1999: {
+								$select: {
+									$from: 'people',
+									$where: {
+										date_of_birth: { $gte: '2000-01-01' }
+									}
+								}
+							},
+							$query: {
+								$insert: {
+									$table: 'peoples_after_1999_named_doe',
+									$columns: ['people_id', 'first_name', 'last_name'],
+									$select: {
+										$columns: ['people_id', 'first_name', 'last_name'],
+										$from: 'peoples_after_1999',
+										$where: {
+											last_name: 'Doe'
+										}
+									}
+								}
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'WITH peoples_after_1999 AS (SELECT * FROM people WHERE date_of_birth >= $1) INSERT INTO peoples_after_1999_named_doe (people_id, first_name, last_name) SELECT people_id, first_name, last_name FROM peoples_after_1999 WHERE last_name = $2',
+						values:{
+							$1: '2000-01-01',
+							$2: 'Doe'
+						}
+					}
+				}
+			},
+			"PostgreSQL Example using RETURNING": function(sql) {
+				return {
+					supportedBy: {
+						PostgreSQL: true
+					},
+					test: function(){
+						return sql.$with({
 							moved_rows: {
 								$delete: {
 									$from: 'products',
@@ -69,6 +108,10 @@ module.exports = {
 			},
 			"Using RECURSIVE": function(sql) {
 				return {
+					supportedBy: {
+						PostgreSQL: true,
+						MariaDB: true,
+					},
 					test: function(){
 						return sql.$with({
 							$recursive: true,

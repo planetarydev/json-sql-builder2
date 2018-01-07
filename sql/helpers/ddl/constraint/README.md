@@ -27,10 +27,10 @@ $constraint: { ... }
 CONSTRAINT <key-ident> 
   {* PRIMARY KEY [$primary] *}
   {* UNIQUE [$unique] *}
-  { FOREIGN KEY [$foreignKey] }
-  { CHECK [$check] }
+  {* FOREIGN KEY [$foreignKey] *}
+  {* CHECK [$check] *}
   { ([$columns])}
-  [$references]
+  { [$references]}
 
 ```
 
@@ -40,10 +40,10 @@ Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
 [primary](../../../helpers/ddl/constraint/primary/)|*optional*|:heavy_check_mark:||
 [unique](../../../helpers/ddl/constraint/unique/)|*optional*|:heavy_check_mark:||
-[foreignKey](./private/foreignKey/)|*optional*|*private*| FOREIGN KEY  [$foreignKey] |
-[check](./private/check/)|*optional*|*private*| CHECK  [$check] |
+[foreignKey](../../../helpers/ddl/constraint/foreignKey/)|*optional*|:heavy_check_mark:||
+[check](../../../helpers/ddl/constraint/check/)|*optional*|:heavy_check_mark:||
 [columns](../../../helpers/ddl/columns/)|*optional*|:heavy_check_mark:| ( [$columns])|
-[references](./private/references/)|*optional*|*private*||
+[references](../../../helpers/ddl/constraint/references/)|*optional*|:heavy_check_mark:|  [$references]|
 
 :bulb: **Example:**
 ```javascript
@@ -64,7 +64,7 @@ function() {
 
 // SQL output
 CREATE TEMPORARY TABLE my_temp_people_table (
-    people_id INT DEFAULT 0,
+    people_id INT DEFAULT $1,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     bio TEXT,
@@ -72,7 +72,9 @@ CREATE TEMPORARY TABLE my_temp_people_table (
 )
 
 // Values
-{}
+{
+    "$1": 0
+}
 ```
 
 ## as Function:
@@ -109,7 +111,7 @@ function() {
 
 // SQL output
 CREATE TABLE my_people_table (
-    people_id INT DEFAULT 0,
+    people_id INT DEFAULT $1,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     bio TEXT,
@@ -118,6 +120,8 @@ CREATE TABLE my_people_table (
 )
 
 // Values
-{}
+{
+    "$1": 0
+}
 ```
 

@@ -4,10 +4,12 @@ const SYNTAX = `
 <key-ident> <$type>{([$size])}
 	{ NOT NULL[$notNull]}
 	{ DEFAULT [$default]}
+	{ AUTO_INCREMENT[$autoInc]}-->(MySQL,MariaDB)
 	{ [$primary]}
 	{ [$unique]}
-	{* CHECK [$check] *}
-	{* REFERENCES [$references] *}
+	{ [$check]}
+	{ COMMENT [$comment]}-->(MySQL,MariaDB)
+	{ [$references]}
 `;
 
 class column extends SQLBuilder.SQLHelper {
@@ -21,13 +23,12 @@ class column extends SQLBuilder.SQLHelper {
 		});
 
 		this.$notNull = new SQLBuilder.SQLPredefined.AcceptIfTrue(sql);
+		this.$autoInc = new SQLBuilder.SQLPredefined.AcceptIfTrue(sql);
+		this.$comment = new SQLBuilder.SQLPredefined.StringValueParam(sql);
 
 		this.registerPrivateHelper('type');
 		this.registerPrivateHelper('size');
 		this.registerPrivateHelper('default');
-
-		//this.registerPrivateHelper('check');
-		//this.registerPrivateHelper('references');
 	}
 }
 
@@ -58,7 +59,36 @@ module.exports = {
 						});
 					},
 					expectedResults: {
-						sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT)',
+						sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT $1, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT)',
+						values: {
+							$1: 0
+						},
+						PostgreSQL: {
+							sql: 'CREATE TABLE my_people_table (people_id INT DEFAULT 0, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT)',
+							values: {},
+						}
+					}
+				}
+			},
+			"Usage of AUTO_INCREMENT": function(sql) {
+				return {
+					supportedBy: {
+						MariaDB: true,
+						MySQL: true
+					},
+					test: function(){
+						return sql.$createTable({
+							$table: 'my_people_table',
+							$define: {
+								people_id: { $column: { $type: 'INT', $autoInc: true, $primary: true } },
+								first_name: { $column: { $type: 'VARCHAR', $size: 50, $notNull: true } },
+								last_name: { $column: { $type: 'VARCHAR', $size: 50, $notNull: true } },
+								bio: { $column: { $type: 'TEXT' } }
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'CREATE TABLE my_people_table (people_id INT AUTO_INCREMENT PRIMARY KEY, first_name VARCHAR(50) NOT NULL, last_name VARCHAR(50) NOT NULL, bio TEXT)',
 						values:{ }
 					}
 				}
