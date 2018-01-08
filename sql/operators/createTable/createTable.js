@@ -6,8 +6,10 @@ const SYNTAX =
 	{ TEMPORARY[$temp]}
 	{ UNLOGGED[$unlogged]}-->(PostgreSQL)
  TABLE { IF NOT EXISTS [$ine] | [$ifNotExists] } <$table> (<$define>)
-	{ WITH [$with]}-->(PostgreSQL,SQLServer)
-	{ TABLESPACE [$tablespace]}`;
+	{ WITH ([$tableOptions])}-->(PostgreSQL,SQLServer)
+	{ [$options]}-->(MariaDB,MySQL)
+	{ TABLESPACE [$tablespace]}-->(PostgreSQL)
+	`;
 
 class createTable extends SQLBuilder.SQLOperator {
 	constructor(sql){
@@ -27,9 +29,17 @@ class createTable extends SQLBuilder.SQLOperator {
 		this.$ifNotExists = this.$ine;
 
 		this.$table = new SQLBuilder.SQLPredefined.StringIdentifier(sql);
+		this.$tablespace = new SQLBuilder.SQLPredefined.StringIdentifier(sql);
 
 		this.registerPrivateHelper('define');
-		//this.registerPrivateHelper('with');
+
+		if (sql.isPostgreSQL() || sql.isSQLServer()) {
+			this.registerPrivateHelper('tableOptions');
+		}
+
+		if (sql.isMySQL() || sql.isMariaDB()) {
+			this.registerPrivateHelper('options');
+		}
 	}
 }
 

@@ -23,7 +23,7 @@ class ArithmeticHelper extends SQLBuilder.SQLHelper {
 
 		this.callee = function(...args) {
 			let identifier = args.pop();
-			return this._callHelper('$mul', args, identifier);
+			return this._callHelper('$' + helperName, args, identifier);
 		}
 	}
 
@@ -43,7 +43,7 @@ class ArithmeticHelper extends SQLBuilder.SQLHelper {
 		// 				mycol: { $add: ['mycol', 1] }
 		// 			}
 		// 		}
-		if (this.isPreviousHelper('$set') && (
+		if ((this.isPreviousHelper('$set') || this.isPreviousHelper('$columns')) && (
 				this.isNumber(query) ||
 				this.isString(query) ||
 				this.isPlainObject(query) ||

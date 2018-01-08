@@ -32,7 +32,11 @@ $define: {
 
 **SQL-Definition:**
 ```javascript
-[$column][$constraint][ , ... ]
+
+[$column]
+[$constraint]
+
+[ , ... ]
 ```
 
 **Registered Helpers**

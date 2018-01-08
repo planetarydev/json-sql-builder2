@@ -1,5 +1,11 @@
 'use strict';
 
+const SYNTAX = `
+[$column]
+[$constraint]
+
+[ , ... ]`;
+
 class define extends SQLBuilder.SQLHelper {
 	constructor(sql){
 		super(sql);
@@ -7,7 +13,7 @@ class define extends SQLBuilder.SQLHelper {
 		this.Types({
 			Object: {
 				eachItemOf: {
-					Object: { syntax: this.Syntax(`[$column][$constraint][ , ... ]`) },
+					Object: { syntax: this.Syntax(SYNTAX) },
 					Function: { syntax: this.Syntax(`<value>[ , ... ]`) },
 				}
 			}

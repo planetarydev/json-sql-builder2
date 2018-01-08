@@ -28,8 +28,10 @@ CREATE
   { TEMPORARY[$temp]}
   { UNLOGGED[$unlogged]}-->(PostgreSQL)
  TABLE { IF NOT EXISTS [$ine] | [$ifNotExists] } <$table> (<$define>)
-  { WITH [$with]}-->(PostgreSQL,SQLServer)
-  { TABLESPACE [$tablespace]}
+  { WITH ([$tableOptions])}-->(PostgreSQL,SQLServer)
+  { [$options]}-->(MariaDB,MySQL)
+  { TABLESPACE [$tablespace]}-->(PostgreSQL)
+  
 ```
 
 **Registered Helpers**
@@ -43,8 +45,9 @@ Name|Required|Public|SQL-Definition|Supported by
 [ifNotExists](./private/ifNotExists/)|*optional*|*private*| IF NOT EXISTS  [$ifNotExists] |
 [table](./private/table/)|:heavy_check_mark:|*private*||
 [define](./private/define/)|:heavy_check_mark:|*private*||
-[with](../../operators/with/)|*optional*|:heavy_check_mark:| WITH  [$with]|`PostgreSQL` `SQLServer` 
-[tablespace](./private/tablespace/)|*optional*|*private*| TABLESPACE  [$tablespace]|
+[tableOptions](./private/tableOptions/)|*optional*|*private*| WITH ( [$tableOptions])|`PostgreSQL` `SQLServer` 
+[options](./private/options/)|*optional*|*private*|  [$options]|`MariaDB` `MySQL` 
+[tablespace](./private/tablespace/)|*optional*|*private*| TABLESPACE  [$tablespace]|`PostgreSQL` 
 
 :bulb: **Example:**
 ```javascript
