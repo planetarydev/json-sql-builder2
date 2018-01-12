@@ -75,7 +75,7 @@ Name|Required|Public|SQL-Definition|Supported by
 [lateral](./private/lateral/)|*optional*|*private*||`PostgreSQL` 
 [cross](./private/cross/)|*optional*|*private*|CROSS JOIN  [$cross]|
 [inner](./private/inner/)|*optional*|*private*|INNER JOIN  [$inner]|
-[left](./private/left/)|*optional*|*private*|LEFT JOIN  [$left]|
+[left](../../../helpers/functions/string/left/)|*optional*|:heavy_check_mark:|LEFT JOIN  [$left]|
 [right](./private/right/)|*optional*|*private*|RIGHT JOIN  [$right]|
 [full](./private/full/)|*optional*|*private*|FULL JOIN  [$full]|
 [on](./private/on/)|*optional*|*private*| ON  [$on]|
