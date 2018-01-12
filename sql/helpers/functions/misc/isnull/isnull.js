@@ -61,6 +61,27 @@ module.exports = {
 						values: {}
 					}
 				}
+			},
+			"Usage as Function": function(sql) {
+				return {
+					supportedBy: {
+						SQLServer: 'https://docs.microsoft.com/en-US/sql/t-sql/functions/isnull-transact-sql'
+					},
+					test: function() {
+						return sql.build({
+							$select: {
+								$from: 'people',
+								$where: {
+									first_name: { $eq: sql.isNull('~~nick_name', '~~first_name') }
+								}
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT * FROM people WHERE first_name = ISNULL(nick_name, first_name)',
+						values: {}
+					}
+				}
 			}
 		},
 		Boolean: {

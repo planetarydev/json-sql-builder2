@@ -136,3 +136,30 @@ WHERE
 {}
 ```
 
+## Further Examples
+
+:bulb: **Usage as Function**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $from: 'people',
+            $where: {
+                first_name: { $eq: sql.isNull('~~nick_name', '~~first_name') }
+            }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people
+WHERE
+    first_name = ISNULL(nick_name, first_name)
+
+// Values
+{}
+```
+
