@@ -4,7 +4,7 @@
   "description": "SQLBuilder to translate JSON dataformat to SQL",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/ --recursive"
+    "test": "node lib/test.js"
   },
   "keywords": [
     "sql",
