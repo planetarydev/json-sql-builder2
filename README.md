@@ -7,7 +7,6 @@ Levelup your Queries with `json-sql-builder2`.
 - [Why to use json-sql-builder2](#why-to-use-json-sql-builder2)
 - [Supported SQL-Dialects](#supported-sql-dialects)
 - [Documentation](#documentation)
-- [Tests](#tests)
 - [Getting Started](#getting-started)
   - [Install](#install)
   - [First Example](#first-example)
@@ -21,11 +20,14 @@ Levelup your Queries with `json-sql-builder2`.
     - [Example writing LEFT-Function Helper](#example-writing-left-function-helper)
     - [Understanding, Writing the Syntax](#understanding-writing-the-syntax)
       - [Sub-Syntaxing](#sub-syntaxing)
-    - [Native js Function support - using SQLBuiler.CALLEE](#native-js-function-support-using-sqlbuiler-callee)
+    - [Native js Function support - using SQLBuiler.CALLEE](#native-js-function-support---using-sqlbuilercallee)
     - [Dialect-Specific SQL-Parts](#dialect-specific-sql-parts)
   - [Concating iterateable Informations](#concating-iterateable-informations)
   - [BuiltIn Parameters](#builtin-parameters)
   - [More Examples writing new stuff](#more-examples-writing-new-stuff)
+- [Tests](#tests)
+- [Generating docs](#generating-docs)
+
 
 # Why to use json-sql-builder2
 
@@ -350,6 +352,7 @@ class <operator-name> extends SQLBuilder.[SQLOperator | SQLHelper] {
     // optional postBuild-method
     postBuild(result, type, itemType){
         // ...
+		return result;
     }
 }
 
@@ -364,8 +367,8 @@ module.exports = {
     },
     examples: {
         // write at minimum one Test "Basic Usage" for each Type of Syntax defined above
-        // using the same structure as used by Typeds({...}) in the class constructor.
-        // Additional Test and Examples allways wellcome!
+        // using the same structure as used by this.Types({...}) in the class constructor.
+        // Additional Tests and Examples allways wellcome!
 
         // Example of a Test-Case for the Type "Object":
         Object: {
@@ -440,7 +443,7 @@ class left extends SQLBuilder.SQLHelper {
             Object: { syntax: this.Syntax('LEFT(<$str>, <$len>)', SQLBuilder.CALLEE) },
         });
 
-        // add each Helper defined in the Syntax as private Helper
+        // add each Helper defined in the Syntax as private, predefined Helper
         this.$str = new SQLBuilder.SQLPredefined.StringValueParam(sql);
         this.$len = new SQLBuilder.SQLPredefined.NumberValueParam(sql);
     }
@@ -482,8 +485,8 @@ module.exports = {
                             firstname: { $left: 1 }
                         });
                     },
-                    // define the expected results of the test as Number with
-                    // sql as String and values as Object. If there are no values generated, so define an empty Object like values: {}
+                    // define the expected results of the test with
+                    // sql as String and values as Object. If there are no values expected, so define an empty Object like values: {}
                     expectedResults: {
                         sql: 'SELECT LEFT(first_name, $1) AS first_name',
                         values: {
@@ -505,7 +508,7 @@ module.exports = {
                             test: { $left: { $str: 'Hello World', $len: 5 } }
                         });
                     },
-                    // define the expected results of the test as Object with
+                    // define the expected results of the test with
                     // sql as String and values as Object. If there are no values generated, so define an empty Object values: {}
                     expectedResults: {
                         sql: 'SELECT LEFT($1, $2) AS test',
@@ -888,5 +891,18 @@ SELECT
 
 ## More Examples writing new stuff
 
-**For more informations browse through the `/sql/operator` or `/sql/helper` directories there are a lot
+**For more informations browse through the `/sql/operator` or `/sql/helper` directories. There are a lot
 of Helpers and Operators and they all give you the best examples to write your own magic stuff.**
+
+# Tests
+
+After changing an existing Helper or Operator or maybe creating some new stuff you should run the Test.
+For this use always:
+
+```sh
+npm test
+```
+
+## Generating docs
+
+The documentation will automatically rebuild with every successful Test run.
