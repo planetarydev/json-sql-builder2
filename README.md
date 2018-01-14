@@ -1,8 +1,30 @@
 # json-sql-builder2
 
-Levelup your Queries with `waowql`.
+Levelup your Queries with `json-sql-builder2`.
 
-# Why to use jsonaql
+# Table of Content
+
+1. [Why to use json-sql-builder2](#Why-to-use-json-sql-builder2)
+2. [Supported SQL-Dialects](#supported-sql-dialects)
+3. [Documentation](#documentation)
+4. [Tests](#Tests)
+5. [Getting Started](#getting-started)
+   5.1. [Install](#install)
+   5.2. [First Example](#first-example)
+    5.3. [Support different Data Types](#Support-different-Data-Types)
+    5.4. [Using Keywords](#Using-Keywords)
+	5.5. [More Examples](#More-Examples)
+	5.6. [Working with SQL-Functions](#Working-with-SQL-Functions)
+6. [Writing new Helpers and Operators](#Writing-new-Helpers-and-Operators)
+    6.1. [What are the differences between Operators and Helpers?](#What-are-the-differences-between-Operators-and-Helpers)
+	6.2. [Using a Template](#Using-a-Template)
+	     - [Example writing LEFT-Function Helper](#Example-writing-LEFT-Function-Helper)
+		 - [Understanding, Writing the Syntax](#Understanding-Writing-the-Syntax)
+		    * [Sub-Syntaxing](#Sub-Syntaxing)
+		 - [Native js Function support - using SQLBuiler.CALLEE](#Native-js-Function-support-using-SQLBuiler-CALLEE)
+			* [Dialect-Specific SQL-Parts](#Dialect-Specific-SQL-Parts)
+
+# Why to use json-sql-builder2
 
 You are working with javascript and got the power of json, so why do you concat string by string or worry about query parameters.
 When you need to write dynamic queries defined by the user it is also much easier to use JSON instead of generating a string-based query.
@@ -11,7 +33,7 @@ Another point is that in most cases the readability and structuring the query is
 
 Working with the JSON DataType is also much easier (see JSON-Example below).
 
-## Supported SQL-Dialects
+# Supported SQL-Dialects
 
 By default `jsonaql` supports the follwing languages.
 - [x] MySQL
@@ -21,11 +43,13 @@ By default `jsonaql` supports the follwing languages.
 - [x] Oracle
 - [x] Microsoft SQL Server
 
-## Documentation
+# Documentation
 Each Operator and Helper is well documented. And you've got a lot of examples for each.
 
 For further details on each Helper or Operators have a look at the complete
 documentation at [https://github.com/planetarydev/jsonaql/](https://github.com/planetarydev/jsonaql/sql) and search or browse through the directories.
+
+# Getting Started
 
 ## Install
 
@@ -33,7 +57,7 @@ documentation at [https://github.com/planetarydev/jsonaql/](https://github.com/p
 npm install jsonaql --save
 ```
 
-## Getting Started
+## First Example
 
 ```javascript
 const SQLBuilder = require('jsonaql');
@@ -75,9 +99,11 @@ GROUP BY
 
 ```
 
-### Support different Data Types
+## Support different Data Types
 
 Each Operator and Helper can be used with different Data Types, so it is easy to take the Type that fits your needs.
+Have a look at the README.md for the Helpers, Operator you like to use. Each of them are well documented and the file
+is located directly beside the source-code.
 
 ```javascript
 myQuery = sql.$insert({
@@ -97,6 +123,16 @@ myQuery = sql.$insert({
     $values: ['John', 'Doe', 40]
 });
 
+// is the same as:
+myQuery = sql.$insert({
+    $table: 'people',
+    $documents: {
+        first_name: 'John',
+        last_name: 'Doe',
+        age: 40
+    }
+});
+
 // SQL output
 INSERT INTO
     people (first_name, last_name, age)
@@ -111,32 +147,8 @@ VALUES
 }
 ```
 
-**Using `$documents` Helper as shotcut for `$columns`, `$values`**
-```javascript
-myQuery = sql.$insert({
-    $table: 'people_history',
-    $documents: {
-        first_name: 'John',
-        last_name: 'Doe',
-        age: 40
-    }
-});
 
-// SQL output
-INSERT INTO
-    people_history (first_name, last_name, age)
-VALUES
-    ($1, $2, $3)
-
-// Values
-{
-    "$1": "John",
-    "$2": "Doe",
-    "$3": 40
-}
-```
-
-### Supporting Keywords
+### Using Keywords
 
 :bulb: **Using Keyword DEFAULT**
 ```javascript
@@ -164,7 +176,7 @@ VALUES
 
 ## More Examples
 
-Working with SQL-Functions.
+## Working with SQL-Functions
 
 ```javascript
 myQuery = sql.$select({
@@ -221,9 +233,9 @@ WHERE
 }
 ```
 
-## Writing new Helpers and Operators
+# Writing new Helpers and Operators
 
-### What are the differences between Operators and Helpers?
+## What are the differences between Operators and Helpers?
 Any Operator can build a valid SQL result by it's own without additional stuff.
 So each operator will be directly attached as `$<operator-name>` to the SQLBuilder instance.
 That means you can directly call each Operator like:
@@ -248,6 +260,7 @@ let myQuery = sql.$select({
 // and this could'nt be directly called like sql.$from({...})
 
 ```
+## Using a Template
 
 **A Template for writing new Helpers and Operators:**
 
@@ -391,7 +404,7 @@ module.exports = {
 }
 ```
 
-### Using the Template
+### Example writing LEFT-Function Helper
 
 If there is something missing you can easily extend all your required stuff.
 
@@ -526,7 +539,7 @@ module.exports = {
 
 ### Understanding, Writing the Syntax
 
-Every Helper or Operator will be defined by a Type, iterateable SubType and vale restrictions.
+Every Helper or Operator will be defined by a Type, iterateable sub-Type and optionally value restrictions.
 For each of this situation you have to support a valid Syntax, that will generate the
 SQL-Result-String for the Helper or Operator.
 
@@ -569,7 +582,7 @@ that specifies the length of the substring. So we need a *Sub-Syntax* that will 
 The *Sub-Syntax* is defined by using curly braces like `{ FOR [$len]}`.
 
 
-#### Native js Function support - using SQLBuiler.CALLEE
+### Native js Function support - using SQLBuiler.CALLEE
 
 What the hell is that?
 
@@ -592,7 +605,7 @@ SELECT
     SUBSTR($1 FROM $2 FOR $3) AS test
 ```
 
-**Write an individual callee**
+### Write an individual callee**
 
 Sometimes the auto generated callee does not fit our rules, so you can easily write your own callee by adding a method named `callee` to the new Helper class.
 In this case you could define each Function-Parameter by your own and add code to build the SQL-Result.
@@ -647,7 +660,7 @@ SELECT
     SUBSTR($1 FROM 3 FOR 5) AS test
 ```
 
-#### Dialect-Specific SQL-Parts inside Syntax
+#### Dialect-Specific SQL-Parts
 
 About 70% or 80% of all SQL comply with the ANSI SQL-Standard. So you can write code for each Helper and Operator for each SQL-dialect or
 you can add your specific Helper-Syntax as dialect-specific expression.
@@ -865,3 +878,6 @@ SELECT
     LEFT([first_name], @param1) AS [first_name]
 
 ```
+
+**For more informations browse through the `/sql/operator` or `/sql/helper` directories there are a lot
+of Helpers and Operators and they all give you the best examples to write your own magic stuff.**
