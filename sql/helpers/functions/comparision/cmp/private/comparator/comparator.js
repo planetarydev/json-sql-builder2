@@ -21,7 +21,7 @@ class comparator extends SQLBuilder.SQLHelper {
 
 module.exports = {
 	definition: comparator,
-	description: 'Specifies a private comparision Operator to use with `cmp` as Helper.',
+	description: 'Specifies the comparision Operator to use with `cmp` as Helper.',
 	supportedBy: {
 		MySQL: '',
 		MariaDB: '',

@@ -27,7 +27,7 @@ CREATE
   { OR REPLACE[$orReplace]}-->(MariaDB)
   { TEMPORARY[$temp]}
   { UNLOGGED[$unlogged]}-->(PostgreSQL)
- TABLE { IF NOT EXISTS [$ine] | [$ifNotExists] } <$table> (<$define>)
+ TABLE {IF NOT EXISTS [$ine] | [$ifNotExists] }<$table> (<$define>)
   { WITH ([$tableOptions])}-->(PostgreSQL,SQLServer)
   { [$options]}-->(MariaDB,MySQL)
   { TABLESPACE [$tablespace]}-->(PostgreSQL)
@@ -41,8 +41,8 @@ Name|Required|Public|SQL-Definition|Supported by
 [orReplace](./private/orReplace/)|*optional*|*private*| OR REPLACE [$orReplace]|`MariaDB` 
 [temp](./private/temp/)|*optional*|*private*| TEMPORARY [$temp]|
 [unlogged](./private/unlogged/)|*optional*|*private*| UNLOGGED [$unlogged]|`PostgreSQL` 
-[ine](./private/ine/)|*optional*|*private*| IF NOT EXISTS  [$ine] |
-[ifNotExists](./private/ifNotExists/)|*optional*|*private*| IF NOT EXISTS  [$ifNotExists] |
+[ine](./private/ine/)|*optional*|*private*|IF NOT EXISTS  [$ine] |
+[ifNotExists](./private/ifNotExists/)|*optional*|*private*|IF NOT EXISTS  [$ifNotExists] |
 [table](./private/table/)|:heavy_check_mark:|*private*||
 [define](./private/define/)|:heavy_check_mark:|*private*||
 [tableOptions](./private/tableOptions/)|*optional*|*private*| WITH ( [$tableOptions])|`PostgreSQL` `SQLServer` 

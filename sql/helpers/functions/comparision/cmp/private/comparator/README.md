@@ -1,5 +1,5 @@
 # comparator Helper
-Specifies a private comparision Operator to use with `cmp` as Helper.
+Specifies the comparision Operator to use with `cmp` as Helper.
 
 #### Supported by
 - MySQL

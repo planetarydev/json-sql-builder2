@@ -1,5 +1,18 @@
 'use strict';
 
+class valueHelper extends SQLBuilder.SQLHelper {
+	constructor(sql){
+		super(sql);
+
+		this.Types({
+			String: { syntax: this.Syntax('<value-param>') },
+			Number: { syntax: this.Syntax('<value-param>') },
+			Object: { syntax: this.Syntax('<value>') },
+			Function: { syntax: this.Syntax('<value>') },
+		});
+	}
+}
+
 class cmp extends SQLBuilder.SQLHelper {
 	constructor(sql){
 		super(sql);
@@ -10,8 +23,10 @@ class cmp extends SQLBuilder.SQLHelper {
 
 		this.registerPrivateHelper('comparator');
 
-		this.$value = new SQLBuilder.SQLPredefined.PrimitiveValueParam(sql);
-		this.$other = new SQLBuilder.SQLPredefined.PrimitiveValueParam(sql);
+		//this.$value = new SQLBuilder.SQLPredefined.PrimitiveValueParam(sql);
+		//this.$other = new SQLBuilder.SQLPredefined.PrimitiveValueParam(sql);
+		this.$value = new valueHelper(sql);
+		this.$other = new valueHelper(sql);
 	}
 }
 

@@ -14,14 +14,17 @@ class concat extends SQLBuilder.SQLHelper {
 
 	callee(...args){
 		let argResults = [],
-			maxArgs = args.length;
+			// the last arg is always the identifier injected by the builder itself
+			identifier = args.pop();
 		this.forEach(args, (arg, index) => {
-			// the last arg is alway the identifier injected by the builder itself
-			// so we check and skip it
-			if (index + 1 == maxArgs) return;
-
 			if (this.isPrimitive(arg)) {
 				argResults.push(this.addValue(arg));
+			}
+			if (this.isFunction(arg)) {
+				argResults.push(arg(identifier));
+			}
+			if (this.isPlainObject(arg)) {
+				argResults.push(this._queryUnknown({ $: arg }));
 			}
 		});
 		return 'CONCAT(' + argResults.join(', ') + ')';

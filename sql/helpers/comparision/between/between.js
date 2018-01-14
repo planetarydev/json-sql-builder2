@@ -8,7 +8,7 @@ class between extends SQLBuilder.SQLHelper {
 			Object: { syntax: this.Syntax('BETWEEN <$min> AND <$max>', SQLBuilder.CALLEE) }
 		});
 
-		// add the min max expressions as private helpers
+		// add the min, max expressions as private helpers
 		// so they can't run in conflict with the public
 		// aggregation $min and $max
 		this.$min = new SQLBuilder.SQLPredefined.Expression(sql);

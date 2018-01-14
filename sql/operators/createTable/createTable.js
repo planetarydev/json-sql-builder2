@@ -5,7 +5,7 @@ const SYNTAX =
 	{ OR REPLACE[$orReplace]}-->(MariaDB)
 	{ TEMPORARY[$temp]}
 	{ UNLOGGED[$unlogged]}-->(PostgreSQL)
- TABLE { IF NOT EXISTS [$ine] | [$ifNotExists] } <$table> (<$define>)
+ TABLE {IF NOT EXISTS [$ine] | [$ifNotExists] }<$table> (<$define>)
 	{ WITH ([$tableOptions])}-->(PostgreSQL,SQLServer)
 	{ [$options]}-->(MariaDB,MySQL)
 	{ TABLESPACE [$tablespace]}-->(PostgreSQL)

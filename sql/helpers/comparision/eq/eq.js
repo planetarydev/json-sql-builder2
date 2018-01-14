@@ -5,10 +5,25 @@ class eq extends SQLBuilder.SQLHelper {
 		super(sql);
 
 		this.Types({
-			Primitive: { syntax: this.Syntax('= <value-param>', SQLBuilder.CALLEE) },
+			Primitive: { syntax: this.Syntax('= <value-param>')}, //SQLBuilder.CALLEE) },
 			Object: { syntax: this.Syntax('= <value>') },
 			Function: { syntax: this.Syntax('= <value>') }
 		});
+	}
+
+	callee(...args){
+		if (args.length === 3){
+			return this._queryUnknown({
+				$cmp: {
+					$value: args[0],
+					$comparator: '=',
+					$other: args[1]
+				}
+			});
+		}
+		if (args.length === 2){
+			return '= ' + this.addValue(args[0]);
+		}
 	}
 }
 
