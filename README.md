@@ -568,35 +568,6 @@ In most cases of SQL there are optional parts that also include keywords. In our
 that specifies the length of the substring. So we need a *Sub-Syntax* that will only be generated when the Helper inside is supported.
 The *Sub-Syntax* is defined by using curly braces like `{ FOR [$len]}`.
 
-#### SQL-Dialect-Support inside the Synta
-
-About 70% to 80% of all SQL comply with the ANSI SQL-Standard. So you can write code for each Helper and Operator for each SQL-dialect or
-you can add your specific Helpers Syntax as dialect-specific expression.
-
-**Example**
-
-```javascript
-SELECT
-    { [$top]}-->(SQLServer)
-    { DISTINCT[$distinct]}
-    { SQL_CALC_FOUND_ROWS[$calcFoundRows]}-->(MySQL,MariaDB)
-
-    { <$columns>}
-        { [$into]}-->(MySQL,MariaDB,SQLServer)
-
-    { FROM [$from]}    { [$join]}
-    { WHERE [$where]}
-    { GROUP BY [$groupBy]}
-        { WITH ROLLUP[$withRollup]}-->(MariaDB,MySQL)
-    { HAVING [$having]}
-    { ORDER BY [$orderBy]}
-    { LIMIT [$limit]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
-    { OFFSET [$offset]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
-```
-
-The Example shows the current Syntax of the `SELECT` Statement. Here you can see some
-dialect-specific Helpers marked with `-->(<sql-dialect>[ , ...])`.
-
 
 #### Native js Function support - using SQLBuiler.CALLEE
 
@@ -674,4 +645,223 @@ let myQuery = sql.$select({
 // SQL-Output
 SELECT
     SUBSTR($1 FROM 3 FOR 5) AS test
+```
+
+#### Dialect-Specific SQL-Parts inside Syntax
+
+About 70% or 80% of all SQL comply with the ANSI SQL-Standard. So you can write code for each Helper and Operator for each SQL-dialect or
+you can add your specific Helper-Syntax as dialect-specific expression.
+
+**Example**
+
+```javascript
+SELECT
+    { [$top]}-->(SQLServer)
+    { DISTINCT[$distinct]}
+    { SQL_CALC_FOUND_ROWS[$calcFoundRows]}-->(MySQL,MariaDB)
+
+    { <$columns>}
+        { [$into]}-->(MySQL,MariaDB,SQLServer)
+
+    { FROM [$from]}    { [$join]}
+    { WHERE [$where]}
+    { GROUP BY [$groupBy]}
+        { WITH ROLLUP[$withRollup]}-->(MariaDB,MySQL)
+    { HAVING [$having]}
+    { ORDER BY [$orderBy]}
+    { LIMIT [$limit]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
+    { OFFSET [$offset]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
+```
+
+The Example shows the current Syntax of the `SELECT` Statement. Here you can see some
+dialect-specific Helpers marked with `-->(<sql-dialect>[,<sql-dialect>,...])`.
+
+So, if you are running SQLBuilder with PostgreSQL the `$info` Helper for the ` INTO ` clause
+is only supported by MySQL, MariaDB and SQLServer. If you write `$select: { $from: 'people', $into: ... }`
+the SQLBuilder will throw an Error that `$into Helper is not permitted by Syntax`.
+
+#### Concating iterateable Informations
+
+Sometimes you need to define an Array of columns or an Object with column-identifiers and they all need to
+concatenated by comma with the previouse one. To archive this you can specifiy a concatination-String or Joiner.
+
+Let's build a part of the `$columns` Helper from the `$select` Operator.
+
+```javascript
+let myQuery = sql.$select({
+    $columns: {
+        first_name: true,
+        last_name: true,
+        ...
+    }
+})
+
+// SQL-Output
+SELECT
+    first_name,
+    last_name,
+    ...
+
+// This is the definition of the $columns Helper.
+// Have a look at the joiner "[ , ... ]" inside the Syntax.
+class columns extends SQLBuilder.SQLHelper {
+    constructor(sql){
+        super(sql);
+
+        this.Types({
+            Object: {
+                // Here we have a iterateable...
+                eachItemOf: {
+                    // ...where each value should have one of the
+                    // following types listed:
+                    Boolean: {
+                        syntax: {
+                            true: this.Syntax('<key-ident>[ , ... ]'),
+                            false: this.Syntax('')
+                        }
+                    },
+                    Number: {
+                        syntax: {
+                            1: this.Syntax('<key-ident>[ , ... ]'),
+                            0: this.Syntax('')
+                        }
+                    },
+                    String: { syntax: this.Syntax('<key-ident> AS <value-ident>[ , ... ]') },
+                    Object: { syntax: this.Syntax('<value> AS <identifier>[ , ... ]') },
+                    Function: { syntax: this.Syntax('<value> AS <key-ident>[ , ... ]') }
+                }
+            },
+            Array: {
+                eachItemOf: {
+                    String: { syntax: this.Syntax('<value-ident>[ , ... ]') },
+                    Object: { syntax: this.Syntax('<value> AS <key-ident>[ , ... ]') }
+                }
+            },
+            String: { syntax: this.Syntax('<value-ident>') }
+        });
+    }
+}
+
+// Joiner [ , ... ] explained:
+// Each joiner has this style: "[ <joiner-def>... ]"
+// ! note of the space chars >---^---------------^
+```
+
+Every time the Syntax includes such a declaration the SQLBuilder extracts the joiner-definition and concatenates each item with this string-definition.
+
+Another Example of a joiner-Definition you will find at `/sql/helpers/locical/and/and.js` which is a Helper that is used by the $where Helper.
+The joiner is defined as `[  AND ... ]`.
+
+#### Built-In Parameters
+
+Each Syntax can take - so called BuiltIn-Params - to interact with the JSON-Data. For this
+you have to following parameter definitions you could use inside each Syntax:
+
+- `<key>`, `<key-ident>` or `<key-param>`
+- `<value>`, `<value-ident>` or `<value-param>`
+- `<identifier>`
+
+`<key>`, `<value>`:
+
+Native replacement for the Objects Key (or Index when using an Array) and replacement for the value of an Item.
+```javascript
+class columns extends... {
+    ...
+    this.Types({
+        Object: {
+            eachItemOf: {
+                String: { syntax: this.Syntax('<key> AS <value>') }
+            }
+        }
+    });
+    ...
+}
+
+let myQuery = sql.$select({
+    $columns: {
+        my_key: 'my_string_value'
+    }
+})
+
+//SQL-Output
+SELECT
+    my_key AS my_string_value
+```
+
+
+`<key-ident>`, `<value-ident>`:
+
+Safely quoted replacement for the Objects Key (or Index when using an Array - does not really make sense :-) ) and replacement for the value of an Item.
+```javascript
+class columns extends... {
+    constructor(){
+        ...
+        this.Types({
+            Object: {
+                eachItemOf: {
+                    String: { syntax: this.Syntax('<key-ident> AS <value-ident>') }
+                }
+            }
+        });
+        ...
+    }
+}
+
+let myQuery = sql.$select({
+    $columns: {
+        my_key: 'my_string_value',
+        'my_schema.my_table.my_col': 'my_test_alias'
+    }
+})
+
+//SQL-Output for PostgreSQL
+SELECT
+    "my_key" AS "my_string_value",
+    "my_schema"."my_table"."my_col" AS "my_test_alias"
+
+//SQL-Output for MySQL
+SELECT
+    `my_key` AS `my_string_value`,
+    `my_schema`.`my_table`.`my_col` AS `my_test_alias`
+
+//SQL-Output for SQLServer
+SELECT
+    [my_key] AS [my_string_value],
+    [my_schema].[my_table].[my_col] AS [my_test_alias]
+```
+
+
+`<key-param>`, `<value-param>`
+
+Parameterized Key and Value replacement where the value itself is pushed to the value-stack.
+
+```javascript
+class left extends... {
+    constructor(){
+        ...
+        this.Types({
+            Number: { syntax: this.Syntax('<key-ident> AS <value-param>')
+        });
+        ...
+    }
+}
+
+let myQuery = sql.$select({
+    $columns: {
+        first_name: { $left: 1 }
+    }
+})
+
+//SQL-Output for PostgreSQL
+SELECT
+    LEFT("first_name", $1) AS "first_name"
+
+//SQL-Output for MySQL
+SELECT
+    LEFT(`first_name`, ?) AS `first_name`
+
+//SQL-Output for SQLServer
+SELECT
+    LEFT([first_name], @param1) AS [first_name]
+
 ```
