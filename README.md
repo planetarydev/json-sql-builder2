@@ -4,25 +4,28 @@ Levelup your Queries with `json-sql-builder2`.
 
 # Table of Content
 
-1. [Why to use json-sql-builder2](#Why-to-use-json-sql-builder2)
-2. [Supported SQL-Dialects](#supported-sql-dialects)
-3. [Documentation](#documentation)
-4. [Tests](#Tests)
-5. [Getting Started](#getting-started)
-   5.1. [Install](#install)
-   5.2. [First Example](#first-example)
-    5.3. [Support different Data Types](#Support-different-Data-Types)
-    5.4. [Using Keywords](#Using-Keywords)
-	5.5. [More Examples](#More-Examples)
-	5.6. [Working with SQL-Functions](#Working-with-SQL-Functions)
-6. [Writing new Helpers and Operators](#Writing-new-Helpers-and-Operators)
-    6.1. [What are the differences between Operators and Helpers?](#What-are-the-differences-between-Operators-and-Helpers)
-	6.2. [Using a Template](#Using-a-Template)
-	     - [Example writing LEFT-Function Helper](#Example-writing-LEFT-Function-Helper)
-		 - [Understanding, Writing the Syntax](#Understanding-Writing-the-Syntax)
-		    * [Sub-Syntaxing](#Sub-Syntaxing)
-		 - [Native js Function support - using SQLBuiler.CALLEE](#Native-js-Function-support-using-SQLBuiler-CALLEE)
-			* [Dialect-Specific SQL-Parts](#Dialect-Specific-SQL-Parts)
+- [Why to use json-sql-builder2](#why-to-use-json-sql-builder2)
+- [Supported SQL-Dialects](#supported-sql-dialects)
+- [Documentation](#documentation)
+- [Tests](#tests)
+- [Getting Started](#getting-started)
+  - [Install](#install)
+  - [First Example](#first-example)
+  - [Support different Data Types](#support-different-data-types)
+  - [Using Keywords](#using-keywords)
+  - [More Examples](#more-examples)
+  - [Working with SQL-Functions](#working-with-sql-functions)
+- [Writing new Helpers and Operators](#writing-new-helpers-and-operators)
+  - [What are the differences between Operators and Helpers?](#what-are-the-differences-between-operators-and-helpers)
+  - [Using a Template](#using-a-template)
+    - [Example writing LEFT-Function Helper](#example-writing-left-function-helper)
+    - [Understanding, Writing the Syntax](#understanding-writing-the-syntax)
+      - [Sub-Syntaxing](#sub-syntaxing)
+    - [Native js Function support - using SQLBuiler.CALLEE](#native-js-function-support-using-sqlbuiler-callee)
+    - [Dialect-Specific SQL-Parts](#dialect-specific-sql-parts)
+  - [Concating iterateable Informations](#concating-iterateable-informations)
+  - [BuiltIn Parameters](#builtin-parameters)
+  - [More Examples writing new stuff](#more-examples-writing-new-stuff)
 
 # Why to use json-sql-builder2
 
@@ -660,7 +663,9 @@ SELECT
     SUBSTR($1 FROM 3 FOR 5) AS test
 ```
 
-#### Dialect-Specific SQL-Parts
+
+
+### Dialect-Specific SQL-Parts
 
 About 70% or 80% of all SQL comply with the ANSI SQL-Standard. So you can write code for each Helper and Operator for each SQL-dialect or
 you can add your specific Helper-Syntax as dialect-specific expression.
@@ -693,7 +698,9 @@ So, if you are running SQLBuilder with PostgreSQL the `$info` Helper for the ` I
 is only supported by MySQL, MariaDB and SQLServer. If you write `$select: { $from: 'people', $into: ... }`
 the SQLBuilder will throw an Error that `$into Helper is not permitted by Syntax`.
 
-#### Concating iterateable Informations
+
+
+### Concating iterateable Informations
 
 Sometimes you need to define an Array of columns or an Object with column-identifiers and they all need to
 concatenated by comma with the previouse one. To archive this you can specifiy a concatination-String or Joiner.
@@ -765,7 +772,7 @@ Every time the Syntax includes such a declaration the SQLBuilder extracts the jo
 Another Example of a joiner-Definition you will find at `/sql/helpers/locical/and/and.js` which is a Helper that is used by the $where Helper.
 The joiner is defined as `[  AND ... ]`.
 
-#### Built-In Parameters
+### BuiltIn Parameters
 
 Each Syntax can take - so called BuiltIn-Params - to interact with the JSON-Data. For this
 you have to following parameter definitions you could use inside each Syntax:
@@ -878,6 +885,8 @@ SELECT
     LEFT([first_name], @param1) AS [first_name]
 
 ```
+
+## More Examples writing new stuff
 
 **For more informations browse through the `/sql/operator` or `/sql/helper` directories there are a lot
 of Helpers and Operators and they all give you the best examples to write your own magic stuff.**
