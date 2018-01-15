@@ -162,9 +162,12 @@ var sql = new SQLBuilder(function(sql) {
 });
 ```
 
-**Options**
 
-At this time there are only few options available:
+### Options
+
+- `quoteIdentifiers` true | false (Default=false)
+
+If this option is `true` each identifier will be quoted. If this option is set to `false` only invalid, unsafe identifiers will be quoted.
 
 - `attachGlobal` true | false (Default=false)
 
@@ -205,7 +208,7 @@ AND [last_name] = @param5
 
 ```
 
-- useOuterKeywordOnJoin true | false
+- `useOuterKeywordOnJoin` true | false
 
 Have a look at the source of [/sql/helpers/queries/join/.joinhelper.js](./sql/helpers/queries/join/.joinhelper.js)
 

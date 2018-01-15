@@ -7,22 +7,34 @@
     "test": "node lib/test.js"
   },
   "keywords": [
+    "database",
     "sql",
     "mysql",
+    "pg",
+    "postgres",
+    "PostgreSQL",
+    "mariadb",
+    "maria",
+    "plsql",
+    "oracle",
+    "mssql",
+    "SQLServer",
+    "T-SQL",
+    "Transact-SQL",
     "mongo",
+    "SQLite",
     "json",
     "build",
     "translate",
-    "postgreSQL"
+    "query"
   ],
   "author": "planetarydev",
   "license": "MIT",
   "dependencies": {
-    "lodash": "^4.17.4",
-    "pg-format": "^1.0.4",
-    "sql-formatter": "^2.1.0"
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
+    "sql-formatter": "^2.1.0",
     "js-beautify": "^1.7.4",
     "colors": "^1.1.2",
     "chai": "^4.1.1",
