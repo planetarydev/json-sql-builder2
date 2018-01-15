@@ -151,14 +151,14 @@ var sql = new SQLBuilder(function(sql) {
         return '@param' + sql._values.length;
     }
 
-	// if neccessary turn the array of values to a object
-	sql.transformValueResult = function(valuesAsArray) {
-		let resultAsObj = {}
-		sql.forEach(valuesAsArray, (value, index) => {
-			resultAsObj['param' + index] = value
-		});
-		return resultAsObj;
-	}
+    // if neccessary turn the array of values to a object
+    sql.transformValueResult = function(valuesAsArray) {
+        let resultAsObj = {}
+        sql.forEach(valuesAsArray, (value, index) => {
+            resultAsObj['param' + index] = value
+        });
+        return resultAsObj;
+    }
 });
 ```
 
@@ -178,29 +178,29 @@ var sql = new SQLBuilder('SQLServer', {
 let myQuery = SELECT({
     people_name: $concat($left($i('people.first_name'), 1), '. ', $i('people.last_name')),
     $from: 'people',
-	$where: {
-		job_title: $in(['Sales Manager', 'Account Manager']),
-		last_name: $eq('Doe')
-	}
+    $where: {
+        job_title: $in(['Sales Manager', 'Account Manager']),
+        last_name: $eq('Doe')
+    }
 });
 
 // Results
 // myQuery.sql
 SELECT
-	CONCAT(LEFT([people].[first_name], @param1), @param2, [people].[last_name]) AS [people_name]
+    CONCAT(LEFT([people].[first_name], @param1), @param2, [people].[last_name]) AS [people_name]
 FROM
-	[people]
+    [people]
 WHERE
-	[job_title] IN (@param3, @param4)
+    [job_title] IN (@param3, @param4)
 AND [last_name] = @param5
 
 // myQuery.values
 {
-	param1: 1,
-	param2: '. ',
-	param3: 'Sales Manager',
-	param4: 'Account Manager',
-	param5: 'Doe'
+    param1: 1,
+    param2: '. ',
+    param3: 'Sales Manager',
+    param4: 'Account Manager',
+    param5: 'Doe'
 }
 
 ```
