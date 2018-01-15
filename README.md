@@ -10,6 +10,7 @@ Levelup your Queries with `json-sql-builder2`.
 - [Getting Started](#getting-started)
   - [Install](#install)
   - [First Example](#first-example)
+  - [Setup SQLBuilder](#setup-sqlbuilder)
   - [Support different Data Types](#support-different-data-types)
   - [Using Keywords](#using-keywords)
   - [More Examples](#more-examples)
@@ -40,7 +41,7 @@ Working with the JSON DataType is also much easier (see JSON-Example below).
 
 # Supported SQL-Dialects
 
-By default `jsonaql` supports the follwing languages.
+By default `json-sql-builder2` supports the follwing languages.
 - [x] MySQL
 - [x] MariaDB
 - [x] PostgreSQL
@@ -52,7 +53,7 @@ By default `jsonaql` supports the follwing languages.
 Each Operator and Helper is well documented. And you've got a lot of examples for each.
 
 For further details on each Helper or Operators have a look at the complete
-documentation at [https://github.com/planetarydev/jsonaql/](https://github.com/planetarydev/jsonaql/sql) and search or browse through the directories.
+documentation at [https://github.com/planetarydev/json-sql-builder2/tree/master/sql](https://github.com/planetarydev/json-sql-builder2/tree/master/sql) and search or browse through the directories.
 
 # Getting Started
 
@@ -65,7 +66,7 @@ npm install jsonaql --save
 ## First Example
 
 ```javascript
-const SQLBuilder = require('jsonaql');
+const SQLBuilder = require('json-sql-builder2');
 // create a new instance of the SQLBuilder and load the language extension for mysql
 var sql = new SQLBuilder('MySQL');
 
@@ -103,6 +104,64 @@ GROUP BY
 ['Sales Manager', 'Account Manager', 18, 'US']
 
 ```
+
+
+## Setup SQLBuilder
+
+By default you will create a new Instance of SQLBuilder by passing the language-dialect as String you would like to work with.
+
+```javascript
+// Syntax:
+// SQLBuilder(<dialect>[, options]);
+//
+// dialect: String | Function
+// options: Object
+
+// Setup a new instance for MySQL
+var sql = new SQLBuilder('MySQL');
+
+// Setup a new instance for MariaDB
+var sql = new SQLBuilder('MariaDB');
+
+// Setup a new instance for PostgreSQL
+var sql = new SQLBuilder('PostgreSQL');
+
+// Setup a new instance for SQLite
+var sql = new SQLBuilder('SQLite');
+
+// Setup a new instance for Oracle
+var sql = new SQLBuilder('Oracle');
+
+// Setup a new instance for SQLServer
+var sql = new SQLBuilder('SQLServer');
+
+
+// Passing a function as dialect param to setup your individual needs
+var sql = new SQLBuilder(function(sql) {
+    // set the name to one of the supported language-dialects
+    sql.setLanguage('SQLServer');
+
+    // set the left and right handed quoting character
+    sql.setQuoteChar('[', ']');
+    // if there the character is the same for left and right
+    sql.setQuoteChar('`');
+
+    // setup the placholder for each value pushed to the value-stack
+    sql.placeholder = function() {
+        return '@param' + sql._values.length;
+    }
+});
+```
+
+**Options**
+
+At this time there is only 1 option available:
+
+- useOuterKeywordOnJoin
+
+Have a look at the source of [/sql/helpers/queries/join/.joinhelper.js](./sql/helpers/queries/join/.joinhelper.js)
+
+
 
 ## Support different Data Types
 
@@ -352,7 +411,7 @@ class <operator-name> extends SQLBuilder.[SQLOperator | SQLHelper] {
     // optional postBuild-method
     postBuild(result, type, itemType){
         // ...
-		return result;
+        return result;
     }
 }
 
@@ -896,13 +955,24 @@ of Helpers and Operators and they all give you the best examples to write your o
 
 # Tests
 
-After changing an existing Helper or Operator or maybe creating some new stuff you should run the Test.
+After changing an existing Helper, Operator or maybe creating some new stuff you should run the Test.
 For this use always:
 
 ```sh
 npm test
 ```
 
+If you like to Test only a specific language dialect or specific helper or operator you could pass arguments for that:
+
+```sh
+npm test -- [ --language|dialect <MySQL|MariaDB|PostgreSQL|SQLite|Oracle|SQLServer> ] [ --helper|operator <path of helper located in ./sql> ]
+
+# Test only the $left-helper for language-dialect MySQL
+npm test -- --helper /helpers/functions/string/left/left.js --language MySQL
+```
+
+
 ## Generating docs
 
 The documentation will automatically rebuild with every successful Test run.
+Please note that a successful Test will only be archived by running a complete Tests without a specific language, helper or operator.
