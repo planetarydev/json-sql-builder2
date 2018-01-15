@@ -24,7 +24,7 @@ $update: { ... }
 **SQL-Definition:**
 ```javascript
 UPDATE  { [$top]}-->(SQLServer){ <$table>}
-  { SET <$set>}
+  { SET [$set]}
   { FROM [$from]}  { [$join]}
   { WHERE [$where]}
   { ORDER BY [$orderBy]}-->(MariaDB,MySQL,SQLite)
@@ -39,7 +39,7 @@ Name|Required|Public|SQL-Definition|Supported by
 :---|:------:|:----:|:-------------|:-----------
 [top](../../helpers/queries/top/)|*optional*|:heavy_check_mark:|  [$top]|`SQLServer` 
 [table](./private/table/)|:heavy_check_mark:|*private*|  <$table>|
-[set](./private/set/)|:heavy_check_mark:|*private*| SET  <$set>|
+[set](./private/set/)|*optional*|*private*| SET  [$set]|
 [from](../../helpers/queries/from/)|*optional*|:heavy_check_mark:| FROM  [$from]|
 [join](../../helpers/queries/join/)|*optional*|:heavy_check_mark:|  [$join]|
 [where](../../helpers/queries/where/)|*optional*|:heavy_check_mark:| WHERE  [$where]|

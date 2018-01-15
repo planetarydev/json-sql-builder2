@@ -150,14 +150,62 @@ var sql = new SQLBuilder(function(sql) {
     sql.placeholder = function() {
         return '@param' + sql._values.length;
     }
+
+	// if neccessary turn the array of values to a object
+	sql.transformValueResult = function(valuesAsArray) {
+		let resultAsObj = {}
+		sql.forEach(valuesAsArray, (value, index) => {
+			resultAsObj['param' + index] = value
+		});
+		return resultAsObj;
+	}
 });
 ```
 
 **Options**
 
-At this time there is only 1 option available:
+At this time there are only few options available:
 
-- useOuterKeywordOnJoin
+- `attachGlobal` true | false (Default=false)
+
+This Option will attach each Operator like `$select` in uppercase `SELECT`, each callee like `left` in lowercase `$left` and each Keyword in uppercase letters to the `globals` Object, so you could write your code like:
+
+```javascript
+var sql = new SQLBuilder('SQLServer', {
+    attachGlobal: true
+});
+
+let myQuery = SELECT({
+    people_name: $concat($left($i('people.first_name'), 1), '. ', $i('people.last_name')),
+    $from: 'people',
+	$where: {
+		job_title: $in(['Sales Manager', 'Account Manager']),
+		last_name: $eq('Doe')
+	}
+});
+
+// Results
+// myQuery.sql
+SELECT
+	CONCAT(LEFT([people].[first_name], @param1), @param2, [people].[last_name]) AS [people_name]
+FROM
+	[people]
+WHERE
+	[job_title] IN (@param3, @param4)
+AND [last_name] = @param5
+
+// myQuery.values
+{
+	param1: 1,
+	param2: '. ',
+	param3: 'Sales Manager',
+	param4: 'Account Manager',
+	param5: 'Doe'
+}
+
+```
+
+- useOuterKeywordOnJoin true | false
 
 Have a look at the source of [/sql/helpers/queries/join/.joinhelper.js](./sql/helpers/queries/join/.joinhelper.js)
 

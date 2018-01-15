@@ -52,7 +52,7 @@ UPDATE
 */
 const SYNTAX =
 `UPDATE	{ [$top]}-->(SQLServer){ <$table>}
-	{ SET <$set>}
+	{ SET [$set]}
 	{ FROM [$from]}	{ [$join]}
 	{ WHERE [$where]}
 	{ ORDER BY [$orderBy]}-->(MariaDB,MySQL,SQLite)
