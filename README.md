@@ -111,6 +111,7 @@ GROUP BY
 By default you will create a new Instance of SQLBuilder by passing the language-dialect as String you would like to work with.
 
 ```javascript
+const SQLBuilder = require('json-sql-builder2');
 // Syntax:
 // SQLBuilder(<dialect>[, options]);
 //
@@ -265,7 +266,9 @@ VALUES
 
 ### Using Keywords
 
-:bulb: **Using Keyword DEFAULT**
+A complete List of all Keywords you will find at [./sql/keywords/](./sql/keywords/).
+
+:bulb: **Exmple using Keyword DEFAULT**
 ```javascript
 myQuery = sql.$insert({
     $table: 'people',
