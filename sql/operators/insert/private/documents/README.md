@@ -140,3 +140,32 @@ VALUES
 }
 ```
 
+:bulb: **Using a NULL value and Date**
+```javascript
+function() {
+    return sql.$insert({
+        $table: 'people',
+        $documents: {
+            first_name: 'John',
+            last_name: 'Doe',
+            age: null,
+            created_at: createdAt
+        }
+    });
+}
+
+// SQL output
+INSERT INTO
+    people (first_name, last_name, age, created_at)
+VALUES
+    ($1, $2, $3, $4)
+
+// Values
+{
+    "$1": "John",
+    "$2": "Doe",
+    "$3": null,
+    "$4": "2018-01-18T15:10:19.864Z"
+}
+```
+

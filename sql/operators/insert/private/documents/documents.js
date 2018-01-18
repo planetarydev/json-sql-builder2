@@ -116,6 +116,31 @@ module.exports = {
 						}
 					}
 				}
+			},
+			"Using a NULL value and Date": function(sql) {
+				let createdAt = new Date();
+				return {
+					test: function(){
+						return sql.$insert({
+							$table: 'people',
+							$documents: {
+								first_name: 'John',
+								last_name: 'Doe',
+								age: null,
+								created_at: createdAt
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'INSERT INTO people (first_name, last_name, age, created_at) VALUES ($1, $2, $3, $4)',
+						values:{
+							$1: 'John',
+							$2: 'Doe',
+							$3: null,
+							$4: createdAt //.toISOString()
+						}
+					}
+				}
 			}
 		},
 		Array: {
