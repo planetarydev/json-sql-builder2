@@ -1,5 +1,5 @@
 # aggregationHelper Helper
-Specifies the a general aggregation function as template
+Specifies a general aggregation function as template
 class to inherit for the real aggregations like `COUNT`, `MIN`, `MAX`.
 
 The constructor needs in addition to the SQLBuilder instance a second argument with the
