@@ -5,7 +5,8 @@ class jsonAgg extends SQLBuilder.SQLOperator {
 		super(sql);
 
 		this.Types({
-			Object: { syntax: this.Syntax('json_agg(<value>)', SQLBuilder.CALLEE) },
+			String: { syntax: this.Syntax('json_agg(<value-ident>)', SQLBuilder.CALLEE) },
+			Object: { syntax: this.Syntax('json_agg(<value>)') },
 		});
 	}
 }
@@ -18,6 +19,24 @@ module.exports = {
 		PostgreSQL: 'https://www.postgresql.org/docs/10/static/functions-aggregate.html',
 	},
 	examples: {
+		String: {
+			"Basic Usage": function(sql) {
+				return {
+					test: function() {
+						return sql.$select({
+							people_id: 1,
+							emails: { $jsonAgg: 'address' },
+							$from: 'people_emails',
+							$groupBy: 'people_id'
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT people_id, json_agg(address) AS emails FROM people_emails GROUP BY people_id',
+						values: {}
+					}
+				}
+			}
+		},
 		Object: {
 			"Basic Usage": function(sql) {
 				return {

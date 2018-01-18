@@ -6,6 +6,45 @@ Specifies the PostgreSQL `json_agg` aggregation Function.
 
 # Allowed Types and Usage
 
+## as String:
+
+Usage of `jsonAgg` as **String** with the following Syntax:
+
+**Syntax:**
+
+```javascript
+$jsonAgg: < String >
+```
+
+**SQL-Definition:**
+```javascript
+json_agg(<value-ident>)
+```
+
+:bulb: **Example:**
+```javascript
+function() {
+    return sql.$select({
+        people_id: 1,
+        emails: { $jsonAgg: 'address' },
+        $from: 'people_emails',
+        $groupBy: 'people_id'
+    });
+}
+
+// SQL output
+SELECT
+    people_id,
+    json_agg(address) AS emails
+FROM
+    people_emails
+GROUP BY
+    people_id
+
+// Values
+{}
+```
+
 ## as Object:
 
 Usage of `jsonAgg` as **Object** with the following Syntax:
