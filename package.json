@@ -1,6 +1,6 @@
 {
   "name": "json-sql-builder2",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Query Builder to translate JSON dataformat a SQL.",
   "main": "index.js",
   "scripts": {
