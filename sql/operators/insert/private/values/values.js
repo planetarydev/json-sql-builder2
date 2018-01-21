@@ -7,7 +7,9 @@ class values extends SQLBuilder.SQLHelper {
 		this.Types({
 			Array: {
 				eachItemOf: {
-					Primitive: { syntax: this.Syntax('<value-param>[ , ... ]') }
+					Primitive: { syntax: this.Syntax('<value-param>[ , ... ]') },
+					Object: { syntax: this.Syntax('<value>[ , ... ]') },
+					Function: { syntax: this.Syntax('<value>[ , ... ]') }
 				}
 			}
 		});
@@ -87,6 +89,55 @@ module.exports = {
 								values:{
 									$1: 'John',
 									$2: 'Doe'
+								}
+							}
+						}
+					}
+				},
+				Object: {
+					"Basic Usage": function(sql) {
+						return {
+							test: function() {
+								return sql.$insert({
+									$table: 'people',
+									$documents: {
+										first_name: 'John',
+										last_name: 'Doe',
+										hobbies: { $json: ['football', 'basketball'] }
+									}
+								});
+							},
+							expectedResults: {
+								sql: 'INSERT INTO people (first_name, last_name, hobbies) VALUES ($1, $2, $3)',
+								values: {
+									$1: 'John',
+									$2: 'Doe',
+									$3: '["football","basketball"]'
+								}
+							}
+						}
+					}
+				},
+				Function: {
+					"Basic Usage": function(sql) {
+						return {
+							test: function() {
+								return sql.$insert({
+									$table: 'people',
+									$documents: {
+										first_name: 'John',
+										last_name: 'Doe',
+										foo: sql.concat('Hello ', 'John!')
+									}
+								});
+							},
+							expectedResults: {
+								sql: 'INSERT INTO people (first_name, last_name, foo) VALUES ($1, $2, CONCAT($3, $4))',
+								values: {
+									$1: 'John',
+									$2: 'Doe',
+									$3: 'Hello ',
+									$4: 'John!'
 								}
 							}
 						}

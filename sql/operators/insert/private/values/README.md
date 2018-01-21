@@ -16,6 +16,8 @@ Specifies the `VALUES` clause for the `INSERT INTO` Statement
 The Usage of `values` as **Array** is restricted to childs have the following Type:
 
 - Primitive
+- Object
+- Function
 
 ## as Array :arrow_right: Primitive:
 
@@ -55,6 +57,93 @@ VALUES
     "$1": "John",
     "$2": "Doe",
     "$3": 40
+}
+```
+## as Array :arrow_right: Object:
+
+Usage of `values` as **Array** with a child of Type **Object** :
+
+**Syntax:**
+
+```javascript
+$values: [
+    { ... } [, ... ]
+]
+```
+
+**SQL-Definition:**
+```javascript
+<value>[ , ... ]
+```
+
+:bulb: **Example:**
+```javascript
+function() {
+    return sql.$insert({
+        $table: 'people',
+        $documents: {
+            first_name: 'John',
+            last_name: 'Doe',
+            hobbies: { $json: ['football', 'basketball'] }
+        }
+    });
+}
+
+// SQL output
+INSERT INTO
+    people (first_name, last_name, hobbies)
+VALUES
+    ($1, $2, $3)
+
+// Values
+{
+    "$1": "John",
+    "$2": "Doe",
+    "$3": "[\"football\",\"basketball\"]"
+}
+```
+## as Array :arrow_right: Function:
+
+Usage of `values` as **Array** with a child of Type **Function** :
+
+**Syntax:**
+
+```javascript
+$values: [
+    sql.<callee>([params]) [, ... ]
+]
+```
+
+**SQL-Definition:**
+```javascript
+<value>[ , ... ]
+```
+
+:bulb: **Example:**
+```javascript
+function() {
+    return sql.$insert({
+        $table: 'people',
+        $documents: {
+            first_name: 'John',
+            last_name: 'Doe',
+            foo: sql.concat('Hello ', 'John!')
+        }
+    });
+}
+
+// SQL output
+INSERT INTO
+    people (first_name, last_name, foo)
+VALUES
+    ($1, $2, CONCAT($3, $4))
+
+// Values
+{
+    "$1": "John",
+    "$2": "Doe",
+    "$3": "Hello ",
+    "$4": "John!"
 }
 ```
 ## Further Examples
