@@ -7,9 +7,9 @@ class set extends SQLBuilder.SQLOperator {
 		this.Types({
 			Object: {
 				eachItemOf: {
-					Boolean: { syntax: this.Syntax('<key-ident> = <value-param>[ , ... ]') },
-					Number: { syntax: this.Syntax('<key-ident> = <value-param>[ , ... ]') },
 					String: { syntax: this.Syntax('<key-ident> = <value-param>[ , ... ]') },
+					Number: { syntax: this.Syntax('<key-ident> = <value-param>[ , ... ]') },
+					Boolean: { syntax: this.Syntax('<key-ident> = <value-param>[ , ... ]') },
 					Object: { syntax: this.Syntax('<identifier> = <value>[ , ... ]') },
 					Function: { syntax: this.Syntax('<key-ident> = <value>[ , ... ]') },
 				}

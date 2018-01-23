@@ -15,21 +15,21 @@ Specifies the `SET` clause for the `UPDATE` Statement.
 
 The Usage of `set` as **Object** is restricted to childs have the following Type:
 
-- Boolean
-- Number
 - String
+- Number
+- Boolean
 - Object
 - Function
 
-## as Object :arrow_right: Boolean:
+## as Object :arrow_right: String:
 
-Usage of `set` as **Object** with a child of Type **Boolean** :
+Usage of `set` as **Object** with a child of Type **String** :
 
 **Syntax:**
 
 ```javascript
 $set: {
-    "<identifier | $Helper | $operator>": true | false [, ... ]
+    "<identifier | $Helper | $operator>": <String> [, ... ]
 }
 ```
 
@@ -45,8 +45,7 @@ function() {
         $table: 'people',
         $set: {
             first_name: 'John',
-            last_name: 'Doe',
-            is_adult: true
+            last_name: 'Doe'
         },
         $where: {
             people_id: 456
@@ -59,17 +58,15 @@ UPDATE
     people
 SET
     first_name = $1,
-    last_name = $2,
-    is_adult = $3
+    last_name = $2
 WHERE
-    people_id = $4
+    people_id = $3
 
 // Values
 {
     "$1": "John",
     "$2": "Doe",
-    "$3": true,
-    "$4": 456
+    "$3": 456
 }
 ```
 ## as Object :arrow_right: Number:
@@ -123,15 +120,15 @@ WHERE
     "$4": 456
 }
 ```
-## as Object :arrow_right: String:
+## as Object :arrow_right: Boolean:
 
-Usage of `set` as **Object** with a child of Type **String** :
+Usage of `set` as **Object** with a child of Type **Boolean** :
 
 **Syntax:**
 
 ```javascript
 $set: {
-    "<identifier | $Helper | $operator>": <String> [, ... ]
+    "<identifier | $Helper | $operator>": true | false [, ... ]
 }
 ```
 
@@ -147,7 +144,8 @@ function() {
         $table: 'people',
         $set: {
             first_name: 'John',
-            last_name: 'Doe'
+            last_name: 'Doe',
+            is_adult: true
         },
         $where: {
             people_id: 456
@@ -160,15 +158,17 @@ UPDATE
     people
 SET
     first_name = $1,
-    last_name = $2
+    last_name = $2,
+    is_adult = $3
 WHERE
-    people_id = $3
+    people_id = $4
 
 // Values
 {
     "$1": "John",
     "$2": "Doe",
-    "$3": 456
+    "$3": true,
+    "$4": 456
 }
 ```
 ## as Object :arrow_right: Object:
