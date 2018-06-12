@@ -60,7 +60,7 @@ documentation at [https://github.com/planetarydev/json-sql-builder2/tree/master/
 ## Install
 
 ```sh
-npm install jsonaql --save
+npm install json-sql-builder2 --save
 ```
 
 ## First Example
