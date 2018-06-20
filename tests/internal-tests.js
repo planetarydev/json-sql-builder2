@@ -31,5 +31,6 @@ describe('SQLBuilder internal Tests', function() {
 				expect(myQuery.sql).to.equal('SELECT LEFT(first_name, $1) AS "when" FROM people');
 			});
 		});
+
 	})
 })
