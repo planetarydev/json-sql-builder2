@@ -338,6 +338,26 @@ FROM
 
 ## Further Examples
 
+:bulb: **Oracle Basic Usage with aliases**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $from: { people: 'p' }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people p
+
+// Values
+{}
+```
+
 :bulb: **Cross Joined Tables**
 ```javascript
 function() {
@@ -354,6 +374,85 @@ SELECT
 FROM
     people AS p,
     people_skills AS ps
+
+// Values
+{}
+```
+
+:bulb: **Oracle Cross Joined Tables with aliases**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $from: { people: 'p', people_skills: 'ps' }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people p,
+    people_skills ps
+
+// Values
+{}
+```
+
+:bulb: **Oracle Basic Usage**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $from: {
+                people: 'p',
+                skills: {
+                    $select: { $from: 'people_skills' }
+                }
+            }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    people p,
+    (
+        SELECT
+            *
+        FROM
+            people_skills
+    ) skills
+
+// Values
+{}
+```
+
+:bulb: **Oracle Basic Usage with alias**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $from: {
+                p: sql.select('*', { $from: 'people' })
+            }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    (
+        SELECT
+            *
+        FROM
+            people
+    ) p
 
 // Values
 {}

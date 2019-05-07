@@ -4,6 +4,8 @@ class from extends SQLBuilder.SQLHelper {
 	constructor(sql){
 		super(sql);
 
+		let aliasKeyword = sql.isOracle() ? ' ' : ' AS ';
+
 		this.Types({
 			Object: {
 				eachItemOf: {
@@ -19,9 +21,9 @@ class from extends SQLBuilder.SQLHelper {
 							0: this.Syntax('')
 						}
 					},
-					String: { syntax: this.Syntax('<key-ident> AS <value-ident>[ , ... ]') },
-					Object: { syntax: this.Syntax('<value> AS <identifier>[ , ... ]') },
-					Function: { syntax: this.Syntax('<value> AS <key-ident>[ , ... ]') }
+					String: { syntax: this.Syntax('<key-ident>' + aliasKeyword + '<value-ident>[ , ... ]') },
+					Object: { syntax: this.Syntax('<value>' + aliasKeyword + '<identifier>[ , ... ]') },
+					Function: { syntax: this.Syntax('<value>' + aliasKeyword + '<key-ident>[ , ... ]') }
 				},
 			},
 			String: { syntax: this.Syntax('<value-ident>') },
@@ -46,6 +48,13 @@ module.exports = {
 				Function: {
 					"Basic Usage": function(sql) {
 						return {
+							supportedBy: {
+								MySQL: true,
+								MariaDB: true,
+								PostgreSQL: true,
+								SQLite: true,
+								SQLServer: true
+							},
 							test: function(){
 								return sql.build({
 									$select: {
@@ -57,6 +66,26 @@ module.exports = {
 							},
 							expectedResults: {
 								sql: 'SELECT * FROM (SELECT * FROM people) AS p',
+								values: {}
+							}
+						}
+					},
+					"Oracle Basic Usage with alias": function(sql) {
+						return {
+							supportedBy: {
+								Oracle: true
+							},
+							test: function(){
+								return sql.build({
+									$select: {
+										$from: {
+											p: sql.select('*', { $from: 'people'})
+										}
+									}
+								});
+							},
+							expectedResults: {
+								sql: 'SELECT * FROM (SELECT * FROM people) p',
 								values: {}
 							}
 						}
@@ -146,6 +175,13 @@ module.exports = {
 				String: {
 					"Basic Usage": function(sql) {
 						return {
+							supportedBy: {
+								MySQL: true,
+								MariaDB: true,
+								PostgreSQL: true,
+								SQLite: true,
+								SQLServer: true
+							},
 							test: function(){
 								return sql.build({
 									$select: {
@@ -159,8 +195,33 @@ module.exports = {
 							},
 						}
 					},
+					"Oracle Basic Usage with aliases": function(sql) {
+						return {
+							supportedBy: {
+								Oracle: true,
+							},
+							test: function(){
+								return sql.build({
+									$select: {
+										$from: { people: 'p' }
+									}
+								});
+							},
+							expectedResults: {
+								sql: 'SELECT * FROM people p',
+								values: {}
+							},
+						}
+					},
 					"Cross Joined Tables": function(sql) {
 						return {
+							supportedBy: {
+								MySQL: true,
+								MariaDB: true,
+								PostgreSQL: true,
+								SQLite: true,
+								SQLServer: true
+							},
 							test: function(){
 								return sql.build({
 									$select: {
@@ -173,11 +234,37 @@ module.exports = {
 								values: {}
 							}
 						}
+					},
+					"Oracle Cross Joined Tables with aliases": function(sql) {
+						return {
+							supportedBy: {
+								Oracle: true
+							},
+							test: function(){
+								return sql.build({
+									$select: {
+										$from: { people: 'p', people_skills: 'ps' }
+									}
+								});
+							},
+							expectedResults: {
+								sql: 'SELECT * FROM people p, people_skills ps',
+								values: {}
+							}
+						}
 					}
+
 				},
 				Object: {
 					"Basic Usage": function(sql) {
 						return {
+							supportedBy: {
+								MySQL: true,
+								MariaDB: true,
+								PostgreSQL: true,
+								SQLite: true,
+								SQLServer: true
+							},
 							test: function(){
 								return sql.build({
 									$select: {
@@ -192,6 +279,29 @@ module.exports = {
 							},
 							expectedResults: {
 								sql: 'SELECT * FROM people AS p, (SELECT * FROM people_skills) AS skills',
+								values: {}
+							}
+						}
+					},
+					"Oracle Basic Usage": function(sql) {
+						return {
+							supportedBy: {
+								Oracle: true
+							},
+							test: function(){
+								return sql.build({
+									$select: {
+										$from: {
+											people: 'p',
+											skills: {
+												$select: { $from: 'people_skills' }
+											}
+										}
+									}
+								});
+							},
+							expectedResults: {
+								sql: 'SELECT * FROM people p, (SELECT * FROM people_skills) skills',
 								values: {}
 							}
 						}
