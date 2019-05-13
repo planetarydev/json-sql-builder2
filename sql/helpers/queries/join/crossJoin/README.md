@@ -79,6 +79,47 @@ WHERE
 
 ## Further Examples
 
+:bulb: **Oracle Basic Usage**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $columns: {
+                'people.first_name': true,
+                'people.last_name': true,
+                'skills.description': true,
+                'skills.rate': true
+            },
+            $from: 'people',
+            $join: {
+                skills: { $crossJoin: { $table: 'people_skills' } }
+
+            },
+            $where: {
+                'skills.rate': { $gt: 50 }
+            }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    skills.rate
+FROM
+    people
+    CROSS JOIN people_skills skills
+WHERE
+    skills.rate > $1
+
+// Values
+{
+    "$1": 50
+}
+```
+
 :bulb: **Usage as Function**
 ```javascript
 function() {

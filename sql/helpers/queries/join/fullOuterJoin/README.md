@@ -84,6 +84,52 @@ WHERE
 
 ## Further Examples
 
+:bulb: **Oracle Basic Usage**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $columns: {
+                'people.first_name': true,
+                'people.last_name': true,
+                'skills.description': true,
+                'skills.rate': true
+            },
+            $from: 'people',
+            $join: {
+                skills: {
+                    $fullOuterJoin: {
+                        $table: 'people_skills',
+                        $on: { 'skills.people_id': { $eq: '~~people.people_id' } },
+                    }
+                }
+
+            },
+            $where: {
+                'skills.rate': { $gt: 50 }
+            }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    skills.rate
+FROM
+    people FULL
+    JOIN people_skills skills ON skills.people_id = people.people_id
+WHERE
+    skills.rate > $1
+
+// Values
+{
+    "$1": 50
+}
+```
+
 :bulb: **Usage as Function**
 ```javascript
 function() {
@@ -117,6 +163,48 @@ SELECT
 FROM
     people FULL
     JOIN people_skills AS skills ON skills.people_id = people.people_id
+WHERE
+    skills.rate > $1
+
+// Values
+{
+    "$1": 50
+}
+```
+
+:bulb: **Oracle Usage as Function**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $columns: {
+                'people.first_name': true,
+                'people.last_name': true,
+                'skills.description': true,
+                'skills.rate': true
+            },
+            $from: 'people',
+            $join: {
+                skills: sql.fullOuterJoin('people_skills', {
+                    $on: { 'skills.people_id': { $eq: '~~people.people_id' } }
+                })
+            },
+            $where: {
+                'skills.rate': { $gt: 50 }
+            }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    skills.rate
+FROM
+    people FULL
+    JOIN people_skills skills ON skills.people_id = people.people_id
 WHERE
     skills.rate > $1
 

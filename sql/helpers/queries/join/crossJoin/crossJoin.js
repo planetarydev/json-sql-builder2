@@ -23,6 +23,13 @@ module.exports = {
 		Object: {
 			'Basic Usage': function(sql) {
 				return {
+					supportedBy: {
+						MySQL: true,
+						MariaDB: true,
+						PostgreSQL: true,
+						SQLite: true,
+						SQLServer: true
+					},
 					test: function(){
 						return sql.build({
 							$select: {
@@ -51,8 +58,48 @@ module.exports = {
 					}
 				}
 			},
+			'Oracle Basic Usage': function(sql) {
+				return {
+					supportedBy: {
+						Oracle: true,
+					},
+					test: function(){
+						return sql.build({
+							$select: {
+								$columns: {
+									'people.first_name': true,
+									'people.last_name': true,
+									'skills.description': true,
+									'skills.rate': true
+								},
+								$from: 'people',
+								$join: {
+									skills: { $crossJoin: { $table: 'people_skills' } }
+
+								},
+								$where: {
+									'skills.rate': { $gt: 50 }
+								}
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people CROSS JOIN people_skills skills WHERE skills.rate > $1',
+						values:{
+							$1: 50
+						}
+					}
+				}
+			},
 			'Usage as Function': function(sql) {
 				return {
+					supportedBy: {
+						MySQL: true,
+						MariaDB: true,
+						PostgreSQL: true,
+						SQLite: true,
+						SQLServer: true
+					},
 					test: function(){
 						return sql.build({
 							$select: {
@@ -77,6 +124,38 @@ module.exports = {
 						values:{
 							$1: 50
 						}
+					}
+				}
+			}
+		},
+		'Oracle Usage as Function': function(sql) {
+			return {
+				supportedBy: {
+					Oracle: true,
+				},
+				test: function(){
+					return sql.build({
+						$select: {
+							$columns: {
+								'people.first_name': true,
+								'people.last_name': true,
+								'skills.description': true,
+								'skills.rate': true
+							},
+							$from: 'people',
+							$join: {
+								skills: sql.crossJoin('people_skills')
+							},
+							$where: {
+								'skills.rate': { $gt: 50 }
+							}
+						}
+					});
+				},
+				expectedResults: {
+					sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people CROSS JOIN people_skills skills WHERE skills.rate > $1',
+					values:{
+						$1: 50
 					}
 				}
 			}

@@ -51,6 +51,13 @@ module.exports = {
 		Object: {
 			'Basic Usage': function(sql) {
 				return {
+					supportedBy: {
+						MySQL: true,
+						MariaDB: true,
+						PostgreSQL: true,
+						SQLite: true,
+						SQLServer: true
+					},
 					test: function(){
 						return sql.build({
 							$select: {
@@ -78,6 +85,44 @@ module.exports = {
 					},
 					expectedResults: {
 						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people LEFT JOIN people_skills AS skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
+						values:{
+							$1: 50
+						}
+					}
+				}
+			},
+			'Oracle Basic Usage': function(sql) {
+				return {
+					supportedBy: {
+						Oracle: true,
+					},
+					test: function(){
+						return sql.build({
+							$select: {
+								$columns: {
+									'people.first_name': true,
+									'people.last_name': true,
+									'skills.description': true,
+									'skills.rate': true
+								},
+								$from: 'people',
+								$join: {
+									people_skills: {
+										$left: 'skills',
+										$on: {
+											'skills.people_id': { $eq: '~~people.people_id' }
+										}
+									}
+								},
+								$where: {
+									'skills.rate': { $gt: 50 }
+								}
+
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people LEFT JOIN people_skills skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
 						values:{
 							$1: 50
 						}
