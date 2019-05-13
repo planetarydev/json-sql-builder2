@@ -23,6 +23,13 @@ module.exports = {
 		String: {
 			'Basic Usage': function(sql) {
 				return {
+					supportedBy: {
+						MySQL: true,
+						MariaDB: true,
+						PostgreSQL: true,
+						SQLite: true,
+						SQLServer: true
+					},
 					test: function(){
 						return sql.build({
 							$select: {
@@ -49,11 +56,50 @@ module.exports = {
 						}
 					}
 				}
+			},
+			'Oracle Basic Usage': function(sql) {
+				return {
+					supportedBy: {
+						Oracle: true,
+					},
+					test: function(){
+						return sql.build({
+							$select: {
+								$columns: {
+									'people.first_name': true,
+									'people.last_name': true,
+									'skills.description': true,
+									'skills.rate': true
+								},
+								$from: 'people',
+								$join: {
+									people_skills: { $cross: 'skills' }
+								},
+								$where: {
+									'skills.rate': { $gt: 50 }
+								}
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people CROSS JOIN people_skills skills WHERE skills.rate > $1',
+						values:{
+							$1: 50
+						}
+					}
+				}
 			}
 		},
 		Object: {
 			'Basic Usage': function(sql) {
 				return {
+					supportedBy: {
+						MySQL: true,
+						MariaDB: true,
+						PostgreSQL: true,
+						SQLite: true,
+						SQLServer: true
+					},
 					test: function(){
 						return sql.build({
 							$select: {
@@ -91,11 +137,61 @@ module.exports = {
 						}
 					}
 				}
+			},
+			'Oracle Basic Usage': function(sql) {
+				return {
+					supportedBy: {
+						Oracle: true,
+					},
+					test: function(){
+						return sql.build({
+							$select: {
+								$columns: {
+									'people.first_name': true,
+									'people.last_name': true,
+									'skills.description': true,
+									'skills.rate': true
+								},
+								$from: 'people',
+								$join: {
+									skills: {
+										$cross: {
+											$select: {
+												$from: 'people_skills',
+												$where: {
+													is_skill: 1
+												}
+											}
+										}
+									}
+								},
+								$where: {
+									'skills.rate': { $gt: 50 }
+								}
+
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people CROSS JOIN (SELECT * FROM people_skills WHERE is_skill = $1) skills WHERE skills.rate > $2',
+						values:{
+							$1: 1,
+							$2: 50
+						}
+					}
+				}
 			}
 		},
 		Function: {
 			'Basic Usage': function(sql) {
 				return {
+					supportedBy: {
+						MySQL: true,
+						MariaDB: true,
+						PostgreSQL: true,
+						SQLite: true,
+						SQLServer: true
+					},
 					test: function(){
 						return sql.build({
 							$select: {
@@ -125,6 +221,47 @@ module.exports = {
 					},
 					expectedResults: {
 						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people CROSS JOIN (SELECT * FROM people_skills WHERE is_skill = $1) AS skills WHERE skills.rate > $2',
+						values:{
+							$1: 1,
+							$2: 50
+						}
+					}
+				}
+			},
+			'Oracle Basic Usage': function(sql) {
+				return {
+					supportedBy: {
+						Oracle: true,
+					},
+					test: function(){
+						return sql.build({
+							$select: {
+								$columns: {
+									'people.first_name': true,
+									'people.last_name': true,
+									'skills.description': true,
+									'skills.rate': true
+								},
+								$from: 'people',
+								$join: {
+									skills: {
+										$cross: sql.select('*', {
+											$from: 'people_skills',
+											$where: {
+												is_skill: 1
+											}
+										})
+									}
+								},
+								$where: {
+									'skills.rate': { $gt: 50 }
+								}
+
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people CROSS JOIN (SELECT * FROM people_skills WHERE is_skill = $1) skills WHERE skills.rate > $2',
 						values:{
 							$1: 1,
 							$2: 50

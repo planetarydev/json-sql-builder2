@@ -199,6 +199,59 @@ WHERE
 ```
 ## Further Examples
 
+:bulb: **Oracle Basic Usage**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $columns: {
+                'people.first_name': true,
+                'people.last_name': true,
+                'skills.description': true,
+                'ratings.description': true
+            },
+            $from: 'people',
+            $join: {
+                people_skills: {
+                    $inner: 'skills',
+                    $on: {
+                        'skills.people_id': { $eq: '~~people.people_id' }
+                    }
+                },
+                ratings: {
+                    $leftJoin: {
+                        $table: 'skill_ratings',
+                        $on: { 'skills.rate_id': '~~ratings.rate_id' }
+                    }
+                }
+            },
+            $where: {
+                'skills.rate': { $gt: 50 }
+            }
+
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    ratings.description
+FROM
+    people
+    INNER JOIN people_skills skills ON skills.people_id = people.people_id
+    LEFT JOIN skill_ratings ratings ON skills.rate_id = ratings.rate_id
+WHERE
+    skills.rate > $1
+
+// Values
+{
+    "$1": 50
+}
+```
+
 :bulb: **Join using sub-selects**
 ```javascript
 function() {
@@ -262,6 +315,120 @@ WHERE
 {
     "$1": 1,
     "$2": 50
+}
+```
+
+:bulb: **Oracle Join using sub-selects**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $columns: {
+                'people.first_name': true,
+                'people.last_name': true,
+                'skills.description': true,
+                'ratings.description': true
+            },
+            $from: 'people',
+            $join: {
+                people_skills: {
+                    $inner: 'skills',
+                    $on: {
+                        'skills.people_id': { $eq: '~~people.people_id' }
+                    }
+                },
+                ratings: {
+                    $leftJoin: {
+                        $select: {
+                            $from: 'skill_ratings',
+                            $where: {
+                                'is_people_skill': 1
+                            }
+                        },
+                        $on: { 'skills.rate_id': '~~ratings.rate_id' }
+                    }
+                }
+            },
+            $where: {
+                'skills.rate': { $gt: 50 }
+            }
+
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    ratings.description
+FROM
+    people
+    INNER JOIN people_skills skills ON skills.people_id = people.people_id
+    LEFT JOIN (
+        SELECT
+            *
+        FROM
+            skill_ratings
+        WHERE
+            is_people_skill = $1
+    ) ratings ON skills.rate_id = ratings.rate_id
+WHERE
+    skills.rate > $2
+
+// Values
+{
+    "$1": 1,
+    "$2": 50
+}
+```
+
+:bulb: **Oracle Basic Usage**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $columns: {
+                'people.first_name': true,
+                'people.last_name': true,
+                'skills.description': true,
+                'ratings.description': true
+            },
+            $from: 'people',
+            $join: {
+                people_skills: {
+                    $inner: 'skills',
+                    $on: {
+                        'skills.people_id': { $eq: '~~people.people_id' }
+                    }
+                },
+                ratings: sql.leftJoin('skill_ratings', { $on: { 'skills.rate_id': '~~ratings.rate_id' } })
+            },
+            $where: {
+                'skills.rate': { $gt: 50 }
+            }
+
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    ratings.description
+FROM
+    people
+    INNER JOIN people_skills skills ON skills.people_id = people.people_id
+    LEFT JOIN skill_ratings ratings ON skills.rate_id = ratings.rate_id
+WHERE
+    skills.rate > $1
+
+// Values
+{
+    "$1": 50
 }
 ```
 

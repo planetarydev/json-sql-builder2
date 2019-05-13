@@ -3,8 +3,8 @@
 class joinHelper extends SQLBuilder.SQLHelper {
 	constructor(sql, joinType){
 		super(sql);
-
-		let joinSyntax = joinType + '{ LATERAL[$lateral]}-->(PostgreSQL){ [$table]}{ [$select]} AS <key-ident>{ ON [$on]}{ USING [$using]}';
+		let aliasKeyword = sql.isOracle() ? ' ' : ' AS ';
+		let joinSyntax = joinType + '{ LATERAL[$lateral]}-->(PostgreSQL){ [$table]}{ [$select]}' + aliasKeyword + '<key-ident>{ ON [$on]}{ USING [$using]}';
 		if (!sql._options.useOuterKeywordOnJoin) {
 			joinSyntax = joinSyntax.split('OUTER ').join('');
 		}
@@ -69,6 +69,13 @@ module.exports = {
 		Object: {
 			'Basic Usage': function(sql) {
 				return {
+					supportedBy: {
+						MySQL: true,
+						MariaDB: true,
+						PostgreSQL: true,
+						SQLite: true,
+						SQLServer: true
+					},
 					test: function(){
 						return sql.build({
 							$select: {
@@ -102,8 +109,53 @@ module.exports = {
 					}
 				}
 			},
+			'Oracle Basic Usage': function(sql) {
+				return {
+					supportedBy: {
+						Oracle: true,
+					},
+					test: function(){
+						return sql.build({
+							$select: {
+								$columns: {
+									'people.first_name': true,
+									'people.last_name': true,
+									'skills.description': true,
+									'skills.rate': true
+								},
+								$from: 'people',
+								$join: {
+									skills: {
+										$leftJoin: {
+											$table: 'people_skills',
+											$on: { 'skills.people_id': { $eq: '~~people.people_id' } },
+										}
+									}
+
+								},
+								$where: {
+									'skills.rate': { $gt: 50 }
+								}
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people LEFT JOIN people_skills skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
+						values:{
+							$1: 50
+						}
+					}
+				}
+			},
 			'Usage as Function': function(sql) {
 				return {
+					supportedBy: {
+						MySQL: true,
+						MariaDB: true,
+						PostgreSQL: true,
+						SQLite: true,
+						SQLServer: true
+					},
 					test: function(){
 						return sql.build({
 							$select: {
@@ -127,6 +179,40 @@ module.exports = {
 					},
 					expectedResults: {
 						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people LEFT JOIN people_skills AS skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
+						values:{
+							$1: 50
+						}
+					}
+				}
+			},
+			'Oracle usage as Function': function(sql) {
+				return {
+					supportedBy: {
+						Oracle: true,
+					},
+					test: function(){
+						return sql.build({
+							$select: {
+								$columns: {
+									'people.first_name': true,
+									'people.last_name': true,
+									'skills.description': true,
+									'skills.rate': true
+								},
+								$from: 'people',
+								$join: {
+									skills: sql.leftJoin('people_skills', {
+										$on: { 'skills.people_id': { $eq: '~~people.people_id' } }
+									})
+								},
+								$where: {
+									'skills.rate': { $gt: 50 }
+								}
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people LEFT JOIN people_skills skills ON skills.people_id = people.people_id WHERE skills.rate > $1',
 						values:{
 							$1: 50
 						}
