@@ -88,3 +88,53 @@ WHERE
 }
 ```
 
+## Further Examples
+
+:bulb: **Oracle Basic Usage**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $columns: {
+                'people.first_name': true,
+                'people.last_name': true,
+                'skills.description': true,
+                'skills.rating': true,
+            },
+            $from: 'people',
+            $join: {
+                people_skills: {
+                    $lateral: {
+                        $inner: 'skills',
+                        $on: {
+                            'skills.people_id': { $eq: '~~people.people_id' }
+                        }
+                    }
+                }
+            },
+            $where: {
+                'skills.rate': { $gt: 50 }
+            }
+
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    skills.rating
+FROM
+    people
+    INNER JOIN LATERAL people_skills skills ON skills.people_id = people.people_id
+WHERE
+    skills.rate > $1
+
+// Values
+{
+    "$1": 50
+}
+```
+

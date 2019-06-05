@@ -373,3 +373,257 @@ WHERE
     "$1": 50
 }
 ```
+## Further Examples
+
+:bulb: **Oracle Basic Usage**
+```javascript
+function() {
+    return sql.$select({
+        $columns: {
+            'people.first_name': true,
+            'people.last_name': true,
+            'skills.description': true,
+            'skills.rate': true
+        },
+        $from: 'people',
+        $join: {
+            people_skills: { $left: 'skills', $using: 'people_id' }
+        },
+        $where: {
+            'skills.rate': { $gt: 50 }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    skills.rate
+FROM
+    people
+    LEFT JOIN people_skills skills USING (people_id)
+WHERE
+    skills.rate > $1
+
+// Values
+{
+    "$1": 50
+}
+```
+
+:bulb: **Oracle Basic Usage**
+```javascript
+function() {
+    return sql.$select({
+        $columns: {
+            'people.first_name': true,
+            'people.last_name': true,
+            'skills.description': true,
+            'skills.rate': true
+        },
+        $from: 'people',
+        $join: {
+            people_skills: { $left: 'skills', $using: ['people_id', 'skill_id'] }
+        },
+        $where: {
+            'skills.rate': { $gt: 50 }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    skills.rate
+FROM
+    people
+    LEFT JOIN people_skills skills USING (people_id, skill_id)
+WHERE
+    skills.rate > $1
+
+// Values
+{
+    "$1": 50
+}
+```
+
+:bulb: **Oracle Basic Usage**
+```javascript
+function() {
+    return sql.$select({
+        $columns: {
+            'people.first_name': true,
+            'people.last_name': true,
+            'skills.description': true,
+            'skills.rate': true
+        },
+        $from: 'people',
+        $join: {
+            people_skills: {
+                $left: 'skills',
+                $using: {
+                    people_id: true,
+                    skill_id: false
+                }
+            }
+        },
+        $where: {
+            'skills.rate': { $gt: 50 }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    skills.rate
+FROM
+    people
+    LEFT JOIN people_skills skills USING (people_id)
+WHERE
+    skills.rate > $1
+
+// Values
+{
+    "$1": 50
+}
+```
+
+:bulb: **Oracle Basic Usage**
+```javascript
+function() {
+    return sql.$select({
+        $columns: {
+            'people.first_name': true,
+            'people.last_name': true,
+            'skills.description': true,
+            'skills.rate': true
+        },
+        $from: 'people',
+        $join: {
+            people_skills: {
+                $left: 'skills',
+                $using: {
+                    people_id: true,
+                    skill_id: false
+                }
+            }
+        },
+        $where: {
+            'skills.rate': { $gt: 50 }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    skills.rate
+FROM
+    people
+    LEFT JOIN people_skills skills USING (people_id)
+WHERE
+    skills.rate > $1
+
+// Values
+{
+    "$1": 50
+}
+```
+
+:bulb: **Oracle Basic Usage**
+```javascript
+function() {
+    return sql.$select({
+        $columns: {
+            'people.first_name': true,
+            'people.last_name': true,
+            'skills.description': true,
+            'skills.rate': true
+        },
+        $from: 'people',
+        $join: {
+            people_skills: {
+                $left: 'skills',
+                $using: {
+                    people_id: 1,
+                    skill_id: 0
+                }
+            }
+        },
+        $where: {
+            'skills.rate': { $gt: 50 }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    skills.rate
+FROM
+    people
+    LEFT JOIN people_skills skills USING (people_id)
+WHERE
+    skills.rate > $1
+
+// Values
+{
+    "$1": 50
+}
+```
+
+:bulb: **Oracle Basic Usage**
+```javascript
+function() {
+    return sql.$select({
+        $columns: {
+            'people.first_name': true,
+            'people.last_name': true,
+            'skills.description': true,
+            'skills.rate': true
+        },
+        $from: 'people',
+        $join: {
+            people_skills: {
+                $left: 'skills',
+                $using: {
+                    people_id: 1,
+                    skill_id: 0
+                }
+            }
+        },
+        $where: {
+            'skills.rate': { $gt: 50 }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    skills.rate
+FROM
+    people
+    LEFT JOIN people_skills skills USING (people_id)
+WHERE
+    skills.rate > $1
+
+// Values
+{
+    "$1": 50
+}
+```
+

@@ -210,3 +210,159 @@ WHERE
 }
 ```
 
+## Further Examples
+
+:bulb: **Oracle Basic Usage**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $columns: {
+                'people.first_name': true,
+                'people.last_name': true,
+                'skills.description': true,
+                'skills.rate': true
+            },
+            $from: 'people',
+            $join: {
+                people_skills: { $cross: 'skills' }
+            },
+            $where: {
+                'skills.rate': { $gt: 50 }
+            }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    skills.rate
+FROM
+    people
+    CROSS JOIN people_skills skills
+WHERE
+    skills.rate > $1
+
+// Values
+{
+    "$1": 50
+}
+```
+
+:bulb: **Oracle Basic Usage**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $columns: {
+                'people.first_name': true,
+                'people.last_name': true,
+                'skills.description': true,
+                'skills.rate': true
+            },
+            $from: 'people',
+            $join: {
+                skills: {
+                    $cross: {
+                        $select: {
+                            $from: 'people_skills',
+                            $where: {
+                                is_skill: 1
+                            }
+                        }
+                    }
+                }
+            },
+            $where: {
+                'skills.rate': { $gt: 50 }
+            }
+
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    skills.rate
+FROM
+    people
+    CROSS JOIN (
+        SELECT
+            *
+        FROM
+            people_skills
+        WHERE
+            is_skill = $1
+    ) skills
+WHERE
+    skills.rate > $2
+
+// Values
+{
+    "$1": 1,
+    "$2": 50
+}
+```
+
+:bulb: **Oracle Basic Usage**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $columns: {
+                'people.first_name': true,
+                'people.last_name': true,
+                'skills.description': true,
+                'skills.rate': true
+            },
+            $from: 'people',
+            $join: {
+                skills: {
+                    $cross: sql.select('*', {
+                        $from: 'people_skills',
+                        $where: {
+                            is_skill: 1
+                        }
+                    })
+                }
+            },
+            $where: {
+                'skills.rate': { $gt: 50 }
+            }
+
+        }
+    });
+}
+
+// SQL output
+SELECT
+    people.first_name,
+    people.last_name,
+    skills.description,
+    skills.rate
+FROM
+    people
+    CROSS JOIN (
+        SELECT
+            *
+        FROM
+            people_skills
+        WHERE
+            is_skill = $1
+    ) skills
+WHERE
+    skills.rate > $2
+
+// Values
+{
+    "$1": 1,
+    "$2": 50
+}
+```
+

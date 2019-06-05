@@ -46,6 +46,13 @@ module.exports = {
 		String: {
 			'Basic Usage': function(sql) {
 				return {
+					supportedBy: {
+						MySQL: true,
+						MariaDB: true,
+						PostgreSQL: true,
+						SQLite: true,
+						SQLServer: true
+					},
 					test: function(){
 						return sql.$select({
 							$columns: {
@@ -70,6 +77,36 @@ module.exports = {
 						}
 					}
 				}
+			},
+			'Oracle Basic Usage': function(sql) {
+				return {
+					supportedBy: {
+						Oracle: true,
+					},
+					test: function(){
+						return sql.$select({
+							$columns: {
+								'people.first_name': true,
+								'people.last_name': true,
+								'skills.description': true,
+								'skills.rate': true
+							},
+							$from: 'people',
+							$join: {
+								people_skills: { $left: 'skills', $using: 'people_id' }
+							},
+							$where: {
+								'skills.rate': { $gt: 50 }
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people LEFT JOIN people_skills skills USING (people_id) WHERE skills.rate > $1',
+						values:{
+							$1: 50
+						}
+					}
+				}
 			}
 		},
 		Array: {
@@ -77,6 +114,13 @@ module.exports = {
 				String: {
 					'Basic Usage': function(sql) {
 						return {
+							supportedBy: {
+								MySQL: true,
+								MariaDB: true,
+								PostgreSQL: true,
+								SQLite: true,
+								SQLServer: true
+							},
 							test: function(){
 								return sql.$select({
 									$columns: {
@@ -101,6 +145,36 @@ module.exports = {
 								}
 							}
 						}
+					},
+					'Oracle Basic Usage': function(sql) {
+						return {
+							supportedBy: {
+								Oracle: true,
+							},
+							test: function(){
+								return sql.$select({
+									$columns: {
+										'people.first_name': true,
+										'people.last_name': true,
+										'skills.description': true,
+										'skills.rate': true
+									},
+									$from: 'people',
+									$join: {
+										people_skills: { $left: 'skills', $using: ['people_id', 'skill_id'] }
+									},
+									$where: {
+										'skills.rate': { $gt: 50 }
+									}
+								});
+							},
+							expectedResults: {
+								sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people LEFT JOIN people_skills skills USING (people_id, skill_id) WHERE skills.rate > $1',
+								values:{
+									$1: 50
+								}
+							}
+						}
 					}
 				}
 			}
@@ -111,6 +185,13 @@ module.exports = {
 					1: {
 						'Basic Usage': function(sql) {
 							return {
+								supportedBy: {
+									MySQL: true,
+									MariaDB: true,
+									PostgreSQL: true,
+									SQLite: true,
+									SQLServer: true
+								},
 								test: function(){
 									return sql.$select({
 										$columns: {
@@ -141,11 +222,54 @@ module.exports = {
 									}
 								}
 							}
+						},
+						'Oracle Basic Usage': function(sql) {
+							return {
+								supportedBy: {
+									Oracle: true,
+								},
+								test: function(){
+									return sql.$select({
+										$columns: {
+											'people.first_name': true,
+											'people.last_name': true,
+											'skills.description': true,
+											'skills.rate': true
+										},
+										$from: 'people',
+										$join: {
+											people_skills: {
+												$left: 'skills',
+												$using: {
+													people_id: 1,
+													skill_id: 0
+												}
+											}
+										},
+										$where: {
+											'skills.rate': { $gt: 50 }
+										}
+									});
+								},
+								expectedResults: {
+									sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people LEFT JOIN people_skills skills USING (people_id) WHERE skills.rate > $1',
+									values:{
+										$1: 50
+									}
+								}
+							}
 						}
 					},
 					0: {
 						'Basic Usage': function(sql) {
 							return {
+								supportedBy: {
+									MySQL: true,
+									MariaDB: true,
+									PostgreSQL: true,
+									SQLite: true,
+									SQLServer: true
+								},
 								test: function(){
 									return sql.$select({
 										$columns: {
@@ -171,6 +295,42 @@ module.exports = {
 								},
 								expectedResults: {
 									sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people LEFT JOIN people_skills AS skills USING (people_id) WHERE skills.rate > $1',
+									values:{
+										$1: 50
+									}
+								}
+							}
+						},
+						'Oracle Basic Usage': function(sql) {
+							return {
+								supportedBy: {
+									Oracle: true,
+								},
+								test: function(){
+									return sql.$select({
+										$columns: {
+											'people.first_name': true,
+											'people.last_name': true,
+											'skills.description': true,
+											'skills.rate': true
+										},
+										$from: 'people',
+										$join: {
+											people_skills: {
+												$left: 'skills',
+												$using: {
+													people_id: 1,
+													skill_id: 0
+												}
+											}
+										},
+										$where: {
+											'skills.rate': { $gt: 50 }
+										}
+									});
+								},
+								expectedResults: {
+									sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people LEFT JOIN people_skills skills USING (people_id) WHERE skills.rate > $1',
 									values:{
 										$1: 50
 									}
@@ -183,6 +343,13 @@ module.exports = {
 					true: {
 						'Basic Usage': function(sql) {
 							return {
+								supportedBy: {
+									MySQL: true,
+									MariaDB: true,
+									PostgreSQL: true,
+									SQLite: true,
+									SQLServer: true
+								},
 								test: function(){
 									return sql.$select({
 										$columns: {
@@ -213,11 +380,54 @@ module.exports = {
 									}
 								}
 							}
+						},
+						'Oracle Basic Usage': function(sql) {
+							return {
+								supportedBy: {
+									Oracle: true,
+								},
+								test: function(){
+									return sql.$select({
+										$columns: {
+											'people.first_name': true,
+											'people.last_name': true,
+											'skills.description': true,
+											'skills.rate': true
+										},
+										$from: 'people',
+										$join: {
+											people_skills: {
+												$left: 'skills',
+												$using: {
+													people_id: true,
+													skill_id: false
+												}
+											}
+										},
+										$where: {
+											'skills.rate': { $gt: 50 }
+										}
+									});
+								},
+								expectedResults: {
+									sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people LEFT JOIN people_skills skills USING (people_id) WHERE skills.rate > $1',
+									values:{
+										$1: 50
+									}
+								}
+							}
 						}
 					},
 					false: {
 						'Basic Usage': function(sql) {
 							return {
+								supportedBy: {
+									MySQL: true,
+									MariaDB: true,
+									PostgreSQL: true,
+									SQLite: true,
+									SQLServer: true
+								},
 								test: function(){
 									return sql.$select({
 										$columns: {
@@ -243,6 +453,42 @@ module.exports = {
 								},
 								expectedResults: {
 									sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people LEFT JOIN people_skills AS skills USING (people_id) WHERE skills.rate > $1',
+									values:{
+										$1: 50
+									}
+								}
+							}
+						},
+						'Oracle Basic Usage': function(sql) {
+							return {
+								supportedBy: {
+									Oracle: true,
+								},
+								test: function(){
+									return sql.$select({
+										$columns: {
+											'people.first_name': true,
+											'people.last_name': true,
+											'skills.description': true,
+											'skills.rate': true
+										},
+										$from: 'people',
+										$join: {
+											people_skills: {
+												$left: 'skills',
+												$using: {
+													people_id: true,
+													skill_id: false
+												}
+											}
+										},
+										$where: {
+											'skills.rate': { $gt: 50 }
+										}
+									});
+								},
+								expectedResults: {
+									sql: 'SELECT people.first_name, people.last_name, skills.description, skills.rate FROM people LEFT JOIN people_skills skills USING (people_id) WHERE skills.rate > $1',
 									values:{
 										$1: 50
 									}
