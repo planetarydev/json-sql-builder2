@@ -23,10 +23,11 @@ class from extends SQLBuilder.SQLHelper {
 					},
 					String: { syntax: this.Syntax('<key-ident>' + aliasKeyword + '<value-ident>[ , ... ]') },
 					Object: { syntax: this.Syntax('<value>' + aliasKeyword + '<identifier>[ , ... ]') },
-					Function: { syntax: this.Syntax('<value>' + aliasKeyword + '<key-ident>[ , ... ]') }
+					Function: { syntax: this.Syntax('<value>' + aliasKeyword + '<key-ident>[ , ... ]') },
+					Array: { syntax: this.Syntax('<key-ident>(<value-param>[ , ... ])')}
 				},
 			},
-			String: { syntax: this.Syntax('<value-ident>') },
+			String: { syntax: this.Syntax('<value-ident>') }
 		});
 	}
 }
@@ -45,6 +46,37 @@ module.exports = {
 	examples: {
 		Object: {
 			eachItemOf: {
+				Array: {
+					"Basic Usage": function(sql) {
+						return {
+							supportedBy: {
+								MySQL: true,
+								MariaDB: true,
+								PostgreSQL: true,
+								SQLite: true,
+								SQLServer: true
+							},
+							test: function(){
+								return sql.build({
+									$select: {
+										$from: {
+											my_table_valued_function: ['Param1', 2, 'Param3', 4]
+										}
+									}
+								});
+							},
+							expectedResults: {
+								sql: 'SELECT * FROM my_table_valued_function($1, $2, $3, $4)',
+								values: {
+									$1: 'Param1',
+									$2: 2,
+									$3: 'Param3',
+									$4: 4
+								}
+							}
+						}
+					},
+				},
 				Function: {
 					"Basic Usage": function(sql) {
 						return {

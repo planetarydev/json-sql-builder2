@@ -20,6 +20,7 @@ The Usage of `from` as **Object** is restricted to childs have the following Typ
 - String
 - Object
 - Function
+- Array
 
 ## as Object :arrow_right: Boolean:
 
@@ -300,6 +301,49 @@ FROM
 
 // Values
 {}
+```
+## as Object :arrow_right: Array:
+
+Usage of `from` as **Object** with a child of Type **Array** :
+
+**Syntax:**
+
+```javascript
+$from: {
+    "<identifier | $Helper | $operator>": [ ... ] [, ... ]
+}
+```
+
+**SQL-Definition:**
+```javascript
+<key-ident>(<value-param>[ , ... ])
+```
+
+:bulb: **Example:**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $from: {
+                my_table_valued_function: ['Param1', 2, 'Param3', 4]
+            }
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    my_table_valued_function($1, $2, $3, $4)
+
+// Values
+{
+    "$1": "Param1",
+    "$2": 2,
+    "$3": "Param3",
+    "$4": 4
+}
 ```
 ## as String:
 
