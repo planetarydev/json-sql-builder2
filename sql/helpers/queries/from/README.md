@@ -380,6 +380,46 @@ FROM
 {}
 ```
 
+## as Function:
+
+Usage of `from` as **Function** with the following Syntax:
+
+**Syntax:**
+
+```javascript
+$from: sql.<callee>([params])
+```
+
+**SQL-Definition:**
+```javascript
+<value>
+```
+
+:bulb: **Example:**
+```javascript
+function() {
+    return sql.build({
+        $select: {
+            $from: sql.tableFunction('my_table_valued_function', { $args: ['Param1', 2, 'Param3', 4] })
+        }
+    });
+}
+
+// SQL output
+SELECT
+    *
+FROM
+    my_table_valued_function($1, $2, $3, $4)
+
+// Values
+{
+    "$1": "Param1",
+    "$2": 2,
+    "$3": "Param3",
+    "$4": 4
+}
+```
+
 ## Further Examples
 
 :bulb: **Oracle Basic Usage with aliases**

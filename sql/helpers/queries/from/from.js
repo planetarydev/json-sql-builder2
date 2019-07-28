@@ -27,7 +27,8 @@ class from extends SQLBuilder.SQLHelper {
 					Array: { syntax: this.Syntax('<key-ident>(<value-param>[ , ... ])')}
 				},
 			},
-			String: { syntax: this.Syntax('<value-ident>') }
+			String: { syntax: this.Syntax('<value-ident>') },
+			Function: { syntax: this.Syntax('<value>') }
 		});
 	}
 }
@@ -44,6 +45,32 @@ module.exports = {
 		SQLServer: 'https://docs.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql'
 	},
 	examples: {
+		Function:  {
+			"Basic Usage": function(sql) {
+				return {
+					supportedBy: {
+						PostgreSQL: true,
+						SQLServer: true
+					},
+					test: function(){
+						return sql.build({
+							$select: {
+								$from: sql.tableFunction('my_table_valued_function', { $args: ['Param1', 2, 'Param3', 4] })
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT * FROM my_table_valued_function($1, $2, $3, $4)',
+						values: {
+							$1: 'Param1',
+							$2: 2,
+							$3: 'Param3',
+							$4: 4
+						}
+					}
+				}
+			},
+		},
 		Object: {
 			eachItemOf: {
 				Array: {
