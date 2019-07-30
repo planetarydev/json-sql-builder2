@@ -10,7 +10,7 @@ class tableFunction extends SQLBuilder.SQLHelper {
 		});
 
 		this.$name = new SQLBuilder.SQLPredefined.StringIdentifier(sql);
-		this.$args = new SQLBuilder.SQLPredefined.ArgsAsArrayParam(sql);
+		this.$args = new SQLBuilder.SQLPredefined.ArrayValueParam(sql);
 	}
 }
 
