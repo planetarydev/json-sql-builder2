@@ -6,7 +6,7 @@ const SYNTAX =
 	{ OR ALTER[$orAlter]}-->(SQLServer)
 	{ TEMPORARY[$temp]}-->(PostgreSQL,SQLite)
 	{ RECURSIVE[$recursive]}-->(PostgreSQL)
- VIEW { IF NOT EXISTS[$ine] | [$ifNotExists]}-->(MariaDB,SQLite) <$view> { ([$columns])}
+ VIEW {IF NOT EXISTS[$ine] }-->(MariaDB,SQLite) <$view> { ([$columns])}
     { WITH (security_barrier)[$securityBarrier]}-->(PostgreSQL)
  AS {[$with]} | {[$select]} | {[$union]} | {[$intersect]} | {[$except]}
 	{* WITH (CASCADED or LOCAL) CHECK OPTION [$checkOption] *}-->(PostgreSQL,MariaDB,MySQL,SQLServer,Oracle)
@@ -70,6 +70,31 @@ module.exports = {
 							// PostgreSQL does not support parameterized queries on CREATE VIEW statements
 							sql: 'CREATE VIEW my_people_view AS SELECT people_id, CONCAT(last_name, \' \', first_name) AS people_name FROM people',
 							values: {}
+						}
+					}
+				}
+			},
+			"Test $ine (IF NOT EXISTS)": function(sql) {
+				return {
+					supportedBy: {
+						MariaDB: true,
+						SQLite: true
+					},
+					test: function(){
+						return sql.$createView({
+							$view: 'my_people_view',
+							$ine: true,
+							$select: {
+								people_id: true,
+								people_name: sql.concat('~~last_name', ' ', '~~first_name'),
+								$from: 'people'
+							}
+						});
+					},
+					expectedResults: {
+						sql: 'CREATE VIEW IF NOT EXISTS my_people_view AS SELECT people_id, CONCAT(last_name, $1, first_name) AS people_name FROM people',
+						values: {
+							$1: ' '
 						}
 					}
 				}

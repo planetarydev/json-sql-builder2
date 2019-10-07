@@ -91,3 +91,25 @@ FROM
 }
 ```
 
+:bulb: **Support for SQLLite**
+```javascript
+function() {
+    return sql.$select({
+        greeting: { $concat: ['Hello', ' ', '~~first_name'] },
+        $from: 'people'
+    });
+}
+
+// SQL output
+SELECT
+    $1 || $2 || first_name AS greeting
+FROM
+    people
+
+// Values
+{
+    "$1": "Hello",
+    "$2": " "
+}
+```
+

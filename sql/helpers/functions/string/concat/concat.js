@@ -7,9 +7,15 @@ class concat extends SQLBuilder.SQLHelper {
 	constructor(sql){
 		super(sql);
 
-		this.Types({
-			Array: { syntax: this.Syntax('CONCAT(<value-param>[ , ... ])') },
-		});
+		if (sql.isSQLite()) {
+			this.Types({
+				Array: { syntax: this.Syntax('<value-param>[  || ... ]') },
+			});
+		} else {
+			this.Types({
+				Array: { syntax: this.Syntax('CONCAT(<value-param>[ , ... ])') },
+			});
+		}
 	}
 
 	callee(...args){
@@ -46,6 +52,13 @@ module.exports = {
 		Array: {
 			"Basic Usage": function(sql) {
 				return {
+					supportedBy: {
+						MySQL: true,
+						MariaDB: true,
+						PostgreSQL: true,
+						Oracle: true,
+						SQLServer: true
+					},
 					test: function(){
 						return sql.$select({
 							people_name: { $concat: ['~~first_name', ' ', '~~last_name'] },
@@ -62,6 +75,13 @@ module.exports = {
 			},
 			"Usage of CONCAT as Function": function(sql) {
 				return {
+					supportedBy: {
+						MySQL: true,
+						MariaDB: true,
+						PostgreSQL: true,
+						Oracle: true,
+						SQLServer: true
+					},
 					test: function(){
 						return sql.$select({
 							people_name: sql.concat('~~first_name', ' ', '~~last_name'),
@@ -78,6 +98,13 @@ module.exports = {
 			},
 			"Usage with INLINE-SQL": function(sql) {
 				return {
+					supportedBy: {
+						MySQL: true,
+						MariaDB: true,
+						PostgreSQL: true,
+						Oracle: true,
+						SQLServer: true
+					},
 					test: function(){
 						return sql.$select({
 							people_name: { $concat: ["__:COALESCE(first_name, '')", ' ', '~~last_name'] },
@@ -88,6 +115,26 @@ module.exports = {
 						sql: 'SELECT CONCAT(COALESCE(first_name, \'\'), $1, last_name) AS people_name FROM people',
 						values:{
 							$1: ' ',
+						}
+					}
+				}
+			},
+			"Support for SQLLite": function(sql) {
+				return {
+					supportedBy: {
+						SQLite: true
+					},
+					test: function(){
+						return sql.$select({
+							greeting: { $concat: ['Hello', ' ', '~~first_name'] },
+							$from: 'people'
+						});
+					},
+					expectedResults: {
+						sql: 'SELECT $1 || $2 || first_name AS greeting FROM people',
+						values:{
+							$1: 'Hello',
+							$2: ' ',
 						}
 					}
 				}

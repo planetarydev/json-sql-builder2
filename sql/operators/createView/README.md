@@ -28,7 +28,7 @@ CREATE
   { OR ALTER[$orAlter]}-->(SQLServer)
   { TEMPORARY[$temp]}-->(PostgreSQL,SQLite)
   { RECURSIVE[$recursive]}-->(PostgreSQL)
- VIEW { IF NOT EXISTS[$ine] | [$ifNotExists]}-->(MariaDB,SQLite) <$view> { ([$columns])}
+ VIEW {IF NOT EXISTS[$ine] }-->(MariaDB,SQLite) <$view> { ([$columns])}
     { WITH (security_barrier)[$securityBarrier]}-->(PostgreSQL)
  AS {[$with]} | {[$select]} | {[$union]} | {[$intersect]} | {[$except]}
   {* WITH (CASCADED or LOCAL) CHECK OPTION [$checkOption] *}-->(PostgreSQL,MariaDB,MySQL,SQLServer,Oracle)
@@ -43,8 +43,7 @@ Name|Required|Public|SQL-Definition|Supported by
 [orAlter](./private/orAlter/)|*optional*|*private*| OR ALTER [$orAlter]|`SQLServer` 
 [temp](./private/temp/)|*optional*|*private*| TEMPORARY [$temp]|`PostgreSQL` `SQLite` 
 [recursive](./private/recursive/)|*optional*|*private*| RECURSIVE [$recursive]|`PostgreSQL` 
-[ine](./private/ine/)|*optional*|*private*| IF NOT EXISTS [$ine]|`MariaDB` `SQLite` 
-[ifNotExists](./private/ifNotExists/)|*optional*|*private*| IF NOT EXISTS [$ifNotExists]|
+[ine](./private/ine/)|*optional*|*private*|IF NOT EXISTS [$ine] |`MariaDB` `SQLite` 
 [view](./private/view/)|:heavy_check_mark:|*private*||
 [columns](../../helpers/ddl/columns/)|*optional*|:heavy_check_mark:| ( [$columns])|
 [securityBarrier](./private/securityBarrier/)|*optional*|*private*| WITH (security_barrier) [$securityBarrier]|`PostgreSQL` 
@@ -83,6 +82,34 @@ FROM
 ```
 
 ## Further Examples
+
+:bulb: **Test $ine (IF NOT EXISTS)**
+```javascript
+function() {
+    return sql.$createView({
+        $view: 'my_people_view',
+        $ine: true,
+        $select: {
+            people_id: true,
+            people_name: sql.concat('~~last_name', ' ', '~~first_name'),
+            $from: 'people'
+        }
+    });
+}
+
+// SQL output
+CREATE VIEW IF NOT EXISTS my_people_view AS
+SELECT
+    people_id,
+    CONCAT(last_name, $1, first_name) AS people_name
+FROM
+    people
+
+// Values
+{
+    "$1": " "
+}
+```
 
 :bulb: **PostgreSQL usage of RECURSIVE VIEW**
 ```javascript
