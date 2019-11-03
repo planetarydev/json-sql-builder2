@@ -245,7 +245,7 @@ module.exports = {
 
 						// create a instance of our people-Table
 						const People = new Table('people', {
-							people_id: { $column: { $type: 'INT', ...NOT_NULL, ...PRIMARY_KEY } },
+							people_id: { $column: Object.assign({ $type: 'INT' }, NOT_NULL, PRIMARY_KEY) },
 							first_name: { $column: { $type: 'VARCHAR', $size: 50, $notNull: true } },
 							last_name: { $column: { $type: 'VARCHAR', $size: 50, $notNull: true } },
 							age: { $column: { $type: 'INT', $notNull: true, $default: 0 } }
