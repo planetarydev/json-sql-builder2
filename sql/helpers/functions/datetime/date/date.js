@@ -7,9 +7,6 @@ class date extends SQLBuilder.SQLHelper {
 		this.Types({
 			String: { syntax: this.Syntax('DATE(<value-param>)') },
 		});
-
-		this.$expr = new SQLBuilder.SQLPredefined.StringValueParam(sql);
-		this.$format = new SQLBuilder.SQLPredefined.StringValueParam(sql);
 	}
 }
 
