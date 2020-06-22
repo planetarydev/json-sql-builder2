@@ -1,8 +1,8 @@
 # top Helper
-Specifies the `FETCH` clause for the `SELECT` Statement.
+Specifies the `FETCH` clause for the `SELECT` Statement for Oracle db only.
 
 #### Supported by
-- [SQLServer](https://docs.microsoft.com/en-us/sql/t-sql/queries/top-transact-sql)
+- [Oracle](https://www.oracletutorial.com/oracle-basics/oracle-fetch/)
 
 # Allowed Types and Usage
 
@@ -13,15 +13,12 @@ Usage of `ssFetch` as **Number** with the following Syntax:
 **Syntax:**
 
 ```javascript
-$ssFetch: {
-    $skip: 30, // it will skip 30 rows
-    $fetch: 10 // it will fetch next 10 rows
-}
+$orFetch: 10 // it will fetch 10 rows only
 ```
 
 **SQL-Definition:**
 ```sql
-OFFSET 30 ROWS FETCH FIRST 10 ROWS ONLY
+FETCH NEXT 15 ROWS ONLY
 ```
 
 :bulb: **Example:**
@@ -29,10 +26,7 @@ OFFSET 30 ROWS FETCH FIRST 10 ROWS ONLY
 function() {
     let query = sql.build({
         $select: {
-            $ssFetch: {
-                $skip: 30,
-                $fetch: 10
-            },
+            $orFetch: 10,
             $from: 'people'
         }
     });
@@ -45,7 +39,7 @@ SELECT
     *
 FROM
     people
-OFFSET 30 ROWS FETCH FIRST 10 ROWS ONLY
+FETCH NEXT 10 ROWS ONLY
 
 // Values
 {}

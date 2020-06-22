@@ -15,6 +15,8 @@ const SYNTAX_SELECT =
 	{ HAVING [$having]}
 	{ ORDER BY [$orderBy]}
 	{ [$ssFetch]}-->(SQLServer)
+	{ [$orOffset]}-->(Oracle)
+	{ [$orFetch]}-->(Oracle)
 	{ LIMIT [$limit]}-->(MariaDB,MySQL,PostgreSQL,SQLite)
 	{ OFFSET [$offset]}-->(MariaDB,MySQL,PostgreSQL,SQLite)`;
 

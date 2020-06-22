@@ -2,8 +2,10 @@ const SQLBuilder = require('../index');
 
 let obj = {
     $from: 'MAYUR.Persons',
-    $where: {id: 'Mayur'}
-    // $where: {id: 1}
+    // $where: {id: 'Mayur'}
+    $where: {id: 1},
+    $orFetch: 10,
+    $orOffset: 10,
 };
 
 const sql = new SQLBuilder('Oracle', {quoteIdentifiers: true});
