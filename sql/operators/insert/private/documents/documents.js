@@ -48,9 +48,7 @@ class documents extends SQLBuilder.SQLHelper {
 		if (this.isArray(query.$documents)){
 			this.forEach(query.$documents, (record, index) => {
 				let values = [];
-				this.forEach(record, (value, key) => {
-					values.push(value);
-				});
+				for (let column of query.$columns) values.push(record[column]);
 				query.$records[index] = { $values: values };
 			});
 		}
@@ -157,9 +155,9 @@ module.exports = {
 											last_name: 'Doe',
 											age: 40
 										}, {
+											age: 35,
 											first_name: 'Jane',
 											last_name: 'Dan',
-											age: 35
 										}
 									]
 								});
